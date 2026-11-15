@@ -45,7 +45,7 @@
   "성과평가 · 대체가격 · 최신 관리회계"
  ],
  "dataThrough": 38,
- "defaultLec": 9,
+ "defaultLec": 10,
  "notes": "notes/acct.html",
  "units": [
   {
@@ -124,8 +124,9 @@
    "u": "IP",
    "nm": "투자부동산 · 생물자산",
    "lec": 10,
-   "n": 18,
-   "grp": "재무회계"
+   "n": 17,
+   "grp": "재무회계",
+   "note": "ip"
   },
   {
    "u": "CR",

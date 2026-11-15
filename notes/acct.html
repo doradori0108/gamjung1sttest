@@ -56,6 +56,8 @@ table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
 th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
 th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
 tr:last-child td{border-bottom:0}
+.c1 td:first-child{min-width:5.2em}
+.c1 table{min-width:520px}
 td.tn{min-width:9.5em}
 td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 .up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
@@ -124,9 +126,9 @@ svg .f-bar{fill:var(--accent)}
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">감정평가사 1차 · 회계학 · 신은미 기본강의 1~9단원 · 무형자산까지</div>
+  <div class="eyebrow">감정평가사 1차 · 회계학 · 신은미 기본강의 1~10단원 · 투자부동산·생물자산까지</div>
   <h1>회계학 개념정리</h1>
-  <p class="lede">제28~37회 회계학 400문항 중 지금까지 배운 1~9단원은 124문항(매년 약 12문항, 회계학의 31%)입니다. 단원마다 '결론 한 줄 → 도식 → 자주 틀리는 지점 → 관련 기출' 순서로 정리했습니다. 목표는 과락 회피이므로 <b>버려도 되는 주제</b>는 따로 표시했습니다.</p>
+  <p class="lede">제28~37회 회계학 400문항 중 지금까지 배운 1~10단원은 141문항(매년 약 14문항, 회계학의 35%)입니다. 단원마다 '결론 한 줄 → 도식 → 자주 틀리는 지점 → 관련 기출' 순서로 정리했습니다. 목표는 과락 회피이므로 <b>버려도 되는 주제</b>는 따로 표시했습니다.</p>
 </header>
 
 <section id="map" class="sec" aria-labelledby="h-map">
@@ -140,7 +142,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -480,6 +482,84 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 10. 투자부동산 · 생물자산 -->
+<section id="ip" class="sec" aria-labelledby="h-ip">
+  <div class="shead"><h2 id="h-ip">투자부동산 · 생물자산</h2><span class="badge hi">비중 상 · 17문항</span><span class="lec">10단원</span></div>
+  <div class="key">임대·시세차익용 부동산 = 투자부동산. 공정가치모형이면 감가상각 없이 매년 공정가치로 바꾸고, 차액은 전부 당기손익.<small>유형자산 재평가모형(오르면 OCI, 감가상각 O)과 정반대라서 둘을 섞어 내는 문제가 단골. 원가모형이면 유형자산과 똑같이 감가상각하고 공정가치는 주석 공시만.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1~2문항. ① 분류(투자부동산인 것 고르기) ② 모형별 당기순이익 영향 계산 ③ 자가사용 ↔ 투자부동산 대체 시 손익·OCI ④ 원가모형 → 공정가치모형 변경(소급). 생물자산은 2~3년에 1번 이론 O·X</p>
+
+  <h3>분류: 보유 목적 하나로 정한다</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>보유 목적</th><th>계정</th><th>시험에 나온 예</th></tr></thead>
+    <tbody>
+      <tr><td>임대(운용리스 제공) · 시세차익</td><td><b>투자부동산</b></td><td>운용리스로 제공하는 건물, 운용리스용 미사용 건물, 장래 용도 미정 토지, 재임대한 사용권자산, 투자부동산용으로 건설 중인 부동산</td></tr>
+      <tr><td>직접 사용(본사·공장·종업원 사택)</td><td>유형자산</td><td>종업원이 쓰는 부동산(임차료를 받아도), 부수 용역 비중이 큰 건물(호텔 직영)</td></tr>
+      <tr><td>팔려고 보유 · 판매용 건설</td><td>재고자산</td><td>분양용 아파트 · 판매 목적 개발 중 부동산</td></tr>
+      <tr><td>곧 처분할 자가사용 부동산</td><td>매각예정비유동자산</td><td>"처분예정인 자가사용부동산 → 투자부동산" = X</td></tr>
+      <tr><td>금융리스로 제공</td><td>제거(리스채권)</td><td>"금융리스로 제공한 부동산" = 투자부동산 X</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">FV = 공정가치. 도로사업에 비유하면, 사업 부지로 쓰는 땅은 유형자산이고 사업이 끝난 뒤 남은 잔여지를 임대하거나 값이 오르기를 기다리며 들고 있으면 투자부동산이다.</p>
+
+  <h3>원가모형 vs 공정가치모형 (모든 투자부동산에 같은 모형)</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>원가모형</th><th>공정가치모형</th><th>(비교) 유형자산 재평가</th></tr></thead>
+    <tbody>
+      <tr><td>감가상각</td><td>O</td><td><b>X</b></td><td>O</td></tr>
+      <tr><td>FV 상승</td><td>무시(주석 공시)</td><td><b>당기이익</b></td><td>OCI(재평가잉여금)</td></tr>
+      <tr><td>FV 하락</td><td>무시(손상이면 손상차손)</td><td><b>당기손실</b></td><td>잉여금 먼저 감소, 넘으면 당기손실</td></tr>
+      <tr><td>모형 변경</td><td colspan="3">원가 ↔ 공정가치 = <b>회계정책 변경 → 소급 적용</b>(전기 재무제표도 새 모형으로 고침)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="lab">
+    <h3>같은 건물, 세 가지 처리 · 원가 1,000 · 10년 · 잔존 0 · 정액</h3>
+    <div class="slider"><label for="ip1">1년 말 공정가치</label><input type="range" id="ip1" min="700" max="1300" step="10" value="930"><output id="ip1Out">930</output></div>
+    <div class="slider"><label for="ip2">2년 말 공정가치</label><input type="range" id="ip2" min="700" max="1300" step="10" value="1000"><output id="ip2Out">1000</output></div>
+    <div class="tw c1"><table><thead><tr><th>처리</th><th class="n">1년 당기손익</th><th class="n">1년 OCI</th><th class="n">2년 당기손익</th><th class="n">2년 OCI</th><th class="n">2년 말 장부</th></tr></thead><tbody id="ipBody"></tbody></table></div>
+    <div class="readout" id="ipOut" aria-live="polite"></div>
+  </div>
+
+  <h3>대체(용도 변경): 차액이 어디로 가나</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>대체</th><th>처리</th><th>대체일 차액</th></tr></thead>
+    <tbody>
+      <tr><td>자가사용 → 투자부동산(공정가치)</td><td>대체일까지 유형자산 규칙(감가상각·손상·재평가) 적용 후 공정가치로</td><td>증가 → <b>재평가잉여금(OCI)</b> (전에 낸 손실만큼은 당기이익) · 감소 → 당기손실</td></tr>
+      <tr><td>재고자산 → 투자부동산(공정가치)</td><td>공정가치로</td><td>당기손익</td></tr>
+      <tr><td>자가건설 완공 → 투자부동산(공정가치)</td><td>공정가치로</td><td>당기손익 (32회 52번 정답 지문 = "OCI"는 X)</td></tr>
+      <tr><td>투자부동산(공정가치) → 자가사용 · 재고</td><td>대체일 공정가치 = 새 원가(이후 감가상각 기준)</td><td>대체일까지 변동은 당기손익</td></tr>
+      <tr><td>원가모형끼리</td><td>장부금액 그대로 넘김</td><td>없음</td></tr>
+    </tbody>
+  </table></div>
+  <p class="ask">대체는 '용도가 실제로 바뀐 증거'(사용 시작·종료, 운용리스 개시, 판매 목적 개발 시작)가 있을 때만. 개발 없이 팔기로 결정만 한 투자부동산은 제거될 때까지 그대로 투자부동산(30회 41번).</p>
+
+  <h3>숫자 예시 · 자가사용 → 투자부동산(공정가치)</h3>
+  <p class="ask">20×1년 초 본사 건물 1,000 취득(10년, 잔존 0, 정액, 원가모형). 20×2년 초 임대로 전환, 그날 공정가치 950. 20×2년 말 공정가치 920</p>
+  <ol class="steps">
+    <li>20×1년 감가상각 100 → 20×2년 초 장부금액 <b>900</b></li>
+    <li>대체일: 950 − 900 = <b>50 증가 → 재평가잉여금(OCI)</b>. 당기손익 아님</li>
+    <li>20×2년: 투자부동산이므로 감가상각 없음. 950 → 920 = <b>평가손실 30(당기손실)</b></li>
+    <li>20×2년 영향: 당기순이익 −30, 기타포괄이익 +50 (36회 50번 · 31회 69번과 같은 구조)</li>
+  </ol>
+
+  <div class="grid2">
+    <div class="mini"><h3>생물자산(소·과수·조림지)</h3><p>최초·매기 말 <b>순공정가치</b>(공정가치 − 처분부대원가). 변동은 <b>당기손익</b>. 처분부대원가를 빼므로 사자마자 손실이 날 수 있다.</p><p>공정가치를 신뢰성 있게 못 구하면 예외적으로 원가 − 감가상각 − 손상.</p></div>
+    <div class="mini"><h3>수확물(우유·과일·벌목한 나무)</h3><p>수확시점에 <b>어떠한 경우에도</b> 순공정가치로 측정 → 그 금액이 재고자산 원가. 이후는 재고자산 기준(33회 49번 · 37회 43번 재고자산 문제에도 지문으로 나옴).</p><p>조건 없는 정부보조금 = 받을 수 있을 때 당기손익(OCI X).</p></div>
+  </div>
+
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>공정가치모형인데 감가상각을 한다(28회 56번 ② · 29회 63번: "필요할 경우 감가상각" 단서는 미끼).</span>
+    <span>원가모형인데 공정가치 하락을 손익에 넣는다. 원가모형 손익 = 감가상각비뿐(33회 44번).</span>
+    <span>"A에 비해 B의 순이익"은 B − A(31회 45번: 원가 −180,000 − 공정가치 −200,000 = 20,000 증가).</span>
+    <span>자가사용 → 투자부동산 대체일 증가분을 당기이익으로 넣는다. OCI다(36회 50번 · 31회 69번).</span>
+    <span>투자부동산 → 자가사용 후 감가상각은 '대체일 공정가치'를 남은 내용연수로 나눈다(34회 66번).</span>
+    <span>원가모형 → 공정가치모형은 소급. 전기 감가상각을 지우고 전기 평가손익으로 바꿔 기초 이익잉여금을 고친다(34회 67번 · 37회 66번).</span>
+    <span>처분예정 자가사용부동산 · 종업원 사용 부동산 · 금융리스 제공 부동산은 투자부동산 X(32회 62번 · 34회 43번 · 36회 52번).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>① 모형별 손익(감가상각 유무) ② 분류 ③ 자가사용 ↔ 투자부동산 대체 순서로. 연결재무제표·사용권자산 분류(34회 43번 ②③), 생물자산 세부 지문(수확 후 재식재 원가 · 계약가격, 35회 66번)은 과락 회피 목표라면 넘긴다. 생물자산은 '순공정가치 · 당기손익 · 수확물은 어떠한 경우에도 순공정가치' 세 줄만.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -499,6 +579,9 @@ svg .f-bar{fill:var(--accent)}
       <tr><td>교환 원가</td><td>실질 O: 준 것 공정가치 + 현금지급 / 실질 X: 준 것 장부금액 + 현금지급</td></tr>
       <tr><td>차입원가</td><td>연평균지출 → 특정 먼저 → 나머지 × 자본화이자율(한도 실제 이자)</td></tr>
       <tr><td>연구 vs 개발</td><td>찾고 고르면 연구(비용) / 만들어 보면 개발(6요건 → 자산)</td></tr>
+      <tr><td>투자부동산 공정가치모형</td><td>감가상각 X · 변동 전부 당기손익 · 모형 변경은 소급</td></tr>
+      <tr><td>대체 차액</td><td>자가사용 → 투자(공정가치) 증가분만 OCI, 나머지 대체는 모두 당기손익</td></tr>
+      <tr><td>생물자산 · 수확물</td><td>순공정가치 · 당기손익 · 수확물은 어떠한 경우에도 순공정가치</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -519,7 +602,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -587,6 +670,24 @@ function drawRv(){let carry=1000,sur=0,pll=0;const rows=[],notes=[];
   $("#rvBody").innerHTML=rows.join("");
   $("#rvOut").innerHTML=`<span>규칙: 오르면 → 이전 당기손실 되돌리기 먼저, 나머지 잉여금 / 내리면 → 잉여금 먼저 줄이고, 모자라면 당기손실</span>${notes.map(s=>`<span>${s}</span>`).join("")}`}
 [1,2,3].forEach(y=>$("#rv"+y).oninput=drawRv);drawRv();
+
+/* 10. 투자부동산 3가지 처리 */
+function drawIp(){const C=1000,n=10,f1=+$("#ip1").value,f2=+$("#ip2").value;$("#ip1Out").textContent=f1;$("#ip2Out").textContent=f2;
+  const sg=v=>{v=Math.round(v);return v>0?`<span class="up">+${w(v)}</span>`:v<0?`<span class="dn">−${w(-v)}</span>`:"0"};
+  /* 원가모형 */const cm=[-C/n,0,-C/n,0,C-2*C/n];
+  /* 공정가치모형 */const fm=[f1-C,0,f2-f1,0,f2];
+  /* 유형자산 재평가모형: 감가상각 후 재평가, 잉여금·전기손실 추적 */
+  let carry=C,sur=0,pll=0;const rv=[];
+  [[f1,n],[f2,n-1]].forEach(([fv,left])=>{const dep=carry/left;carry-=dep;const d=fv-carry;let pl=-dep,oci=0;
+    if(d>0){const back=Math.min(d,pll);pl+=back;pll-=back;oci=d-back;sur+=oci}
+    else if(d<0){const use=Math.min(-d,sur);sur-=use;oci=-use;pl+=d+use;pll+=-(d+use)}
+    carry=fv;rv.push(pl,oci)});rv.push(f2);
+  const row=(nm,a)=>`<tr><td>${nm}</td><td class="n">${sg(a[0])}</td><td class="n">${sg(a[1])}</td><td class="n">${sg(a[2])}</td><td class="n">${sg(a[3])}</td><td class="n">${w(a[4])}</td></tr>`;
+  $("#ipBody").innerHTML=row("투자 · 원가",cm)+row("투자 · 공정가치",fm)+row("유형 · 재평가",rv);
+  $("#ipOut").innerHTML=`<span>원가모형: 공정가치와 상관없이 매년 감가상각비 100만 비용.</span>
+   <span>공정가치모형: 감가상각 없음. 1년 ${w(C)} → ${w(f1)}, 2년 ${w(f1)} → ${w(f2)} 변동이 그대로 당기손익.</span>
+   <span>재평가모형: 감가상각을 먼저 하고(2년차는 ${w(f1)} ÷ 남은 9년) 장부금액과 공정가치 차이를 오르면 OCI, 내리면 당기손실로. 같은 숫자라도 당기순이익이 다르다(35회 63번).</span>`}
+["#ip1","#ip2"].forEach(s=>$(s).oninput=drawIp);drawIp();
 </script>
 
 </body></html>

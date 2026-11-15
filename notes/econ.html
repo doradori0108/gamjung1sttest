@@ -1,0 +1,528 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>경제학 요약노트</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column on graph paper; every topic = 결론 → 그래프 → 함정 → 기출. 문제풀이 페이지와 같은 색(수요=파랑, 공급=주황) */
+:root{
+  --bg:#f2f4f7; --paper:#fbfcfd; --grid:#e4e9f0; --rule:#d5dce6; --ink:#1b2230; --muted:#5a6578;
+  --accent:#1f4f8a; --accent-ink:#ffffff; --demand:#1f4f8a; --supply:#b5562a; --gov:#7a5aa8;
+  --area1:rgba(31,79,138,.16); --area2:rgba(181,86,42,.18); --dwl:rgba(178,58,46,.28);
+  --hi:#b23a2e; --hi-bg:#f8e4e0; --ok:#1f7a4a; --mid:#9a6a12; --mid-bg:#f6ecd6;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+h1{font-size:28px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-size:22px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--muted);font-size:15px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--rule)}
+nav.toc a{flex:none;font-size:13.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;background:var(--paper)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{display:grid;gap:14px;scroll-margin-top:56px}
+.sec{border:1px solid var(--rule);border-radius:12px;padding:22px 20px;display:grid;gap:16px;min-width:0;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.badge{font:500 12.5px var(--f-body);padding:2px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);white-space:nowrap}
+.badge.hi{border-color:var(--hi);color:var(--hi);background:var(--hi-bg)}
+.badge.mid{border-color:var(--mid);color:var(--mid);background:var(--mid-bg)}
+.badge.lo{color:var(--muted)}
+.lec{font:500 12.5px var(--f-mono);color:var(--muted)}
+.key{background:var(--paper);border:1.5px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:16.5px;font-weight:500;line-height:1.6}
+.key small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
+.ask{font-size:14px;color:var(--muted);background:var(--paper)}
+.ask b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.tn{min-width:9.5em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
+ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.trap b{color:var(--hi)}
+.mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
+.mine span{display:inline-block;font-family:var(--f-mono);font-size:12.5px;padding:0 7px;margin:2px 3px 2px 0;border-radius:6px;border:1px solid var(--hi);color:var(--hi)}
+.steps{margin:0;padding:10px 14px 10px 32px;border-radius:8px;background:var(--bg);font-size:14.5px;display:grid;gap:4px}
+.lab{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px;display:grid;gap:10px}
+.lab h3{font-size:15px}
+.lab .hint{font-size:13px;color:var(--muted)}
+.lab svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+svg text{fill:var(--ink);font-family:var(--f-mono);font-size:11px}
+svg .ax{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .d{stroke:var(--demand);stroke-width:2.6;fill:none}
+svg .s{stroke:var(--supply);stroke-width:2.6;fill:none}
+svg .g{stroke:var(--gov);stroke-width:2.4;fill:none}
+svg .old{stroke-dasharray:5 4;opacity:.55}
+svg .guide{stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 3;fill:none}
+svg .dot{fill:var(--ink)}
+svg .lbl{font-size:12px;font-weight:500}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls button{font:500 13.5px var(--f-body);padding:6px 11px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+.ctrls button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.ctrls button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.slider input{width:100%}
+.slider output{font-family:var(--f-mono);min-width:3.5em;text-align:right}
+.readout{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.readout b{font-family:var(--f-mono);font-weight:500}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mini{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper);display:grid;gap:6px;min-width:0}
+.mini svg{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.mini p{font-size:13.5px}
+.mini h3{font-size:14.5px}
+.foot{font-size:13px;color:var(--muted)}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle}
+a{color:var(--accent)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">감정평가사 1차 · 경제학원론 · 손병익 기본이론 <span id="rangeLec">1~19강</span> · 소비자이론까지</div>
+  <h1>경제학 요약노트</h1>
+  <p class="lede">제28~37회 경제학 400문항 중 지금까지 배운 범위는 71문항(매년 약 7문항, 경제학의 18%)입니다. 자주 나온 순서대로 '결론 한 줄 → 그래프 → 함정 → 기출'로 정리했습니다. 그래프는 버튼과 슬라이더로 직접 움직여 볼 수 있습니다. 문제는 <a href="https://claude.ai/artifact/5LNwruGZUdGcVd9SzJ9mLj" target="_blank" rel="noopener">경제학 진도별 기출</a>에서 풉니다.</p>
+</header>
+
+<section id="map" class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">빈출 지도</h2>
+  <p class="ask">숫자 = 10년간 출제 문항 수. <b>내 기록</b>은 문제풀이 페이지에서 10월 29일까지 푼 결과입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>강의</th><th>10년</th><th>비중</th><th>내 기록</th></tr></thead>
+    <tbody id="mapBody"></tbody>
+  </table></div>
+  <p class="foot">상 = 거의 매년 1문항 이상, 중 = 2년에 1문항 꼴, 하 = 드물게. 단원 구분은 손병익 강의목록을 기준으로 나눈 것이라 교재 장 구분과 조금 다를 수 있습니다.</p>
+</section>
+
+<nav class="toc" aria-label="주제 바로가기">
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#card">암기카드</a>
+</nav>
+
+<!-- 1. 수요·공급 -->
+<section id="sd" class="sec" aria-labelledby="h-sd">
+  <div class="shead"><h2 id="h-sd">수요 · 공급 · 시장균형</h2><span class="badge mid">비중 중 · 8문항</span><span class="lec">2~3강</span></div>
+  <div class="key">가격이 변하면 곡선 '위에서' 움직이고, 가격 말고 다른 것이 변하면 곡선 '자체가' 움직인다.<small>문제를 받으면 ① 무엇이 변했나 ② 수요·공급 중 어느 곡선이 어느 쪽으로 ③ 새 교점의 가격·거래량, 이 순서로 그린다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · "○○이 일어나면 가격과 거래량은?"(방향 판단), "균형가격·거래량은?", "소비자잉여·생산자잉여는?"(삼각형 넓이 계산)</p>
+  <div class="lab" id="labShift">
+    <h3>곡선 이동 실험 · 사건을 골라 보세요</h3>
+    <div class="ctrls" id="shiftBtns"></div>
+    <svg id="svgShift" viewBox="0 0 340 250" role="img" aria-label="수요곡선과 공급곡선 이동 그래프"></svg>
+    <div class="readout" id="shiftOut" aria-live="polite"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>수요곡선을 움직이는 것</th><th>방향</th><th>공급곡선을 움직이는 것</th><th>방향</th></tr></thead>
+    <tbody>
+      <tr><td>소득 증가 · 정상재</td><td>오른쪽</td><td>원료·부품·임금 상승</td><td>왼쪽</td></tr>
+      <tr><td>소득 증가 · 열등재</td><td>왼쪽</td><td>기술진보</td><td>오른쪽</td></tr>
+      <tr><td>대체재 가격 상승</td><td>오른쪽</td><td>공급자 수 증가</td><td>오른쪽</td></tr>
+      <tr><td>보완재 가격 상승</td><td>왼쪽</td><td>(공급자에게) 세금 부과</td><td>왼쪽(위로)</td></tr>
+      <tr><td>소비자 수 증가, 선호 증가, 가격 상승 예상</td><td>오른쪽</td><td>보조금 지급</td><td>오른쪽(아래로)</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="pts">
+    <li><b>시장수요 = 개별수요의 수평합.</b> 개별곡선을 'q = …' 꼴로 바꾼 뒤 사람 수를 곱한다. (P = 7 − q인 10명 → Q = 10(7 − P) = 70 − 10P)</li>
+    <li><b>잉여 = 삼각형.</b> 균형을 구하고 → 수요·공급곡선의 가격축 절편을 구하고 → ½ × 밑변(거래량) × 높이.</li>
+    <li>수요·공급이 동시에 움직이면 둘 중 하나(가격 또는 거래량)는 '불확실'.</li>
+  </ul>
+  <div class="trap"><b>자주 틀리는 지점</b><span>"이 재화의 가격이 올랐다" → 곡선 이동이 아니라 곡선 위의 이동(수요량 감소). 가격은 원인이 아니라 결과다.</span><span>수요함수 계수로 판별: 소득 계수 + 정상재, 다른 재화 가격 계수 + 대체재 / − 보완재(31회 55번).</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 2. 탄력성 -->
+<section id="el" class="sec" aria-labelledby="h-el">
+  <div class="shead"><h2 id="h-el">탄력성</h2><span class="badge hi">비중 상 · 13문항 · 최빈출</span><span class="lec">6~7강</span></div>
+  <div class="key">탄력성 = 가격이 1% 변할 때 수요량이 몇 % 변하나. 판매수입(총수입)은 "탄력적이면 가격 내릴 때, 비탄력적이면 가격 올릴 때" 늘어난다.<small>직선 수요곡선은 위쪽 절반이 탄력적, 중점이 1, 아래쪽 절반이 비탄력적. 판매수입 최대 = 중점.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 옳은/옳지 않은 것 고르기(곡선 모양별 탄력성, 부호 판별), "탄력성 1인 가격은?", "판매수입 극대화 가격은?", 지출액 변화로 탄력성 추론</p>
+  <div class="lab">
+    <h3>직선 수요곡선 위를 움직여 보세요 · P = 10 − Q</h3>
+    <div class="slider"><label for="qEl">수량 Q</label><input type="range" id="qEl" min="0.5" max="9.5" step="0.5" value="3"><output id="qElOut">3</output></div>
+    <svg id="svgEl" viewBox="0 0 340 250" role="img" aria-label="직선 수요곡선 위의 점과 총수입 사각형"></svg>
+    <div class="readout" id="elOut" aria-live="polite"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>모양</th><th>탄력성</th><th>외우는 법</th></tr></thead>
+    <tbody>
+      <tr><td>수요 수직선</td><td class="n">0 (모든 점)</td><td>가격이 변해도 수량 그대로 ("40리터 넣어 주세요")</td></tr>
+      <tr><td>수요 수평선</td><td class="n">∞ (모든 점)</td><td>가격이 조금만 올라도 아무도 안 산다</td></tr>
+      <tr><td>수요 직각쌍곡선 (P × Q = 일정)</td><td class="n">1 (모든 점)</td><td>지출액 일정 ("5만 원어치 넣어 주세요")</td></tr>
+      <tr><td>수요 우하향 직선</td><td class="n">점마다 다름</td><td>위로 갈수록 커진다. 기울기가 같아도 위치가 중요</td></tr>
+      <tr><td>공급 · 원점 통과 직선</td><td class="n">1 (기울기 무관)</td><td></td></tr>
+      <tr><td>공급 · 가격축(세로축)에서 출발</td><td class="n">&gt; 1</td><td>세로축 절편이 + 이면 항상 탄력적</td></tr>
+      <tr><td>공급 · 수량축(가로축)에서 출발</td><td class="n">&lt; 1</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>소득탄력성 (소득 1% ↑ → 수요 몇 %)</h3><p>&lt; 0 열등재 · 0~1 필수재 · &gt; 1 사치재</p><p>정상재 = 0보다 큼. "0보다 크면 사치재"는 틀린 지문.</p></div>
+    <div class="mini"><h3>교차탄력성 (다른 재화 가격 1% ↑ → 수요 몇 %)</h3><p>+ 대체재 · − 보완재</p><p>크기(1보다 큰지)는 대체·보완 판별과 무관.</p></div>
+    <div class="mini"><h3>지출액으로 탄력성 읽기</h3><p>지출액 변화율 ≈ 가격 변화율 + 수량 변화율</p><p>가격 2%↑에 지출액 불변 → 1, 지출 1%↓ → 수량 3%↓ → 1.5</p></div>
+    <div class="mini"><h3>탄력성을 크게 만드는 것</h3><p>대체재가 많을수록, 기간이 길수록, 지출 비중이 클수록, 사치재일수록</p><p>공급: 저장·생산 조정이 쉬울수록, 기간이 길수록</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b><span>사치재·필수재·열등재는 '소득'탄력성, 판매수입은 '가격'탄력성. 둘을 바꿔치기한 지문이 단골(35회 42번).</span><span>"동일한 수요곡선에서 가격이 높을수록 탄력성이 항상 커진다" → 직각쌍곡선이면 일정하므로 '항상'이 틀림(30회 41번).</span><span>공급곡선 '절편 위치'만 보고 1보다 큰지 작은지 판별(32회 44번 · 34회 42번 같은 지문 반복).</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 3. 조세 -->
+<section id="tax" class="sec" aria-labelledby="h-tax">
+  <div class="shead"><h2 id="h-tax">조세 · 보조금 · 가격규제</h2><span class="badge hi">비중 상 · 10문항</span><span class="lec">3강, 8강</span></div>
+  <div class="key">세금은 '덜 탄력적인 쪽'이 더 낸다. 누구에게 부과하든 결과(가격·거래량·조세수입)는 같다.<small>소비자 부담 : 생산자 부담 = 공급의 탄력성 : 수요의 탄력성. 한쪽이 완전비탄력(수직)이면 그쪽이 100% 낸다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · "세금 부과 후 시장가격은?", "판매자가 받는 가격과 구입자가 내는 가격은?", 자중손실·조세수입 계산, 가격상한·하한의 효과</p>
+  <div class="lab">
+    <h3>조세 귀착 실험 · 곡선 모양과 세금 크기를 바꿔 보세요</h3>
+    <div class="ctrls" id="taxBtns"></div>
+    <div class="slider"><label for="tEl">단위당 세금 t</label><input type="range" id="tEl" min="0" max="4" step="0.5" value="2"><output id="tElOut">2</output></div>
+    <div class="ctrls"><button id="taxWho" aria-pressed="false">수요자에게 부과로 그리기</button></div>
+    <svg id="svgTax" viewBox="0 0 340 250" role="img" aria-label="종량세 부과 전후의 수요·공급 그래프"></svg>
+    <div class="readout" id="taxOut" aria-live="polite"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>상황</th><th>세금을 내는 쪽</th><th>기출</th></tr></thead>
+    <tbody>
+      <tr><td>공급곡선 수직(완전비탄력)</td><td>판매자 100%. 시장가격 그대로</td><td>34회 41번, 31회 59번</td></tr>
+      <tr><td>수요곡선 수평(완전탄력)</td><td>판매자 100%. 소비자잉여는 원래 0</td><td>32회 45번</td></tr>
+      <tr><td>공급곡선 수평(완전탄력)</td><td>소비자 100%. 가격이 세금만큼 오름</td><td>28회 57번</td></tr>
+      <tr><td>수요곡선 수직(완전비탄력)</td><td>소비자 100%</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps">
+    <li>세전 균형(P, Q)을 구한다.</li>
+    <li>공급자에게 t를 매기면 공급식의 P 자리에 (P − t)를 넣는다. (수요자에게 매기면 수요식의 P 자리에 (P + t))</li>
+    <li>새 균형에서 소비자 가격 P<sub>c</sub>, 생산자 수취가격 P<sub>c</sub> − t를 구한다.</li>
+    <li>조세수입 = t × 새 거래량, 자중손실 = ½ × t × 거래량 감소분.</li>
+  </ol>
+  <div class="grid2">
+    <div class="mini"><h3>자중손실은 세율의 제곱에 비례</h3><p>세금 2배 → 자중손실 4배. 조세수입은 거래량이 줄어 2배보다 적게 는다(28회 57번).</p></div>
+    <div class="mini"><h3>시장 보조금 = 세금의 반대</h3><p>공급곡선이 보조금만큼 아래로. 혜택도 덜 탄력적인 쪽이 더 받고, 과잉생산으로 자중손실이 생긴다.</p></div>
+    <div class="mini"><h3>가격상한 (최고가격제)</h3><p>균형보다 낮게 → 초과수요 → 암시장. 실제 거래량 = 공급량(적은 쪽). 거래량↓ 자중손실.</p></div>
+    <div class="mini"><h3>가격하한 (최저가격제)</h3><p>균형보다 높게 → 초과공급. 최저임금 = 노동시장의 가격하한 → 실업. 거래량↓ 자중손실.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b><span>"세금이 붙었으니 가격이 세금만큼 오른다"(34회 41번 ⑤ 50 선택), "반반 나눈다"(31회 59번 ③ 선택) → 둘 다 감. 곡선 모양을 먼저 확인한다.</span><span>가격상한에서 소비자잉여는 늘 증가하는 게 아니다. 가격 하락 이득(사각형)과 거래량 감소 손실(삼각형) 중 큰 쪽(31회 48번).</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 4. PPF -->
+<section id="ppf" class="sec" aria-labelledby="h-ppf">
+  <div class="shead"><h2 id="h-ppf">기회비용 · 생산가능곡선</h2><span class="badge lo">비중 하 · 3문항</span><span class="lec">1강</span></div>
+  <div class="key">생산가능곡선 위 = 효율, 안쪽 = 비효율, 바깥 = 불가능. 원점에 오목하면 기회비용이 점점 커진다(체증).</div>
+  <div class="grid2">
+    <div class="mini">
+      <svg viewBox="0 0 220 170" role="img" aria-label="원점에 오목한 생산가능곡선과 안쪽, 위, 바깥 점"><line class="ax" x1="30" y1="150" x2="210" y2="150"/><line class="ax" x1="30" y1="150" x2="30" y2="10"/><path class="s" d="M30 30 Q150 30 170 150"/><circle class="dot" cx="75" cy="105" r="4"/><text x="58" y="122">비효율</text><circle class="dot" cx="128" cy="55" r="4"/><text x="134" y="52">효율</text><circle class="dot" cx="170" cy="40" r="4"/><text x="150" y="30">불가능</text><text x="18" y="16">Y</text><text x="200" y="164">X</text></svg>
+      <p>곡선 위의 점에서는 누군가 손해 보지 않고 더 늘릴 수 없다(파레토 효율). 기울기의 절댓값 = 한계변환율(MRT).</p>
+    </div>
+    <div class="mini"><h3>모양 ↔ 기회비용</h3><p>오목 = 체증 · 직선 = 일정 · 볼록 = 체감</p><h3>이동</h3><p>기술진보·자원 증가 → 바깥으로 이동</p><h3>기회비용·매몰비용</h3><p>기회비용 = 포기한 대안 중 가장 큰 가치. 매몰비용(되찾을 수 없는 비용)은 의사결정에서 무시. 고정비용이 모두 매몰비용은 아니다.</p></div>
+  </div>
+</section>
+
+<!-- 5. 무차별곡선 -->
+<section id="ic" class="sec" aria-labelledby="h-ic">
+  <div class="shead"><h2 id="h-ic">무차별곡선 · 예산선 · 소비자균형</h2><span class="badge mid">비중 중 · 5문항</span><span class="lec">9~10강</span></div>
+  <div class="key">소비자균형 = 무차별곡선과 예산선이 접하는 점: MRS = P<sub>X</sub>/P<sub>Y</sub> ⇔ MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub><small>MRS(한계대체율) = 내 마음속 X의 값(X 1개를 위해 포기할 Y의 양) = MU<sub>X</sub> ÷ MU<sub>Y</sub>. P<sub>X</sub>/P<sub>Y</sub> = 시장에서 X의 값.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 무차별곡선 성질 OX, 예산선 이동 해석, "MRS &lt; 가격비일 때 어떻게 해야 하나", 효용함수를 주고 최적 소비량 계산</p>
+  <div class="tw"><table>
+    <thead><tr><th>상황</th><th>뜻</th><th>할 일</th></tr></thead>
+    <tbody>
+      <tr><td>MRS &gt; P<sub>X</sub>/P<sub>Y</sub></td><td>X가 마음속 값보다 싸다</td><td>X를 늘리고 Y를 줄인다</td></tr>
+      <tr><td>MRS &lt; P<sub>X</sub>/P<sub>Y</sub></td><td>X가 마음속 값보다 비싸다</td><td>X를 줄이고 Y를 늘린다 (37회 43번)</td></tr>
+      <tr><td>MRS = P<sub>X</sub>/P<sub>Y</sub></td><td>1원당 만족이 같다</td><td>그대로(최적)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>무차별곡선 성질</h3><p>우하향 · 원점에 볼록(MRS 체감) · 서로 교차하지 않음 · 원점에서 멀수록 효용 큼 · 서수적(순서만 의미)</p><p>볼록 ↔ MRS 체감. "오목하면 체감" = 틀린 지문(32회 41번).</p></div>
+    <div class="mini"><h3>예산선</h3><p>절편 = 소득 ÷ 그 재화 가격, 기울기 = P<sub>X</sub>/P<sub>Y</sub></p><p>소득 변화 → 평행이동, 한 재화 가격 변화 → 그 축 절편만 움직이며 회전, 소득과 가격이 같은 비율로 변하면 그대로.</p></div>
+  </div>
+  <ol class="steps"><li>MU<sub>X</sub>, MU<sub>Y</sub>를 구해(편미분) MRS = MU<sub>X</sub>/MU<sub>Y</sub></li><li>MRS = P<sub>X</sub>/P<sub>Y</sub>로 X와 Y의 관계식</li><li>예산식에 넣어 연립 → 보기 다섯 개가 모두 예산선 위에 있는 경우가 많아 '예산만 맞추기'로는 못 고른다(29회 52번)</li></ol>
+  <p class="mine"></p>
+</section>
+
+<!-- 6. 보조금 -->
+<section id="sub" class="sec" aria-labelledby="h-sub">
+  <div class="shead"><h2 id="h-sub">소비자 보조금 (현금 · 현물 · 가격보조)</h2><span class="badge lo">비중 하 · 기출 0문항</span><span class="lec">11강</span></div>
+  <div class="key">같은 금액이면 소비자 효용은 현금보조가 가장 크거나 같다. 특정 재화 소비를 늘리는 효과는 가격보조가 가장 크다.</div>
+  <div class="grid2">
+    <div class="mini"><h3>현금보조</h3><svg viewBox="0 0 200 140" role="img" aria-label="예산선 평행이동"><line class="ax" x1="20" y1="125" x2="190" y2="125"/><line class="ax" x1="20" y1="125" x2="20" y2="8"/><line class="d old" x1="20" y1="40" x2="110" y2="125"/><line class="g" x1="20" y1="15" x2="137" y2="125"/></svg><p>평행이동. 상대가격 그대로.</p></div>
+    <div class="mini"><h3>현물보조 (X재 지급, 재판매 불가)</h3><svg viewBox="0 0 200 140" role="img" aria-label="예산선이 오른쪽으로 평행이동하고 위쪽에 수평 구간"><line class="ax" x1="20" y1="125" x2="190" y2="125"/><line class="ax" x1="20" y1="125" x2="20" y2="8"/><line class="d old" x1="20" y1="40" x2="110" y2="125"/><polyline class="g" points="20,40 47,40 137,125"/></svg><p>오른쪽 평행이동 + 맨 위 수평 구간(Y만 사도 X를 지급량만큼 가짐).</p></div>
+    <div class="mini"><h3>가격보조 (X재 가격 일부 지원)</h3><svg viewBox="0 0 200 140" role="img" aria-label="예산선이 X축 절편만 바깥으로 나가며 회전"><line class="ax" x1="20" y1="125" x2="190" y2="125"/><line class="ax" x1="20" y1="125" x2="20" y2="8"/><line class="d old" x1="20" y1="40" x2="110" y2="125"/><line class="g" x1="20" y1="40" x2="180" y2="125"/></svg><p>회전(X 상대가격↓). 대체효과까지 생겨 X 소비가 가장 많이 는다.</p></div>
+  </div>
+  <ul class="pts"><li>효용: 현금 ≥ 현물, 현금 ≥ 가격보조 · X재 소비 증대: 가격보조 ≥ 현물 ≥ 현금</li><li>현물 = 현금이 되는 경우: 현금으로 받아도 X를 지급량 이상 샀을 소비자(현물 제약이 안 걸림)</li><li>가격보조 계산: 소비자가 실제 내는 가격으로 균형을 구한 뒤, 보조금 = 보조단가 × 소비량</li></ul>
+  <p class="mine"></p>
+</section>
+
+<!-- 7. 가격효과 -->
+<section id="pe" class="sec" aria-labelledby="h-pe">
+  <div class="shead"><h2 id="h-pe">가격효과 · 대체효과 · 소득효과 · 기펜재</h2><span class="badge mid">비중 중 · 7문항</span><span class="lec">12강</span></div>
+  <div class="key">가격효과 = 대체효과 + 소득효과. 대체효과는 재화 종류와 상관없이 항상 가격과 반대 방향이다.<small>대체효과 = 상대가격이 바뀌어서 싸진 쪽을 더 사는 것. 소득효과 = 실질소득이 바뀌어서 생기는 변화.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 기펜재·열등재 정의, 보상수요곡선의 기울기, 옳은 것 모두 고르기</p>
+  <div class="tw"><table>
+    <thead><tr><th>X재 가격 하락 시</th><th>대체효과</th><th>소득효과</th><th>합계(가격효과)</th><th>수요곡선</th></tr></thead>
+    <tbody>
+      <tr><td>정상재</td><td class="up">X ↑</td><td class="up">X ↑</td><td class="up">X ↑</td><td>우하향</td></tr>
+      <tr><td>열등재 (소득효과 &lt; 대체효과)</td><td class="up">X ↑</td><td class="dn">X ↓</td><td class="up">X ↑</td><td>우하향</td></tr>
+      <tr><td>기펜재 (소득효과 &gt; 대체효과인 열등재)</td><td class="up">X ↑</td><td class="dn">X ↓↓</td><td class="dn">X ↓</td><td>우상향</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="pts">
+    <li><b>보상수요곡선</b> = 대체효과만 반영 → 기펜재든 열등재든 <b>항상 우하향</b>.</li>
+    <li>정상재: 보상수요곡선이 보통수요곡선보다 가파르다. 열등재: 반대.</li>
+    <li>소득효과가 0이면(준선형) 보통수요 = 보상수요. 완전보완재(min)는 대체효과 0.</li>
+    <li>유행효과(밴드왜건)·속물효과(스놉)가 있으면 시장수요 ≠ 개별수요의 단순 수평합.</li>
+  </ul>
+  <div class="trap"><b>자주 틀리는 지점</b><span>"기펜재는 가격이 하락할 때 소비가 증가한다" → 감소. "기펜재의 보상수요곡선은 우상향" → 우하향.</span><span>교재에 따라 보통수요를 '통상수요' 또는 '마샬 수요', 보상수요를 '힉스 수요'라고 부른다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 8. 효용함수 -->
+<section id="uf" class="sec" aria-labelledby="h-uf">
+  <div class="shead"><h2 id="h-uf">여러 가지 효용함수</h2><span class="badge hi">비중 상 · 13문항</span><span class="lec">13~15강</span></div>
+  <div class="key">효용함수 모양만 보면 푸는 법이 정해진다. min = 같은 비율로만, 더하기 = 싼 것 하나만, 곱하기 = 지수 비율대로 소득을 나눈다.</div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 최적 소비량 계산, 가격이 변할 때 소비 변화, 무차별곡선 모양 고르기, 소득소비곡선·가격소비곡선·탄력성 성질</p>
+  <div class="lab">
+    <h3>효용함수 실험실 · 함수를 고르고 X재 가격과 소득을 바꿔 보세요 (P<sub>Y</sub> = 1)</h3>
+    <div class="ctrls" id="ufBtns"></div>
+    <div class="slider"><label for="pxEl">X재 가격 P<sub>X</sub></label><input type="range" id="pxEl" min="0.5" max="3" step="0.25" value="1.5"><output id="pxOut">1.5</output></div>
+    <div class="slider"><label for="iEl">소득 I</label><input type="range" id="iEl" min="6" max="14" step="1" value="12"><output id="iOut">12</output></div>
+    <svg id="svgUf" viewBox="0 0 340 250" role="img" aria-label="무차별곡선과 예산선, 최적 소비점"></svg>
+    <div class="readout" id="ufOut" aria-live="polite"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>함수</th><th>무차별곡선</th><th>최적 찾는 법</th><th>꼭 기억할 성질</th></tr></thead>
+    <tbody>
+      <tr><td>완전보완<br>U = min{X, Y}</td><td>L자 (꼭짓점이 X = Y 선 위)</td><td>X = Y를 예산식에 대입 → X = I/(P<sub>X</sub> + P<sub>Y</sub>)</td><td>대체효과 0 · 소득소비곡선·가격소비곡선 모두 원점 지나는 45도 선 · 교차탄력성 음(−) · 가격탄력성 &lt; 1</td></tr>
+      <tr><td>완전대체<br>U = X + Y</td><td>우하향 직선</td><td>MU<sub>X</sub>/P<sub>X</sub>와 MU<sub>Y</sub>/P<sub>Y</sub> 비교 → 큰 쪽에 소득 전부</td><td>모서리해 · 상대가격이 뒤집히면 한쪽에서 다른 쪽으로 점프(그 변화는 전부 대체효과)</td></tr>
+      <tr><td>콥-더글러스<br>U = X<sup>a</sup>Y<sup>b</sup></td><td>원점에 볼록한 곡선</td><td>X에 소득의 a/(a+b) → X = (a/(a+b)) × I ÷ P<sub>X</sub></td><td>다른 재화 가격이 변해도 내 소비 불변(교차 0) · 소득·가격탄력성 1 · 소득소비곡선 원점 직선 · 가격소비곡선 수평</td></tr>
+      <tr><td>준선형<br>U = v(X) + Y</td><td>위아래 평행이동한 곡선들</td><td>MRS = v′(X) = P<sub>X</sub>/P<sub>Y</sub>로 X 먼저, 남은 돈은 Y</td><td>X는 소득과 무관(소득효과 0) · 소득소비곡선 수직 · 보통수요 = 보상수요</td></tr>
+      <tr><td>오목<br>U = X² + Y²</td><td>원점에 오목</td><td>X만 살 때와 Y만 살 때 효용 비교</td><td>접점은 최소점. 모서리해(33회 51번)</td></tr>
+      <tr><td>꺾인 직선<br>min{X+2Y, 2X+Y}, X+Y+min{X,Y}</td><td>X = Y에서 꺾인 두 직선</td><td>가격비가 두 기울기 사이면 꺾인 점, 밖이면 모서리</td><td>구간을 X &lt; Y, X &gt; Y로 나눠 직선식 두 개로(29회 53번, 30회 42번, 35회 43번, 36회 47번)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b><span>U = x + y인데 접점(MRS = 가격비)을 찾으려 한다 → 직선끼리는 접하지 않는다. 싼 쪽만 산다(28회 41번).</span><span>콥-더글러스의 가격소비곡선은 X축과 평행(수평). "Y축과 평행"은 틀린 지문(33회 54번).</span><span>min{X, Y}에서 P<sub>Y</sub>에 대한 X재 교차탄력성은 음수(36회 56번).</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 9. 응용 -->
+<section id="app" class="sec" aria-labelledby="h-app">
+  <div class="shead"><h2 id="h-app">소비자이론 응용</h2><span class="badge mid">비중 중 · 9문항</span><span class="lec">17~18강</span></div>
+  <div class="key">새 이론이 아니라 소비자균형에 재화 이름만 바꾼 것이다. 여가 = X재(가격은 임금), 1기 소비·2기 소비 = X재·Y재(2기 소비의 가격은 1/(1+r)).</div>
+  <div class="grid2">
+    <div class="mini">
+      <h3>노동-여가 · 후방굴절 노동공급</h3>
+      <svg viewBox="0 0 220 170" role="img" aria-label="임금이 오르다가 어느 지점부터 노동시간이 줄어드는 후방굴절 노동공급곡선"><line class="ax" x1="30" y1="150" x2="210" y2="150"/><line class="ax" x1="30" y1="150" x2="30" y2="10"/><path class="s" d="M50 145 Q150 110 150 70 Q150 35 105 18"/><text x="4" y="16">임금</text><text x="160" y="164">노동시간</text><text x="156" y="72">굴절점</text></svg>
+      <p>임금↑ → 대체효과: 여가가 비싸져 노동↑ / 소득효과: 부자가 되어 여가(정상재)↑ → 노동↓. 소득효과 &gt; 대체효과이면 노동 감소(후방굴절).</p>
+    </div>
+    <div class="mini"><h3>시점간 선택</h3><p>예산: c<sub>1</sub> + c<sub>2</sub>/(1+r) = y<sub>1</sub> + y<sub>2</sub>/(1+r)</p><p>평생소득 현재가치를 먼저 구한 뒤 콥-더글러스 지출비중으로 나눈다(29회 55번: 3,000 + 3,300/1.1 = 6,000 → c<sub>1</sub> = 2,000 → 1,000 저축).</p><p>이자율↑: 대체효과는 현재소비↓. 저축자는 소득효과가 현재소비↑, 차입자는 ↓.</p></div>
+    <div class="mini"><h3>현시선호</h3><p>"A를 고를 때 B도 살 수 있었다" → A가 B보다 현시선호.</p><p>풀이: 가격 × 묶음 비용표를 만들어 '고른 묶음 비용 이하'인 묶음 표시. 약공리 위배 = 두 묶음이 서로를 현시선호(31회 54번, 33회 55번).</p></div>
+    <div class="mini"><h3>실물부존 (X재를 파는 사람)</h3><p>X 가격↑ → 가진 X의 값이 올라 부자가 됨(부존소득효과). 일반 소비자와 소득효과 방향이 반대.</p><p>파는 재화 값이 내렸는데 효용이 늘었다면 구매자로 바뀐 것(36회 42번).</p></div>
+  </div>
+</section>
+
+<!-- 10. 기대효용 -->
+<section id="eu" class="sec" aria-labelledby="h-eu">
+  <div class="shead"><h2 id="h-eu">기대효용 · 위험</h2><span class="badge lo">비중 하 · 3문항</span><span class="lec">19강</span></div>
+  <div class="key">위험기피자는 효용함수가 오목하다 → 기대효용 &lt; 기대값의 효용. 확실성등가 &lt; 기대값, 그 차이가 위험프리미엄.</div>
+  <div class="lab">
+    <h3>예: U = √W, 재산이 50% 확률로 36 또는 100</h3>
+    <svg id="svgEu" viewBox="0 0 340 250" role="img" aria-label="오목한 효용함수와 기대값, 확실성등가, 위험프리미엄"></svg>
+    <div class="readout" id="euOut"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>위험에 대한 태도</th><th>효용함수</th><th>평균-표준편차 평면의 무차별곡선</th></tr></thead>
+    <tbody>
+      <tr><td>위험기피</td><td>오목</td><td>우상향 (위험을 지려면 수익을 더 줘야)</td></tr>
+      <tr><td>위험중립</td><td>직선</td><td>수평</td></tr>
+      <tr><td>위험애호</td><td>볼록</td><td>우하향</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">19강은 수강 중이라 핵심만 넣었습니다. 강의를 마치면 문제풀이 페이지에 기출 3문항(29회 73·76번, 30회 51번)이 열립니다.</p>
+</section>
+
+<!-- 11. 암기카드 -->
+<section id="card" class="sec" aria-labelledby="h-card">
+  <h2 id="h-card">시험 직전 암기카드</h2>
+  <div class="tw"><table>
+    <tbody>
+      <tr><th>탄력성 1</th><td>직선 수요의 중점 = 판매수입 최대 · 직각쌍곡선 · 원점 통과 공급직선</td></tr>
+      <tr><th>판매수입</th><td>탄력적 → 가격↓ 수입↑ · 비탄력적 → 가격↑ 수입↑</td></tr>
+      <tr><th>부호</th><td>소득탄력성 − 열등재 · 교차탄력성 + 대체재 / − 보완재</td></tr>
+      <tr><th>조세 귀착</th><td>덜 탄력적인 쪽이 더 냄 · 수직이면 100% · 부과 대상과 무관</td></tr>
+      <tr><th>자중손실</th><td>세율의 제곱에 비례 (2배 → 4배)</td></tr>
+      <tr><th>가격규제</th><td>상한 → 초과수요·암시장 · 하한 → 초과공급·실업 · 둘 다 거래량↓</td></tr>
+      <tr><th>소비자균형</th><td>MRS = P<sub>X</sub>/P<sub>Y</sub> ⇔ MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></td></tr>
+      <tr><th>콥-더글러스</th><td>X = (a/(a+b)) × I ÷ P<sub>X</sub></td></tr>
+      <tr><th>기펜재</th><td>소득효과 &gt; 대체효과인 열등재 · 보통수요 우상향 · 보상수요는 우하향</td></tr>
+      <tr><th>후방굴절</th><td>여가 정상재 + 소득효과 &gt; 대체효과</td></tr>
+      <tr><th>위험기피</th><td>오목 효용 · 확실성등가 &lt; 기대값 · 위험프리미엄 = 기대값 − 확실성등가</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const NS="http://www.w3.org/2000/svg";
+/* 좌표: 그림 영역 x 40~320, y 222~14 */
+function plot(svg,xmax,ymax,xl,yl){const X=v=>40+v/xmax*280,Y=v=>222-v/ymax*208;
+  svg.innerHTML=`<defs><clipPath id="c-${svg.id}"><rect x="40" y="14" width="280" height="208"/></clipPath></defs>
+  <line class="ax" x1="40" y1="222" x2="324" y2="222"/><line class="ax" x1="40" y1="222" x2="40" y2="10"/>
+  <text x="8" y="16">${yl}</text><text x="${320-xl.length*6}" y="240">${xl}</text><text x="30" y="236">0</text><g clip-path="url(#c-${svg.id})" id="g-${svg.id}"></g><g id="t-${svg.id}"></g>`;
+  return {X,Y,g:svg.querySelector("#g-"+svg.id),t:svg.querySelector("#t-"+svg.id)}}
+function el(parent,tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;parent.appendChild(e);return e}
+function line(p,par,cls,x1,y1,x2,y2){return el(par,"line",{class:cls,x1:p.X(x1),y1:p.Y(y1),x2:p.X(x2),y2:p.Y(y2)})}
+const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
+
+/* 빈출 지도 */
+const MAP=[
+ ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
+ ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["기대효용","#eu","19강",3,"lo","수강 중"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+$("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
+
+/* 1. 곡선 이동 */
+const SHOCKS=[
+ {n:"소득↑ (정상재)",c:"D",d:+2,why:"소득이 늘면 정상재를 더 사려 한다"},
+ {n:"소득↑ (열등재)",c:"D",d:-2,why:"소득이 늘면 열등재는 덜 산다"},
+ {n:"대체재 가격↑",c:"D",d:+2,why:"대체재가 비싸져 이 재화로 옮겨 온다"},
+ {n:"보완재 가격↑",c:"D",d:-2,why:"함께 쓰는 재화가 비싸져 이 재화도 덜 산다"},
+ {n:"싼 대체재 등장 (37회 41번)",c:"D",d:-2,why:"천연가스 대신 SMR을 쓰게 되어 천연가스 수요 감소"},
+ {n:"원료·부품 가격↑",c:"S",d:-2,why:"생산비가 올라 같은 가격에 덜 공급"},
+ {n:"기술진보",c:"S",d:+2,why:"생산비가 내려 같은 가격에 더 공급"},
+ {n:"이 재화 가격↑",c:"none",d:0,why:"곡선은 그대로. 곡선 위에서 움직일 뿐(수요량 감소, 공급량 증가)"}];
+let shock=0;
+function drawShift(){const s=SHOCKS[shock],svg=$("#svgShift"),p=plot(svg,12,12,"Q","P");
+  const D=a=>[[0,10+a],[10+a,0]],S=a=>[[0,2-a],[12,14-a]];
+  const dS=s.c==="D"?s.d:0,sS=s.c==="S"?s.d:0;
+  // 원래
+  line(p,p.g,"d old",0,10,10,0);line(p,p.g,"s old",0,2,12,14);
+  line(p,p.g,"d",0,10+dS,10+dS,0);line(p,p.g,"s",0,2-sS,12,14-sS);
+  // 수평이동: 수요 P=10+dS-Q, 공급 P=2-sS+Q (sS>0이면 오른쪽 = 아래로)
+  const Q1=(8+dS+sS)/2,P1=10+dS-Q1;
+  line(p,p.g,"guide",0,P1,Q1,P1);line(p,p.g,"guide",Q1,0,Q1,P1);
+  el(p.t,"circle",{class:"dot",cx:p.X(4),cy:p.Y(6),r:3.5,opacity:.45});
+  el(p.t,"circle",{class:"dot",cx:p.X(Q1),cy:p.Y(P1),r:4.5});
+  el(p.t,"text",{x:p.X(9.3+dS),y:p.Y(1.6),class:"lbl"},"D");el(p.t,"text",{x:p.X(9+sS)+6,y:p.Y(11)+4,class:"lbl"},"S");
+  el(p.t,"text",{x:6,y:p.Y(P1)+4},f(P1,1));el(p.t,"text",{x:p.X(Q1)-8,y:236},f(Q1,1));
+  const arrow=(a,b,t)=>a>b?`<span class="up">${t} ↑</span>`:a<b?`<span class="dn">${t} ↓</span>`:`${t} 그대로`;
+  $("#shiftOut").innerHTML=s.c==="none"?`<span><b>곡선 이동 없음</b> · ${s.why}</span>`:
+   `<span><b>${s.c==="D"?"수요곡선":"공급곡선"} ${s.d>0?"오른쪽":"왼쪽"} 이동</b> · ${s.why}</span><span>새 균형: ${arrow(P1,6,"가격")} · ${arrow(Q1,4,"거래량")} (점선 = 원래 곡선)</span>`;
+  document.querySelectorAll("#shiftBtns button").forEach((b,i)=>b.setAttribute("aria-pressed",i===shock))}
+$("#shiftBtns").innerHTML=SHOCKS.map((s,i)=>`<button type="button" data-i="${i}">${s.n}</button>`).join("");
+$("#shiftBtns").onclick=e=>{const b=e.target.closest("button");if(!b)return;shock=+b.dataset.i;drawShift()};
+drawShift();
+
+/* 2. 탄력성 */
+function drawEl(){const q=+$("#qEl").value,P=10-q,svg=$("#svgEl"),p=plot(svg,12,12,"Q","P");$("#qElOut").textContent=q;
+  el(p.g,"rect",{x:p.X(0),y:p.Y(P),width:p.X(q)-p.X(0),height:p.Y(0)-p.Y(P),fill:"var(--area1)"});
+  line(p,p.g,"d",0,10,10,0);line(p,p.g,"guide",0,P,q,P);line(p,p.g,"guide",q,0,q,P);
+  el(p.t,"line",{class:"guide",x1:p.X(5),y1:p.Y(5)-6,x2:p.X(5),y2:p.Y(5)+6});
+  el(p.t,"text",{x:p.X(5)+6,y:p.Y(5)-6},"중점");el(p.t,"text",{x:p.X(1.2),y:p.Y(9.6)},"탄력적 (ε>1)");el(p.t,"text",{x:p.X(6.4),y:p.Y(2.4)},"비탄력적 (ε<1)");
+  el(p.t,"circle",{class:"dot",cx:p.X(q),cy:p.Y(P),r:5});el(p.t,"text",{x:6,y:p.Y(P)+4},f(P,1));
+  const e=P/q,TR=P*q;
+  const zone=e>1.0001?"탄력적 → 가격을 내리면 판매수입 증가":e<0.9999?"비탄력적 → 가격을 올리면 판매수입 증가":"단위탄력적 → 판매수입 최대";
+  $("#elOut").innerHTML=`<span>가격 <b>${f(P,1)}</b> · 수량 <b>${q}</b> · 탄력성 ε = (ΔQ/ΔP) × P/Q = 1 × ${f(P,1)}/${q} = <b>${f(e,2)}</b></span><span>판매수입(색칠한 넓이) P × Q = <b>${f(TR,2)}</b> (최대 25, 중점)</span><span>${zone}</span>`}
+$("#qEl").oninput=drawEl;drawEl();
+
+/* 3. 조세 귀착: D: P = 10 − dQ, S: P = 2 + sQ (Infinity = 수직) */
+const TAXP=[{n:"기본",d:1,s:1},{n:"수요가 더 탄력적",d:.4,s:1.6},{n:"공급이 더 탄력적",d:1.6,s:.4},{n:"공급 수직",d:1,s:Infinity},{n:"수요 수평",d:0,s:1},{n:"공급 수평",d:1,s:0},{n:"수요 수직",d:Infinity,s:1}];
+let taxi=0,onBuyer=false;
+function drawTax(){const {d,s}=TAXP[taxi],t=+$("#tEl").value,svg=$("#svgTax"),p=plot(svg,12,12,"Q","P");$("#tElOut").textContent=t;
+  let Q0,P0,Qt,Pc;
+  if(s===Infinity){Q0=Qt=4;P0=10-d*4;Pc=P0}
+  else if(d===Infinity){Q0=Qt=4;P0=2+s*4;Pc=P0+t}
+  else{Q0=8/(d+s);P0=10-d*Q0;Qt=Math.max(0,(8-t)/(d+s));Pc=10-d*Qt}
+  const Pp=Pc-t;
+  // 넓이: 조세수입, 자중손실
+  el(p.g,"rect",{x:p.X(0),y:p.Y(Pc),width:p.X(Qt)-p.X(0),height:Math.max(0,p.Y(Pp)-p.Y(Pc)),fill:"var(--area2)"});
+  if(Q0-Qt>1e-6)el(p.g,"polygon",{points:`${p.X(Qt)},${p.Y(Pc)} ${p.X(Qt)},${p.Y(Pp)} ${p.X(Q0)},${p.Y(P0)}`,fill:"var(--dwl)"});
+  // 곡선
+  const drawD=(sh,cls)=>{if(d===Infinity)line(p,p.g,cls,4,0,4,12);else if(d===0)line(p,p.g,cls,0,10-sh,12,10-sh);else line(p,p.g,cls,0,10-sh,(10-sh)/d,0)};
+  const drawS=(sh,cls)=>{if(s===Infinity)line(p,p.g,cls,4,0,4,12);else line(p,p.g,cls,0,2+sh,12,2+sh+s*12)};
+  drawD(0,"d");drawS(0,"s");
+  if(t>0&&s!==Infinity&&!onBuyer)drawS(t,"s old");
+  if(t>0&&d!==Infinity&&onBuyer)drawD(t,"d old");
+  if(t>0&&s===Infinity&&!onBuyer)el(p.t,"text",{x:p.X(4)+6,y:p.Y(11)},"S+t도 같은 수직선");
+  line(p,p.g,"guide",0,Pc,Qt,Pc);line(p,p.g,"guide",0,Pp,Qt,Pp);line(p,p.g,"guide",Qt,0,Qt,Pc);
+  el(p.t,"circle",{class:"dot",cx:p.X(Q0),cy:p.Y(P0),r:3.5,opacity:.45});
+  el(p.t,"circle",{class:"dot",cx:p.X(Qt),cy:p.Y(Pc),r:4.5});el(p.t,"circle",{class:"dot",cx:p.X(Qt),cy:p.Y(Pp),r:4.5});
+  el(p.t,"text",{x:6,y:p.Y(Pc)+4},f(Pc,1));if(t>0)el(p.t,"text",{x:6,y:p.Y(Pp)+4},f(Pp,1));
+  const cb=Pc-P0,pb=P0-Pp,DWL=.5*t*(Q0-Qt);
+  const share=t>0?`(소비자 ${Math.round(cb/t*100)}% · 판매자 ${Math.round(pb/t*100)}%)`:"";
+  $("#taxOut").innerHTML=`<span>세전: 가격 <b>${f(P0,2)}</b> · 거래량 <b>${f(Q0,2)}</b></span>
+   <span>세후: 소비자가 내는 가격 <b>${f(Pc,2)}</b> · 판매자가 받는 가격 <b>${f(Pp,2)}</b> · 거래량 <b>${f(Qt,2)}</b></span>
+   <span>부담: 소비자 <b>${f(cb,2)}</b> · 판매자 <b>${f(pb,2)}</b> ${share}</span>
+   <span>조세수입(주황 사각형) <b>${f(t*Qt,2)}</b> · 자중손실(빨간 삼각형) <b>${f(DWL,2)}</b></span>
+   <span>${onBuyer?"수요자에게 부과: 수요곡선이 t만큼 아래로. 숫자는 판매자에게 부과할 때와 똑같다.":"판매자에게 부과: 공급곡선이 t만큼 위로(점선)."}</span>`;
+  document.querySelectorAll("#taxBtns button").forEach((b,i)=>b.setAttribute("aria-pressed",i===taxi));$("#taxWho").setAttribute("aria-pressed",onBuyer)}
+$("#taxBtns").innerHTML=TAXP.map((x,i)=>`<button type="button" data-i="${i}">${x.n}</button>`).join("");
+$("#taxBtns").onclick=e=>{const b=e.target.closest("button");if(!b)return;taxi=+b.dataset.i;drawTax()};
+$("#tEl").oninput=drawTax;$("#taxWho").onclick=()=>{onBuyer=!onBuyer;drawTax()};drawTax();
+
+/* 4. 효용함수 실험실 (P_Y = 1) */
+const UF={
+ cd:{n:"곱하기 · U = XY",opt:(px,I)=>({x:I/2/px,y:I/2}),u:(x,y)=>x*y,
+    ic:(U)=>{const pts=[];for(let x=Math.max(U/16,.05);x<=20;x+=.1)pts.push([x,U/x]);return pts},
+    note:"X에 소득의 절반 → X = I/(2P<sub>X</sub>), Y = I/2. P<sub>X</sub>를 움직여도 Y는 그대로(교차효과 0), 소득을 움직이면 X·Y 모두 같은 비율로 증가.",mrs:(x,y)=>y/x},
+ min:{n:"min · U = min{X, Y}",opt:(px,I)=>{const k=I/(px+1);return {x:k,y:k}},u:(x,y)=>Math.min(x,y),
+    ic:(U)=>[[U,16],[U,U],[20,U]],note:"항상 X = Y로만 산다 → X = Y = I/(P<sub>X</sub> + 1). 꼭짓점에서 움직이지 않으므로 대체효과 0, P<sub>X</sub>가 변하면 X·Y가 같이 변한다.",mrs:null},
+ lin:{n:"더하기 · U = X + Y",opt:(px,I)=>px<1?{x:I/px,y:0}:px>1?{x:0,y:I}:{x:I/2,y:I/2},u:(x,y)=>x+y,
+    ic:(U)=>[[0,U],[U,0]],note:"1원당 효용: X는 1/P<sub>X</sub>, Y는 1. 큰 쪽에 소득 전부. P<sub>X</sub>가 1을 넘는 순간 X 전부 → Y 전부로 점프한다(P<sub>X</sub> = 1이면 예산선 위 어디든 최적).",mrs:()=>1},
+ ql:{n:"준선형 · U = 2√X + Y",opt:(px,I)=>{let x=1/(px*px);if(px*x>I)x=I/px;return {x,y:I-px*x}},u:(x,y)=>2*Math.sqrt(x)+y,
+    ic:(U)=>{const pts=[];for(let x=0;x<=20;x+=.1)pts.push([x,U-2*Math.sqrt(x)]);return pts},
+    note:"MRS = 1/√X = P<sub>X</sub> → X = 1/P<sub>X</sub>² 먼저, 남은 소득은 전부 Y. 소득을 움직여도 X는 그대로(소득효과 0).",mrs:(x)=>1/Math.sqrt(x)},
+ cc:{n:"오목 · U = X² + Y²",opt:(px,I)=>{const ux=(I/px)**2,uy=I*I;return ux>uy?{x:I/px,y:0}:{x:0,y:I}},u:(x,y)=>x*x+y*y,
+    ic:(U)=>{const r=Math.sqrt(U),pts=[];for(let a=0;a<=Math.PI/2+1e-9;a+=Math.PI/120)pts.push([r*Math.cos(a),r*Math.sin(a)]);return pts},
+    note:"무차별곡선이 원점에 오목 → 접점은 오히려 최소. X만 살 때와 Y만 살 때 효용을 비교해 큰 쪽(모서리해).",mrs:null}};
+let ufk="cd";
+function drawUf(){const px=+$("#pxEl").value,I=+$("#iEl").value,F=UF[ufk],svg=$("#svgUf"),p=plot(svg,20,16,"X","Y");
+  $("#pxOut").textContent=px;$("#iOut").textContent=I;
+  const o=F.opt(px,I),U=F.u(o.x,o.y);
+  const poly=(pts,cls,op)=>el(p.g,"polyline",{class:cls,points:pts.filter(q=>q[1]>=-1).map(q=>p.X(q[0])+","+p.Y(q[1])).join(" "),opacity:op||1});
+  const lv=ufk==="cd"||ufk==="cc"?[.45,2.1]:ufk==="ql"?[-3,3]:[.6,1.5];
+  lv.forEach(k=>poly(F.ic(ufk==="ql"?U+k:U*k),"d",.3));
+  poly(F.ic(U),"d");
+  line(p,p.g,"s",0,I,I/px,0);
+  el(p.t,"circle",{class:"dot",cx:p.X(o.x),cy:p.Y(o.y),r:5});
+  el(p.t,"text",{x:Math.min(p.X(o.x)+8,270),y:Math.max(p.Y(o.y)-8,26),class:"lbl"},`(${f(o.x,2)}, ${f(o.y,2)})`);
+  el(p.t,"text",{x:6,y:p.Y(I)+4},String(I));el(p.t,"text",{x:Math.min(p.X(I/px),316)-10,y:236},f(I/px,1));
+  let m="";
+  if(ufk==="cd")m=`MRS = Y/X = ${f(F.mrs(o.x,o.y),2)} = P<sub>X</sub>/P<sub>Y</sub> = ${px} (접점)`;
+  else if(ufk==="ql")m=o.y>0?`MRS = 1/√X = ${f(F.mrs(o.x),2)} = P<sub>X</sub> = ${px} (접점)`:`소득이 모자라 X만 산다(모서리해)`;
+  else if(ufk==="lin")m=`MRS = 1 (항상), 가격비 = ${px} → ${px<1?"X가 더 싸다":px>1?"Y가 더 싸다":"같다"}`;
+  else if(ufk==="min")m=`꼭짓점(X = Y)에서 MRS는 정의되지 않는다. 가격비와 상관없이 꼭짓점이 최적`;
+  else m=`X만: U = ${f((I/px)**2,1)} · Y만: U = ${I*I} → 큰 쪽`;
+  $("#ufOut").innerHTML=`<span>최적 소비: X = <b>${f(o.x,2)}</b>, Y = <b>${f(o.y,2)}</b> · 예산선(주황) 기울기 ${px}</span><span>${m}</span><span>${F.note}</span>`;
+  document.querySelectorAll("#ufBtns button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===ufk))}
+$("#ufBtns").innerHTML=Object.entries(UF).map(([k,v])=>`<button type="button" data-k="${k}">${v.n}</button>`).join("");
+$("#ufBtns").onclick=e=>{const b=e.target.closest("button");if(!b)return;ufk=b.dataset.k;drawUf()};
+$("#pxEl").oninput=drawUf;$("#iEl").oninput=drawUf;drawUf();
+
+/* 5. 기대효용 */
+(function(){const svg=$("#svgEu"),p=plot(svg,120,12,"재산 W","U");const u=w=>Math.sqrt(w);
+  const pts=[];for(let w=0;w<=120;w+=1)pts.push(p.X(w)+","+p.Y(u(w)));el(p.g,"polyline",{class:"d",points:pts.join(" ")});
+  const a=36,b=100,EV=.5*a+.5*b,EU=.5*u(a)+.5*u(b),CE=EU*EU,RP=EV-CE;
+  line(p,p.g,"g",a,u(a),b,u(b));
+  line(p,p.g,"guide",EV,0,EV,u(EV));line(p,p.g,"guide",CE,0,CE,EU);line(p,p.g,"guide",0,EU,EV,EU);
+  [[a,u(a)],[b,u(b)],[EV,EU],[CE,EU],[EV,u(EV)]].forEach(([x,y])=>el(p.t,"circle",{class:"dot",cx:p.X(x),cy:p.Y(y),r:3.5}));
+  el(p.t,"text",{x:p.X(CE)-40,y:236},"CE 64");el(p.t,"text",{x:p.X(EV)+5,y:236},"EV 68");el(p.t,"text",{x:6,y:p.Y(EU)+4},"8");
+  el(p.t,"text",{x:p.X(a)-10,y:p.Y(u(a))-8},"36");el(p.t,"text",{x:p.X(b)-12,y:p.Y(u(b))-8},"100");
+  $("#euOut").innerHTML=`<span>기대값 EV = 0.5×36 + 0.5×100 = <b>${EV}</b></span><span>기대효용 EU = 0.5×√36 + 0.5×√100 = 0.5×6 + 0.5×10 = <b>${EU}</b> (보라 선분 위의 점)</span><span>확실성등가 CE: √CE = 8 → CE = <b>${CE}</b> (확실히 64를 받는 것과 이 복권이 똑같이 좋다)</span><span>위험프리미엄 = EV − CE = 68 − 64 = <b>${RP}</b> (위험을 피하려고 포기할 용의가 있는 금액)</span>`})();
+</script>
+
+</body></html>

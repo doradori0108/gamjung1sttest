@@ -1,0 +1,12 @@
+[
+ {
+  "id": "acct",
+  "name": "회계학",
+  "color": "green"
+ },
+ {
+  "id": "econ",
+  "name": "경제학",
+  "color": "blue"
+ }
+]

@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.4.1";
+const APP_VER = "1.5.0";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -26,7 +26,7 @@ async function loadData() {
 
 /* ───────── 기록 ───────── */
 let S = null;
-function blank() { return { v: 1, subjects: {}, hist: {}, days: {}, daily: {} } }
+function blank() { return { v: 1, subjects: {}, hist: {}, days: {}, daily: {}, book: {} } }
 function loadLocal() { try { return JSON.parse(localStorage.getItem(LS_STATE)) } catch (e) { return null } }
 function saveLocal() { try { localStorage.setItem(LS_STATE, JSON.stringify(S)) } catch (e) { } }
 function touch() { saveLocal(); schedulePush() }
@@ -41,6 +41,9 @@ function merge(A, B) {
     M.subjects[k] = !a ? b : !b ? a : (b.t || 0) > (a.t || 0) ? b : a;
   }
   M.hist = Object.assign({}, A.hist);
+  /* 합격노트: 문항마다 더 나중에 고친 쪽 (뺀 것도 on:false로 남겨 두어 다른 기기에도 빠짐이 전달됨) */
+  M.book = Object.assign({}, A.book);
+  for (const [k, b] of Object.entries(B.book || {})) { const a = M.book[k]; if (!a || (b.t || 0) > (a.t || 0)) M.book[k] = b }
   for (const [k, h] of Object.entries(B.hist || {})) { const a = M.hist[k]; if (!a || (h.t || 0) > (a.t || 0)) M.hist[k] = h }
   for (const src of [A.days || {}, B.days || {}]) for (const [d, v] of Object.entries(src)) {
     M.days[d] = M.days[d] || {};
@@ -238,6 +241,71 @@ function wrongList(sub) {
   return out.sort((a, b) => (b.h.wrong || 0) - (a.h.wrong || 0) || String(a.h.last).localeCompare(String(b.h.last)));
 }
 
+/* ───────── 합격노트 ───────── */
+const BK_TAGS = [["mix", "🔁", "헷갈림"], ["key", "⭐", "중요"], ["mem", "🧠", "암기"]];
+function qOfId(sub, id) {
+  if (!id.startsWith(sub + ":")) return null; const k = id.slice(sub.length + 1);
+  if (k.startsWith("ox")) { const b = D[sub].oxBy[+k.slice(2)]; return b ? { t: "ox", id: b.id } : null }
+  return D[sub].ex[k] ? { t: "ex", k } : null;
+}
+function bookList(sub, tag) {
+  const out = [];
+  for (const [id, b] of Object.entries(S.book || {})) {
+    if (!b.on || !id.startsWith(sub + ":") || (tag && !(b.tags || []).includes(tag))) continue;
+    const q = qOfId(sub, id); if (q) out.push({ id, q, b });
+  }
+  return out.sort((a, b) => (b.b.t || 0) - (a.b.t || 0));
+}
+function bookSet(id, patch) {
+  const b = Object.assign({ tags: [], memo: "", on: true }, S.book[id], patch, { t: Date.now() });
+  b.tags = BK_TAGS.map(x => x[0]).filter(t => b.tags.includes(t)); S.book[id] = b; touch();
+}
+/* 문제·해설 화면의 '📒 합격노트' 막대. wrong=true면 저장할 때 '헷갈림'을 먼저 골라 둔다 */
+function bookBar(id, q, wrong) {
+  const b = S.book[id], on = !!(b && b.on), tags = (b && b.tags) || [];
+  return `<div class="bk ${on ? "on" : ""}" data-id="${esc2(id)}" data-w="${wrong ? 1 : ""}">
+    <button class="bkbtn" aria-pressed="${on}">${on ? "📒 합격노트에 저장됨 ✓" : "📒 합격노트에 저장"}</button>
+    <div class="bkpanel" ${on ? "" : "hidden"}><div class="bktags" role="group" aria-label="분류">${BK_TAGS.map(([k, e, n]) => `<button aria-pressed="${tags.includes(k)}" data-k="${k}">${e} ${n}</button>`).join("")}<button class="bkdel" data-del="1">빼기</button></div>
+    <input class="bkmemo" maxlength="120" placeholder="✍️ 한 줄 메모 (예: 재평가는 감가상각 먼저)" value="${esc2((b && b.memo) || "").replace(/"/g, "&quot;")}"></div></div>`;
+}
+function bindBook(root) {
+  root.querySelectorAll(".bk").forEach(el => {
+    const id = el.dataset.id, redraw = () => { const n = document.createElement("div"); n.innerHTML = bookBar(id, null, el.dataset.w); const ne = n.firstElementChild; el.replaceWith(ne); bindBook(ne.parentNode) };
+    el.querySelector(".bkbtn").onclick = () => {
+      const b = S.book[id];
+      if (b && b.on) bookSet(id, { on: false }); else { bookSet(id, { on: true, tags: b && b.tags && b.tags.length ? b.tags : el.dataset.w ? ["mix"] : [] }); toast("📒 합격노트에 저장했어요") }
+      redraw();
+    };
+    el.querySelectorAll(".bktags button[data-k]").forEach(t => t.onclick = () => { const b = S.book[id], tg = new Set(b.tags || []); tg.has(t.dataset.k) ? tg.delete(t.dataset.k) : tg.add(t.dataset.k); bookSet(id, { tags: [...tg] }); redraw() });
+    const del = el.querySelector(".bkdel"); if (del) del.onclick = () => { bookSet(id, { on: false }); redraw() };
+    const memo = el.querySelector(".bkmemo"); let tm = 0;
+    if (memo) memo.oninput = () => { clearTimeout(tm); tm = setTimeout(() => bookSet(id, { memo: memo.value.trim() }), 500) };
+    if (memo) memo.onchange = () => { clearTimeout(tm); bookSet(id, { memo: memo.value.trim() }) };
+  });
+}
+function qBrief(sub, q) {
+  if (q.t === "ex") { const x = D[sub].ex[q.k]; return { head: x.gen ? "✏️ 보충 문제" : `📜 제${x.y}회 ${x.n}번`, text: plain(x.q), u: x.u } }
+  const b = D[sub].oxBy[q.id]; return { head: "⭕ O·X 지문", text: plain(b.s), u: b.u };
+}
+function renderBookPick() {
+  const sub = V.sub, tag = BK_TAGS.some(t => t[0] === V.arg) ? V.arg : "", all = bookList(sub), list = bookList(sub, tag);
+  if (!all.length) { $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">📒</div><p class="exp"><b>합격노트가 비어 있어요.</b><br>문제를 풀다가 헷갈리거나 중요한 문제에서 <b>📒 합격노트에 저장</b>을 누르면 여기에 모여요. 🔁 헷갈림 · ⭐ 중요 · 🧠 암기로 나누고 한 줄 메모도 붙일 수 있어요.</p></section>`; return }
+  const cnt = k => all.filter(x => (x.b.tags || []).includes(k)).length;
+  $("#main").innerHTML = `<div class="bkfilter" role="tablist">${[["", "📒", "전체", all.length], ...BK_TAGS.map(([k, e, n]) => [k, e, n, cnt(k)])].map(([k, e, n, c]) => `<button role="tab" aria-selected="${tag === k}" data-k="${k}">${e} ${n} <b>${c}</b></button>`).join("")}</div>
+    ${list.length ? `<button class="btn" id="bkPlay">⚔️ ${tag ? BK_TAGS.find(t => t[0] === tag)[2] + " " : ""}${list.length}문제 다시 풀기</button>` : `<p class="exp">이 분류에 저장한 문제가 없어요.</p>`}
+    <ul class="bklist">${list.map(({ id, q, b }) => {
+      const br = qBrief(sub, q), h = S.hist[id], un = D[sub].ub[br.u];
+      return `<li><div class="bkh"><b>${br.head}</b><span class="bkt2">${(b.tags || []).map(k => BK_TAGS.find(t => t[0] === k)[1]).join("")}</span><span class="rec" title="마지막 결과">${h ? (h.ok ? "✅" : "❌") : "·"}</span></div>
+        <p class="bkq">${esc2(br.text.length > 90 ? br.text.slice(0, 90) + "…" : br.text)}</p>${b.memo ? `<p class="bkm">✍️ ${esc2(b.memo)}</p>` : ""}
+        <div class="bkf"><small>${esc2(un ? un.nm : "")}</small><button data-one="${esc2(id)}">▶ 풀기</button><button class="gh" data-out="${esc2(id)}">빼기</button></div></li>`;
+    }).join("")}</ul>`;
+  $("#main").querySelectorAll(".bkfilter button").forEach(b => b.onclick = () => go(`#/s/${sub}/book${b.dataset.k ? "/" + b.dataset.k : ""}`));
+  if ($("#bkPlay")) $("#bkPlay").onclick = () => go(`#/s/${sub}/book/play${tag ? "-" + tag : ""}`);
+  $("#main").querySelectorAll("[data-one]").forEach(b => b.onclick = () => go(`#/s/${sub}/book/q=${encodeURIComponent(b.dataset.one)}`));
+  $("#main").querySelectorAll("[data-out]").forEach(b => b.onclick = () => { bookSet(b.dataset.out, { on: false }); toast("합격노트에서 뺐어요"); render() });
+  $("#foot").textContent = "합격노트는 기기 간 동기화에 함께 저장돼요. 다시 풀기는 제한시간 없이, 최근에 저장한 문제부터 나옵니다.";
+}
+
 /* ───────── 라우팅 ───────── */
 function go(hash) { if (location.hash !== hash) location.hash = hash; else route() }
 function route() {
@@ -246,7 +314,7 @@ function route() {
   tmStop(); saveTimer();
   if (p[0] === "settings") { V = { route: "settings", key: "settings" }; return renderSettings() }
   if (p[0] === "s" && D[p[1]]) {
-    const sub = p[1], tab = ["note", "daily", "unit", "wrong", "map"].includes(p[2]) ? p[2] : "daily", arg = p[3] || "";
+    const sub = p[1], tab = ["note", "daily", "unit", "wrong", "book", "map"].includes(p[2]) ? p[2] : "daily", arg = p[3] || "";
     const key = [sub, tab, arg].join("/");
     if (V.key === key && V.route === "subject") return render();
     V = { route: "subject", sub, tab, mode: null, unit: null, Q: [], res: [], idx: 0, key, arg };
@@ -259,6 +327,8 @@ function route() {
       V.Q = exOfU(sub, arg).slice().sort((a, b) => rank(a) - rank(b) || (b.y || 0) - (a.y || 0) || (a.n || 0) - (b.n || 0)).map(x => ({ t: "ex", k: x.k }));
     }
     else if (tab === "wrong" && arg === "play") { V.mode = "wrong"; V.Q = wrongList(sub).map(x => x.q) }
+    else if (tab === "book" && arg.startsWith("play")) { V.mode = "book"; V.Q = bookList(sub, arg.split("-")[1] || "").map(x => x.q) }
+    else if (tab === "book" && arg.startsWith("q=")) { const q = qOfId(sub, decodeURIComponent(arg.slice(2))); V.mode = "book"; V.Q = q ? [q] : [] }
     V.idx = V.res.filter(Boolean).length >= V.Q.length ? V.Q.length : Math.max(0, nextUn(-1));
     return render();
   }
@@ -313,7 +383,8 @@ function badgeList() {
     ["ex100", "📚", "기출 100", "서로 다른 기출 100문항 풀기", seenEx >= 100],
     ["ex300", "🏆", "기출 300", "서로 다른 기출 300문항 풀기", seenEx >= 300],
     ["fix10", "🧹", "오답 정리왕", "틀렸던 문제 10개 다시 맞히기", fixed >= 10],
-    ["half", "🗺️", "반환점", "한 과목 진도 절반 넘기기", subs.some(s => lecOf(s) * 2 >= D[s].meta.lectures.length)]
+    ["half", "🗺️", "반환점", "한 과목 진도 절반 넘기기", subs.some(s => lecOf(s) * 2 >= D[s].meta.lectures.length)],
+    ["book10", "📒", "합격노트 10", "합격노트에 10문제 모으기", Object.values(S.book || {}).filter(b => b.on).length >= 10]
   ];
   return B.map(([id, e, n, d, ok]) => ({ id, e, n, d, ok }));
 }
@@ -347,11 +418,11 @@ function renderHome() {
     const done = sm.done >= sm.total, state = !sm.started ? "오늘 시작 전" : done ? "클리어! 🎉" : `${sm.done}/${sm.total} 진행 중`;
     const nx = m.lectures[L];
     return `<div class="scard" data-s="${s.id}">
-      <div class="row1"><span class="semo" aria-hidden="true">${emoOf(s.id)}</span><span class="ttl"><h2>${m.name}</h2><span class="sub">${m.teacher} ${m.course}</span></span><span class="lvl">Lv.<b>${L}</b><small>/${m.lectures.length}</small></span></div>
+      <div class="row1"><span class="semo" aria-hidden="true">${emoOf(s.id)}</span><span class="ttl"><h2>${m.name}</h2><span class="sub">${m.teacher} ${m.course}</span></span><button class="lvl" data-go="map" aria-label="진도 바꾸기 · 지금 Lv.${L}">Lv.<b>${L}</b><small>/${m.lectures.length}</small></button></div>
       ${pathDots(s.id)}
       <div class="cap">📍 ${esc2(lecLabel(s.id, L))}${nx ? `<span>다음 ▶ ${esc2(m.stepLabel === "강" ? L + 1 + "강" : nx)}</span>` : ""}</div>
       <div class="today">${starRow(Math.floor(sm.done / Math.max(1, sm.total) * 5), 5)}<span>오늘 <b>${sm.done}</b>/${sm.total}${sm.done ? ` · 맞힘 ${sm.ok}` : ""}</span></div>
-      <div class="chips"><span class="chip ${st ? "fire" : ""}">🔥 ${st}일 연속</span><span class="chip">🎯 정답률 ${ac.s ? ac.p + "%" : "–"}</span><span class="chip ${wr ? "bad" : ""}">❌ 오답 ${wr}</span></div>
+      <div class="chips"><span class="chip ${st ? "fire" : ""}">🔥 ${st}일 연속</span><span class="chip">🎯 정답률 ${ac.s ? ac.p + "%" : "–"}</span><span class="chip ${wr ? "bad" : ""}">❌ 오답 ${wr}</span><span class="chip">📒 합격노트 ${bookList(s.id).length}</span></div>
       <div class="two"><button data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button class="main ${done ? "clear" : ""}" data-go="daily">⚔️ 도전하기<small>${state}</small></button></div>
     </div>`;
   }).join("");
@@ -379,17 +450,19 @@ function render() {
   const wrN = wrongList(sub).length;
   chrome({
     subject: sub, back: { label: "홈", hash: "#/" }, eyebrow: `감정평가사 1차 · ${m.name} · ${m.teacher} ${m.course}`,
-    title: `<span class="temo" aria-hidden="true">${emoOf(sub)}</span>` + (V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "오답 정리" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 도전" : V.tab === "wrong" ? "오답 정리" : V.tab === "note" ? `${m.name} 개념정리` : "진도 지도"),
+    title: `<span class="temo" aria-hidden="true">${emoOf(sub)}</span>` + (V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "오답 정리" : V.mode === "book" ? "합격노트 복습" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 도전" : V.tab === "wrong" ? "오답 정리" : V.tab === "book" ? "합격노트" : V.tab === "note" ? `${m.name} 개념정리` : "진도 설정"),
     meta: `<span>${dateLabel()}</span><span>Lv.${L} · <b>${esc2(lecLabel(sub, L))}</b>까지</span>`, tabs: true, stats: true
   });
   drawSeg();
   if (V.tab === "note") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderNote() }
-  const tabs = [["daily", "🎯 오늘"], ["unit", "🧩 단원별"], ["wrong", "❌ 오답"], ["map", "🗺️ 진도"]];
-  $("#tabs").innerHTML = tabs.map(([t, n]) => `<button role="tab" data-t="${t}" aria-selected="${V.tab === t}">${n}${t === "wrong" && wrN ? `<span class="cnt">${wrN}</span>` : ""}</button>`).join("");
+  if (V.tab === "map") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderMap() }
+  const bkN = bookList(sub).length;
+  const tabs = [["daily", "🎯 오늘"], ["unit", "🧩 단원별"], ["wrong", "❌ 오답"], ["book", "📒 합격노트"]];
+  $("#tabs").innerHTML = tabs.map(([t, n]) => `<button role="tab" data-t="${t}" aria-selected="${V.tab === t}">${n}${t === "wrong" && wrN ? `<span class="cnt">${wrN}</span>` : t === "book" && bkN ? `<span class="cnt bk">${bkN}</span>` : ""}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b => b.onclick = () => go(`#/s/${sub}/${b.dataset.t}`));
   stats();
-  if (V.tab === "map") return renderMap();
   if (V.tab === "unit" && !V.mode) return renderUnitPick();
+  if (V.tab === "book" && !V.mode) return renderBookPick();
   if (V.tab === "wrong" && !V.mode) return renderWrongPick();
   renderPlay();
 }
@@ -459,9 +532,9 @@ function noteOf(sub, q) {
 }
 function drawSeg() {
   const sub = V.sub, m = D[sub].meta, sm = summary(sub), seg = $("#seg"); seg.hidden = false;
-  const onNote = V.tab === "note";
-  seg.innerHTML = `<button role="tab" aria-selected="${onNote}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리 · 함정 · 기출" : "준비 중"}</small></button><button role="tab" aria-selected="${!onNote}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button>`;
-  seg.querySelectorAll("button").forEach(b => b.onclick = () => { if ((b.dataset.go === "note") !== onNote) go(`#/s/${sub}/${b.dataset.go}`) });
+  const cur = V.tab === "note" ? "note" : V.tab === "map" ? "map" : "daily";
+  seg.innerHTML = `<button role="tab" aria-selected="${cur === "note"}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button role="tab" aria-selected="${cur === "daily"}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button><button role="tab" aria-selected="${cur === "map"}" data-go="map">🗺️ 진도<small>Lv.${lecOf(sub)} 바꾸기</small></button>`;
+  seg.querySelectorAll("button").forEach(b => b.onclick = () => { if (b.dataset.go !== cur) go(`#/s/${sub}/${b.dataset.go}`) });
 }
 function renderNote() {
   const sub = V.sub, m = D[sub].meta;
@@ -571,6 +644,8 @@ function renderPlay() {
   if (r) html += `<p class="done-note">${r.ok ? "✅" : "❌"} 이미 푼 문제 · 내 답 ${q.t === "ox" ? (r.v ? "O" : "X") : N5[r.v]} (${r.ok ? "정답" : "오답"}) <button class="btn ghost sm" id="review">해설 보기</button></p>`;
   html += `</section><div class="qnav"><button class="btn ghost" id="prevQ" ${V.idx === 0 ? "disabled" : ""}>◀ 이전</button>${nx >= 0 && nx !== V.idx ? `<button class="btn ghost" id="skipQ">${r ? "다음 안 푼 문제" : "건너뛰기"} ▶</button>` : ""}</div>`;
   m.innerHTML = html;
+  m.querySelector(".card.q .qhead").insertAdjacentHTML("afterend", bookBar(qid(sub, q), q));
+  bindBook(m);
   m.querySelectorAll(".ox button,.opts button").forEach(b => { if (r) { b.disabled = true; b.style.opacity = .55 } else b.onclick = () => answer(q.t === "ox" ? b.dataset.v === "1" : +b.dataset.v) });
   if ($("#hintBtn")) $("#hintBtn").onclick = () => { $("#hint").hidden = false; $("#hintBtn").remove() };
   if (r) $("#review").onclick = () => answer(r.v, true);
@@ -613,8 +688,9 @@ function answer(v, review) {
   const nx = nextUn(V.idx), last = nx < 0;
   $("#sheet").className = "sheet " + (ok ? "good" : "bad");
   const cheer = ok ? ["좋아요!", "정확해요!", "완벽!", "그대로 가요!"][(V.combo || 1) % 4] : "괜찮아요, 해설 보고 다음에 맞혀요";
-  $("#sheet").innerHTML = `<div class="verdict"><span class="mark" aria-hidden="true">${ok ? "🎉" : "💥"}</span><span><span id="vtext">${ok ? "정답!" : "오답"}</span><small>${review ? "다시 보는 해설" : cheer}</small></span>${!review && ok && V.combo >= 2 ? `<span class="combo">🔥 ${V.combo}콤보</span>` : ""}</div>${html}
+  $("#sheet").innerHTML = `<div class="verdict"><span class="mark" aria-hidden="true">${ok ? "🎉" : "💥"}</span><span><span id="vtext">${ok ? "정답!" : "오답"}</span><small>${review ? "다시 보는 해설" : cheer}</small></span>${!review && ok && V.combo >= 2 ? `<span class="combo">🔥 ${V.combo}콤보</span>` : ""}</div>${bookBar(qid(sub, q), q, !ok)}${html}
     <div class="row"><button class="btn" id="next">${review ? "닫기" : last ? "🏁 결과 보기" : "다음 문제 ▶"}</button>${noteOf(sub, q) ? `<button class="notelink" id="toNote">📖 개념정리에서 보기</button>` : ""}</div>`;
+  bindBook($("#sheet"));
   $("#modal").hidden = false; $("#sheet").scrollTop = 0; $("#next").focus({ preventScroll: true });
   $("#next").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; render(); scrollTo({ top: 0 }) };
   if ($("#toNote")) $("#toNote").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; tmStop(); T.paused = timed(); saveTimer(); go(`#/s/${sub}/note/${noteOf(sub, q)}`) };
@@ -625,7 +701,7 @@ function linkLine(b) {
   return `<p class="point">기출 출제 · ${b.links.map(lab).join(", ")}</p>`;
 }
 function closeModal() { $("#modal").hidden = true }
-document.addEventListener("keydown", e => { if (!$("#modal").hidden && (e.key === "Enter" || e.key === "Escape")) { e.preventDefault(); $("#next").click() } });
+document.addEventListener("keydown", e => { if (e.target.closest && e.target.closest("input,textarea")) return; if (!$("#modal").hidden && (e.key === "Enter" || e.key === "Escape")) { e.preventDefault(); $("#next").click() } });
 $("#modal").addEventListener("click", e => { if (e.target.id === "modal") $("#next").click() });
 
 function result() {
@@ -749,7 +825,7 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => appl
   try { await loadData() } catch (e) { $("#title").textContent = "문제를 불러오지 못했어요"; $("#main").innerHTML = `<p class="exp">인터넷 연결을 확인하고 다시 열어 주세요. (${esc2(e.message)})</p>`; return }
   S = loadLocal();
   if (!S || !S.hist) { S = blank(); try { S = merge(S, await getJSON("data/migrate.json")) } catch (e) { } saveLocal() }
-  S.daily = S.daily || {}; S.days = S.days || {}; S.subjects = S.subjects || {};
+  S.daily = S.daily || {}; S.days = S.days || {}; S.subjects = S.subjects || {}; S.book = S.book || {};
   route();
   if (syncOn()) syncNow();
   if ("serviceWorker" in navigator && location.protocol === "https:") {

@@ -1,0 +1,592 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>회계학 개념정리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 회계학 개념정리: 경제학 요약노트와 같은 틀. 결론 → 도식 → 함정 → 기출 */
+:root{
+  --bg:#f2f4f7; --paper:#fbfcfd; --grid:#e4e9f0; --rule:#d5dce6; --ink:#1b2230; --muted:#5a6578;
+  --accent:#1f4f8a; --accent-ink:#ffffff; --demand:#1f4f8a; --supply:#b5562a; --gov:#7a5aa8;
+  --area1:rgba(31,79,138,.16); --area2:rgba(181,86,42,.18); --dwl:rgba(178,58,46,.28);
+  --hi:#b23a2e; --hi-bg:#f8e4e0; --ok:#1f7a4a; --mid:#9a6a12; --mid-bg:#f6ecd6;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+h1{font-size:28px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-size:22px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--muted);font-size:15px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--rule)}
+nav.toc a{flex:none;font-size:13.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;background:var(--paper)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{display:grid;gap:14px;scroll-margin-top:56px}
+.sec{border:1px solid var(--rule);border-radius:12px;padding:22px 20px;display:grid;gap:16px;min-width:0;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.badge{font:500 12.5px var(--f-body);padding:2px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);white-space:nowrap}
+.badge.hi{border-color:var(--hi);color:var(--hi);background:var(--hi-bg)}
+.badge.mid{border-color:var(--mid);color:var(--mid);background:var(--mid-bg)}
+.badge.lo{color:var(--muted)}
+.lec{font:500 12.5px var(--f-mono);color:var(--muted)}
+.key{background:var(--paper);border:1.5px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:16.5px;font-weight:500;line-height:1.6}
+.key small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
+.ask{font-size:14px;color:var(--muted);background:var(--paper)}
+.ask b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.tn{min-width:9.5em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
+ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.trap b{color:var(--hi)}
+.mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
+.mine span{display:inline-block;font-family:var(--f-mono);font-size:12.5px;padding:0 7px;margin:2px 3px 2px 0;border-radius:6px;border:1px solid var(--hi);color:var(--hi)}
+.steps{margin:0;padding:10px 14px 10px 32px;border-radius:8px;background:var(--bg);font-size:14.5px;display:grid;gap:4px}
+.lab{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px;display:grid;gap:10px}
+.lab h3{font-size:15px}
+.lab .hint{font-size:13px;color:var(--muted)}
+.lab svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+svg text{fill:var(--ink);font-family:var(--f-mono);font-size:11px}
+svg .ax{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .d{stroke:var(--demand);stroke-width:2.6;fill:none}
+svg .s{stroke:var(--supply);stroke-width:2.6;fill:none}
+svg .g{stroke:var(--gov);stroke-width:2.4;fill:none}
+svg .old{stroke-dasharray:5 4;opacity:.55}
+svg .guide{stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 3;fill:none}
+svg .dot{fill:var(--ink)}
+svg .lbl{font-size:12px;font-weight:500}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls button{font:500 13.5px var(--f-body);padding:6px 11px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+.ctrls button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.ctrls button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.slider input{width:100%}
+.slider output{font-family:var(--f-mono);min-width:3.5em;text-align:right}
+.readout{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.readout b{font-family:var(--f-mono);font-weight:500}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mini{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper);display:grid;gap:6px;min-width:0}
+.mini svg{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.mini p{font-size:13.5px}
+.mini h3{font-size:14.5px}
+.foot{font-size:13px;color:var(--muted)}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle}
+a{color:var(--accent)}
+
+.drop{border-left:3px dashed var(--muted);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.drop b{color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.flow span{border:1px solid var(--rule);border-radius:8px;padding:4px 10px;background:var(--paper)}
+.flow small{color:var(--muted)}
+.flow i{font-style:normal;color:var(--muted);background:var(--paper)}
+.tree{display:grid;gap:8px}
+.tree .row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.tree .col{display:grid;gap:6px;align-content:start}
+.node{border:1px solid var(--rule);border-radius:8px;padding:8px 12px;background:var(--paper);font-size:14.5px}
+.node small{display:block;color:var(--muted);font-size:13px}
+.node.root{border:1.5px solid var(--ink);font-weight:500;text-align:center}
+.node.acc{border-color:var(--demand);color:var(--demand);font-weight:500}
+.node.acc2{border-color:var(--supply);color:var(--supply);font-weight:500}
+.je{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+.je th:nth-child(1),.je th:nth-child(2){color:var(--demand)}.je th:nth-child(3),.je th:nth-child(4){color:var(--supply)}
+.readout .je{margin:4px 0}
+svg .f-a{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-l{fill:var(--area2);stroke:var(--supply);stroke-width:1.5}
+svg .f-e{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-inv{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-loss{fill:var(--dwl)}
+svg .f-short{fill:var(--area2)}
+svg .f-bar{fill:var(--accent)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">감정평가사 1차 · 회계학 · 신은미 기본강의 1~9단원 · 무형자산까지</div>
+  <h1>회계학 개념정리</h1>
+  <p class="lede">제28~37회 회계학 400문항 중 지금까지 배운 1~9단원은 124문항(매년 약 12문항, 회계학의 31%)입니다. 단원마다 '결론 한 줄 → 도식 → 자주 틀리는 지점 → 관련 기출' 순서로 정리했습니다. 목표는 과락 회피이므로 <b>버려도 되는 주제</b>는 따로 표시했습니다.</p>
+</header>
+
+<section id="map" class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">빈출 지도</h2>
+  <p class="ask">숫자 = 10년간 출제 문항 수. <b>내 기록</b>은 앱 문제풀이 기록으로 채워집니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>단원</th><th>10년</th><th>비중</th><th>내 기록</th></tr></thead>
+    <tbody id="mapBody"></tbody>
+  </table></div>
+  <p class="foot">상 = 10년 10문항 이상(거의 매년), 중 = 5~9문항, 하 = 4문항 이하. 단원 구분은 표준 중급회계 순서라 신은미 교수 교재의 장 순서·용어와 조금 다를 수 있습니다.</p>
+</section>
+
+<nav class="toc" aria-label="단원 바로가기">
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#card">암기카드</a>
+</nav>
+
+<!-- 1. 회계원리 -->
+<section id="r" class="sec" aria-labelledby="h-r">
+  <div class="shead"><h2 id="h-r">회계원리 · 재무제표 기초</h2><span class="badge lo">비중 하 · 3문항</span><span class="lec">1단원</span></div>
+  <div class="key">자산 = 부채 + 자본. 모든 거래는 이 등식의 양쪽을 같은 금액만큼 움직인다.<small>자산(가진 것) · 부채(갚을 것) · 자본(주주 몫 = 자산 − 부채). 수익은 자본을 늘리고 비용은 자본을 줄인다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · "기말 자본(자산)은?", "당기순이익은?", "순현금흐름은?" — 자본 변동표를 거꾸로 푸는 계산 1문항 정도</p>
+  <div class="lab">
+    <h3>거래 6개를 차례로 눌러 보세요 · 분개 → 등식</h3>
+    <div class="ctrls" id="txBtns"></div>
+    <svg id="svgTx" viewBox="0 0 340 250" role="img" aria-label="자산과 부채·자본 막대"></svg>
+    <div class="readout" id="txOut" aria-live="polite"></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>늘어나면 이쪽에 적는다</th><th>차변(왼쪽)</th><th>대변(오른쪽)</th></tr></thead>
+    <tbody>
+      <tr><td>자산</td><td>증가</td><td>감소</td></tr>
+      <tr><td>부채 · 자본</td><td>감소</td><td>증가</td></tr>
+      <tr><td>비용</td><td>발생</td><td>—</td></tr>
+      <tr><td>수익</td><td>—</td><td>발생</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>T계정 · 현금 (거래 6개 후)</h3>
+      <div class="tw"><table><thead><tr><th>차변(들어옴)</th><th>대변(나감)</th></tr></thead>
+      <tbody><tr><td class="n">① 1,000</td><td class="n">⑤ 100</td></tr><tr><td class="n">② 500</td><td></td></tr><tr><td class="n">⑥ 500</td><td class="n">잔액 1,900</td></tr></tbody></table></div>
+      <p>분개를 계정별로 모은 것이 T계정(전기). 잔액이 재무상태표 금액이 된다.</p></div>
+    <div class="mini"><h3>자본 변동 공식 (기출 계산의 뼈대)</h3>
+      <p>기말자본 = 기초자본 + 유상증자 − 현금배당 + 당기순이익 + 기타포괄이익</p>
+      <p>무상증자·주식배당은 자본 안에서 이동만 → 총액 불변.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b><span>무상증자를 자본 증가로 더한다 → 자본 총액은 그대로(33회 56번).</span><span>발생주의 이익 ≠ 현금흐름. 순현금흐름 = 이익 − 매출채권 증가 + 매입채무 증가 …처럼 자산 증가는 빼고 부채 증가는 더한다(32회 66번).</span></div>
+  <div class="drop"><b>우선순위</b><span>단독 출제는 적지만 모든 단원 계산의 기초다. 등식과 분개 방향만큼은 버리지 말 것.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 2. 개념체계 -->
+<section id="cf" class="sec" aria-labelledby="h-cf">
+  <div class="shead"><h2 id="h-cf">재무보고를 위한 개념체계</h2><span class="badge hi">비중 상 · 15문항</span><span class="lec">2단원</span></div>
+  <div class="key">개념체계는 회계기준이 아니다. 기준과 충돌하면 기준이 이긴다.<small>시험은 거의 전부 '옳지 않은 것' 고르기. 원문 한 단어(증가↔감소, 있다↔없다, 형식↔실질)를 뒤집은 지문을 찾는 게임이다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 질적특성 O·X(매년), 재무제표 요소 정의, 측정기준 비교, 드물게 자본유지개념 계산</p>
+  <h3>유용한 재무정보의 질적특성 구조도</h3>
+  <div class="tree">
+    <div class="node root">유용한 재무정보</div>
+    <div class="row2">
+      <div class="col"><div class="node acc">근본적 질적특성 (둘 다 있어야 유용)</div>
+        <div class="node">목적적합성<small>예측가치 · 확인가치 · 중요성</small></div>
+        <div class="node">충실한 표현<small>완전성 · 중립성(신중성이 뒷받침) · 오류 없음</small></div></div>
+      <div class="col"><div class="node acc2">보강적 질적특성 (있으면 더 좋음)</div>
+        <div class="node">비교가능성 · 검증가능성 · 적시성 · 이해가능성<small>두문자 '비검적이'</small></div>
+        <div class="node">포괄적 제약요인: 원가<small>정보의 효익이 원가를 정당화해야</small></div></div>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>측정기준</th><th>관점 · 시점</th><th>취득 거래원가</th><th>외울 문장</th></tr></thead>
+    <tbody>
+      <tr><td>역사적원가</td><td>발생일 가격</td><td>자산: 더함 / 부채: 뺌</td><td>가치 변동 반영 X (손상·손실부담만 예외)</td></tr>
+      <tr><td>공정가치</td><td>측정일 · 시장참여자</td><td>반영 안 함</td><td>유출가격(팔 때 받을 가격)</td></tr>
+      <tr><td>사용가치 · 이행가치</td><td>측정일 · 기업 특유</td><td>반영 안 함 (처분·이행 원가는 포함)</td><td>직접 관측 불가 → 현금흐름 현재가치</td></tr>
+      <tr><td>현행원가</td><td>측정일 · 유입가격</td><td>포함</td><td>지금 같은 자산을 사면 드는 돈</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>재무제표 요소 정의</h3><p><b>자산</b> = 과거사건의 결과로 기업이 통제하는 현재의 경제적자원(효익의 '유입'이 아니라 '권리' 그 자체)</p><p><b>부채</b> = 경제적자원을 이전해야 하는 현재의무(상대방 신원은 몰라도 됨)</p><p><b>수익·비용</b>에서 주주의 출자·분배는 제외</p></div>
+    <div class="mini"><h3>자본유지개념 숫자 예시</h3><p>기초 1,000 출자(재고 100개, 개당 10) → 기말 자본 1,500, 개당 12, 물가 10%↑</p><p>명목 재무자본: 1,500 − 1,000 = <b>500</b></p><p>불변구매력: 1,500 − 1,100 = <b>400</b></p><p>실물자본(현행원가): 1,500 − 100×12 = <b>300</b></p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>"회계기준위원회는 중요성의 획일적 임계치를 정할 수 있다/정해야 한다" → 없다. 앞 문장은 맞고 결론만 뒤집는다(28회 61번 · 31회 41번).</span>
+    <span>"합리적 추정은 신뢰성(유용성)을 해친다" → 추정은 필수이고 명확히 설명하면 유용성을 해치지 않는다(30회 58번 · 36회 41번).</span>
+    <span>"법적 통제가 있어야 자산" → 실질 우선, 법적 권리는 필요조건 아님(29회 46번).</span>
+    <span>"수익은 출자를 포함" → 제외(33회 47번). "보고기업은 반드시 법적 실체" → 아님(37회 41번).</span>
+    <span>"개념체계가 개정되면 회계기준도 자동 개정" → 아님(34회 45번). 부채의 역사적원가는 수취대가에서 거래원가를 '뺀다'(35회 41번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>자본유지개념 계산(10년에 1문항, 33회 42번)은 후순위. 질적특성·요소 정의 O·X는 매년 나오니 앱의 개념 O·X로 반복.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 3. 재무제표 표시 -->
+<section id="ps" class="sec" aria-labelledby="h-ps">
+  <div class="shead"><h2 id="h-ps">재무제표 표시</h2><span class="badge mid">비중 중 · 9문항</span><span class="lec">3단원</span></div>
+  <div class="key">원칙은 '유동/비유동 구분 · 상계 금지 · 발생기준(현금흐름표 빼고) · K-IFRS 전부 준수해야 준수 기재'.<small>2027.1.1부터 K-IFRS 1118호(재무제표 표시와 공시)가 1001호를 대체. 손익계산서를 5개 범주로 나눈다. 2027년 4월 시험의 적용 기준은 교재·강의로 확인 필요.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항 '옳은/옳지 않은 것'. 계산 없음</p>
+  <h3>부채 유동/비유동 판단 흐름</h3>
+  <div class="flow"><span>보고기간 말 현재</span><i>→</i><span>12개월 이내 결제?</span><i>→ 아니오 →</i><span>비유동</span></div>
+  <div class="flow"><i>예 →</i><span>보고기간 말에 12개월 이상 연기할 '권리'가 있나?</span><i>→ 있음 →</i><span>비유동 (경영진 의도 무관)</span></div>
+  <div class="flow"><i>없음 →</i><span>유동</span><i>· 약정 위반 후 유예 합의가 보고기간 말 '후'면 →</i><span>여전히 유동</span></div>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>원칙</th><th>예외 · 함정</th></tr></thead>
+    <tbody>
+      <tr><td>재무상태표 배열</td><td>유동/비유동 구분</td><td>유동성 순서가 더 목적적합하면(금융회사) 유동성 순서. 혼합 허용</td></tr>
+      <tr><td>이연법인세자산·부채</td><td>항상 비유동</td><td>"유동으로 분류" → X (36회 42번)</td></tr>
+      <tr><td>정상영업주기</td><td>12개월 넘어도 그 주기 안이면 유동</td><td>주기를 식별 못 하면 12개월로 가정</td></tr>
+      <tr><td>상계</td><td>금지</td><td>평가충당금 차감(손실충당금 등)은 상계가 아님</td></tr>
+      <tr><td>특별손익</td><td>본문·주석 모두 금지</td><td>"주석에는 표시" → X (32회 53번)</td></tr>
+      <tr><td>비용 분류</td><td>성격별 또는 기능별(1118호: 혼합 가능)</td><td>기능별로 표시한 기업이 성격별 정보를 주석 공시</td></tr>
+      <tr><td>기타포괄손익</td><td>세전 + 법인세 한 줄, 또는 세후 순액</td><td>둘 중 선택 가능</td></tr>
+      <tr><td>비교정보</td><td>전기 금액 표시</td><td>서술형 정보도 목적적합하면 비교정보 표시(34회 41번)</td></tr>
+      <tr><td>1118호 손익 범주</td><td>영업 · 투자 · 재무 · 법인세 · 중단영업</td><td>영업 = 나머지 전부(잔여 범주). 지분법손익 = 투자 범주</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>약정 위반 채무: 보고기간 '후' 발행승인 전에 유예 합의 → 비유동 X, 유동(37회 42번). 시점 단어에 동그라미.</span>
+    <span>"부분적으로 K-IFRS를 준수했다고 기재 가능" → X. K-IFRS 준수 재무제표는 국제회계기준 준수 사실을 주석 공시 가능(35회 42번).</span>
+    <span>"재무제표에서 중요하지 않으면 주석에서도 중요하지 않다" → X(28회 58번). 계속기업 평가는 경영진이 한다(31회 42번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>1118호 세부(경영진이 정의한 성과측정치, 범주별 세부 분류)는 깊게 파지 말고 '5범주 + 영업은 잔여 + 지분법은 투자'까지만.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 4. 재고자산 -->
+<section id="iv" class="sec" aria-labelledby="h-iv">
+  <div class="shead"><h2 id="h-iv">재고자산</h2><span class="badge hi">비중 상 · 31문항 · 최빈출</span><span class="lec">4단원</span></div>
+  <div class="key">매출원가 = 기초재고 + 당기매입 − 기말재고. 재고자산 문제는 전부 '기말재고를 정확히 구하는' 싸움이다.<small>기말재고 = ① 포함할 물건(소유권) × ② 수량(감모) × ③ 단가(원가흐름가정) → ④ 저가법(평가손실)</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 3문항꼴. 감모·평가손실 후 매출원가(최다), 소매재고법, 기말재고 포함 항목, 매출총이익률법, 이론 O·X 1문항</p>
+  <div class="tw"><table>
+    <thead><tr><th>상황</th><th>누구의 재고?</th></tr></thead>
+    <tbody>
+      <tr><td>미착품 · 선적지인도조건</td><td>구매자 (배에 실은 순간 넘어감)</td></tr>
+      <tr><td>미착품 · 도착지인도조건</td><td>판매자 (도착해야 넘어감)</td></tr>
+      <tr><td>적송품(위탁판매)</td><td>수탁자가 팔기 전까지 위탁자</td></tr>
+      <tr><td>시송품(써 보고 결정)</td><td>구매 의사 표시 전까지 판매자</td></tr>
+      <tr><td>저당상품(담보로 맡김)</td><td>담보 제공자(소유자)</td></tr>
+      <tr><td>재구매약정 판매</td><td>판매자 (실질은 차입)</td></tr>
+      <tr><td>할부판매</td><td>인도하면 판매 → 구매자</td></tr>
+    </tbody>
+  </table></div>
+  <div class="lab">
+    <h3>감모손실 · 평가손실 박스 · 장부 100개, 개당 원가 100</h3>
+    <div class="slider"><label for="ivQ">실사 수량</label><input type="range" id="ivQ" min="60" max="100" step="5" value="90"><output id="ivQOut">90</output></div>
+    <div class="slider"><label for="ivN">개당 순실현가능가치</label><input type="range" id="ivN" min="50" max="130" step="5" value="80"><output id="ivNOut">80</output></div>
+    <div class="slider"><label for="ivR">감모 중 정상 비율</label><input type="range" id="ivR" min="0" max="100" step="10" value="40"><output id="ivROut">40%</output></div>
+    <svg id="svgIv" viewBox="0 0 340 250" role="img" aria-label="재고자산 감모손실과 평가손실 면적"></svg>
+    <div class="readout" id="ivOut" aria-live="polite"></div>
+  </div>
+  <div class="grid2">
+    <div class="mini"><h3>원가흐름가정 (물가 상승기)</h3><p>기말재고·이익 크기: 선입선출 &gt; 이동평균 ≥ 총평균</p><p>매출원가는 반대 순서. 후입선출은 K-IFRS에서 불인정.</p><p>선입선출은 계속기록법·실지재고조사법 결과가 같다.</p></div>
+    <div class="mini"><h3>순실현가능가치(NRV)</h3><p>예상 판매가 − 추가 완성원가 − 판매비용</p><p>확정판매계약 수량은 '계약가격'으로 계산</p><p>기업 특유 가치 → 공정가치와 다르다</p></div>
+    <div class="mini"><h3>매출총이익률법 (재고 추정)</h3><p>매출총이익률 30% → 매출원가 = 매출 × 0.7</p><p>원가 대비 이익률 25% → 매출원가 = 매출 ÷ 1.25</p><p>기말재고 = 기초 + 매입 − 매출원가</p></div>
+    <div class="mini"><h3>소매재고법</h3><p>원가율 = 원가 ÷ 매가</p><p>기말매가 = 판매가능매가 − 매출</p><p>기말원가 = 기말매가 × 원가율</p><p>평균: 기초 포함 / 선입선출: 기초 빼고 당기만 / 저가기준: 분모에서 순인하 제외</p></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>취득원가에 포함</th><th>포함 안 함(비용)</th></tr></thead>
+    <tbody><tr><td>매입가격, 매입운임·하역료·보험료, 환급 안 되는 수입관세 · 제세금 / 매입할인·리베이트는 차감</td><td>비정상 낭비, 보관원가(다음 생산단계에 필요한 보관은 제외), 관리간접원가, 판매원가, 환급받는 부가가치세(32회 55번)</td></tr></tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>원재료: 그 원재료로 만든 제품이 원가 이상에 팔릴 것이면 감액하지 않는다. 제품이 손실이면 감액하고, 이때 현행대체원가가 NRV의 최선의 측정치(33회 49번).</span>
+    <span>"NRV는 시장참여자 사이 정상거래 가격 − 처분부대원가라 기업 특유 가치가 아니다" → 공정가치 정의로 바꿔치기(37회 43번).</span>
+    <span>저가법은 항목별이 원칙, 유사 항목은 조별 가능, 총계기준 불가(37회 45번). 평가손실 환입은 최초 장부금액 한도, 매출원가에서 차감.</span>
+    <span>중개·가격차익 목적 상품(브로커-트레이더)의 순공정가치 변동은 기타포괄손익이 아니라 당기손익(29회 67번).</span>
+    <span>기말재고 과대계상 → 당기 이익 과대, 다음 해 이익 과소(2년 뒤 자동 상쇄, 35회 48번).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>저가기준 선입선출 소매재고법처럼 변형을 겹친 문제(28회 66번 · 29회 66번)는 과락 회피 목표라면 넘긴다. 원가율 기본 공식 2개(평균·선입선출)만 확실히. 재고 평가방법 변경의 소급 계산(29회 68번 · 32회 67번)은 22단원(회계변경)에서 다시 본다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 5. 유형자산 ① -->
+<section id="p1" class="sec" aria-labelledby="h-p1">
+  <div class="shead"><h2 id="h-p1">유형자산 ① 취득 · 교환</h2><span class="badge hi">비중 상 · 11문항</span><span class="lec">5단원</span></div>
+  <div class="key">원가 = 사서 '쓸 수 있는 상태로 만들기까지' 든 돈. 교환은 상업적 실질이 있으면 공정가치, 없으면 장부금액.<small>도로 공사로 치면 용지비·지장물 철거·부지 정지까지가 토지, 개통 후 홍보·교육은 비용.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 원가에 포함되는 것 모두 고르기, 토지 취득원가 계산, 일괄구입 배분, 교환 시 취득원가·처분손익</p>
+  <div class="tw"><table>
+    <thead><tr><th>원가에 포함</th><th>비용(원가 아님)</th></tr></thead>
+    <tbody><tr><td>구입가격·수입관세·취득세, 설치·운송·전문가 수수료, 정상 작동 여부 시험원가, 복구원가 현재가치, 토지 정지비, 토지만 쓰려고 산 구건물 철거비(폐자재 매각액 차감)</td>
+    <td>새 시설 개설원가, 광고·판촉, 새 지역·고객 대상 영업원가(교육훈련 포함), 관리 및 일반간접원가, 가동 초기 손실, 재배치 원가, 시운전 중 생산품 매각액(당기손익)</td></tr></tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>철거비는 '왜 샀나'로 갈린다</h3><p>건물째 산 땅의 구건물 철거 → 토지 원가</p><p>쓰던 건물 철거 → 장부금액은 처분손실, 철거비는 당기비용</p></div>
+    <div class="mini"><h3>일괄구입</h3><p>총 대가를 각 자산 '공정가치' 비율로 나눈다. 판매자 장부금액 비율이 아니다(30회 49번).</p></div>
+    <div class="mini"><h3>진입로 · 배수로</h3><p>지자체가 유지관리 → 토지 원가</p><p>회사가 유지관리 → 구축물(감가상각)</p></div>
+  </div>
+  <h3>교환 · 같은 숫자로 세 경우 비교</h3>
+  <p class="ask">내 기계(장부 800, 공정가치 1,000)를 주고 현금 100을 더 내서 상대 기계를 받는다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>경우</th><th>새 자산 취득원가</th><th>처분손익</th></tr></thead>
+    <tbody>
+      <tr><td>상업적 실질 O (기본)</td><td class="n">1,000 + 100 = 1,100</td><td class="n">1,000 − 800 = 이익 200</td></tr>
+      <tr><td>실질 O · 받은 자산 공정가치(1,150)가 더 명백</td><td class="n">1,150</td><td class="n">1,150 − 100 − 800 = 이익 250</td></tr>
+      <tr><td>실질 X, 또는 둘 다 공정가치 측정 불가</td><td class="n">800 + 100 = 900</td><td class="n">0</td></tr>
+    </tbody>
+  </table></div>
+  <div class="je"><table><thead><tr><th>차변</th><th class="n">금액</th><th>대변</th><th class="n">금액</th></tr></thead>
+    <tbody><tr><td>기계(신)</td><td class="n">1,100</td><td>기계(구) 장부금액</td><td class="n">800</td></tr><tr><td></td><td></td><td>현금</td><td class="n">100</td></tr><tr><td></td><td></td><td>유형자산처분이익</td><td class="n">200</td></tr></tbody></table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>둘 다 공정가치를 측정할 수 없으면 '제공한' 자산의 장부금액이 원가. '취득한' 자산 장부금액으로 바꾼 지문(28회 41번).</span>
+    <span>현금을 받으면 취득원가에서 빼고, 처분손익 식에서는 더한다. 부호를 그림(주는 것 → 받는 것)으로 확인.</span>
+  </div>
+  <p class="mine"></p>
+</section>
+
+<!-- 6. 유형자산 ② -->
+<section id="p2" class="sec" aria-labelledby="h-p2">
+  <div class="shead"><h2 id="h-p2">유형자산 ② 감가상각 · 후속원가 · 정부보조금 · 복구원가</h2><span class="badge hi">비중 상 · 20문항</span><span class="lec">6단원</span></div>
+  <div class="key">감가상각 = (원가 − 잔존가치)를 내용연수에 나눠 비용으로. 방법·내용연수·잔존가치를 바꾸면 '전진법'(그 시점 장부금액부터 새로 계산).<small>복구원가는 현재가치로 원가에 더하고, 매년 감가상각비 + 이자비용 두 가지 비용이 생긴다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 거의 전부 계산. 변경 후 감가상각비, 복구원가 관련 당기비용, 정부보조금 후 장부금액·순이익 영향</p>
+  <div class="lab">
+    <h3>감가상각 방법 비교 · 원가 1,000</h3>
+    <div class="ctrls" id="depBtns"></div>
+    <div class="slider"><label for="depN">내용연수</label><input type="range" id="depN" min="3" max="8" step="1" value="5"><output id="depNOut">5</output></div>
+    <div class="slider"><label for="depS">잔존가치</label><input type="range" id="depS" min="0" max="200" step="50" value="100"><output id="depSOut">100</output></div>
+    <svg id="svgDep" viewBox="0 0 340 250" role="img" aria-label="연도별 감가상각비 막대"></svg>
+    <div class="readout" id="depOut" aria-live="polite"></div>
+  </div>
+  <div class="grid2">
+    <div class="mini"><h3>추정 변경 = 전진법</h3><p>① 변경 시점까지 옛 방법으로 상각 → 장부금액</p><p>② (장부금액 − 새 잔존가치) ÷ 남은 연수(새 방법)</p><p>과거 숫자는 고치지 않는다.</p></div>
+    <div class="mini"><h3>후속원가</h3><p>인식요건 충족(자본적 지출) → 장부금액에 더하고 남은 기간 상각</p><p>일상적 수선·유지 → 즉시 비용</p></div>
+    <div class="mini"><h3>정부보조금 (상환의무 없음)</h3><p>원가차감법: 자산에서 빼고 감가상각비와 상계</p><p>이연수익법: 부채(이연수익)로 두고 수익 인식</p><p>어느 쪽이든 순비용 같음. 기계 1,000·보조금 300·5년 정액 → 매년 200 − 60 = <b>140</b></p></div>
+    <div class="mini"><h3>상각 시작 · 중지</h3><p>시작: 사용 '가능한' 때(실제 사용 X)</p><p>중지: 매각예정 분류 또는 제거</p><p>일시 가동 중단·유휴 → 계속 상각</p></div>
+  </div>
+  <h3>복구원가 숫자 예시</h3>
+  <p class="ask">설비 10,000 · 5년 · 잔존 0 · 정액. 5년 뒤 복구비 3,000, 할인율 10% (5년 현가계수 0.6209)</p>
+  <ol class="steps">
+    <li>복구충당부채 = 3,000 × 0.6209 = <b>1,863</b> → 설비 원가 = 10,000 + 1,863 = 11,863</li>
+    <li>1년차 감가상각비 = 11,863 ÷ 5 = <b>2,373</b></li>
+    <li>1년차 이자비용(충당부채 증가) = 1,863 × 10% = <b>186</b></li>
+    <li>1년차 당기비용 합계 = 2,373 + 186 = <b>2,559</b></li>
+    <li>5년 뒤 실제 복구비 ≠ 3,000이면 차액은 복구공사손익</li>
+  </ol>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>토지 가치가 올라도 건물 감가상각대상금액은 변하지 않는다(28회 57번). 토지는 상각 X.</span>
+    <span>복구원가 문제에서 '당기비용'을 물으면 감가상각비 + 이자비용 둘 다(31회 47번 · 37회 48번). 감가상각비만 쓰고 끝내는 실수가 가장 많다.</span>
+    <span>가동 중단 기간에도 정액법이면 상각한다(34회 65번). 월할 상각이면 취득 월부터 센다.</span>
+    <span>정부보조금 받은 연도 순이익 영향 = −(감가상각비 − 보조금 상계액)(28회 47번 · 36회 46번).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>무이자 차입·공채 강제매입처럼 현재가치로 원가를 다시 구하는 문제(31회 57번 · 31회 68번 · 32회 56번)는 금융자산·금융부채(12~13단원)를 배운 뒤로 미룬다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 7. 유형자산 ③ -->
+<section id="p3" class="sec" aria-labelledby="h-p3">
+  <div class="shead"><h2 id="h-p3">유형자산 ③ 재평가 · 손상</h2><span class="badge hi">비중 상 · 18문항</span><span class="lec">7단원</span></div>
+  <div class="key">재평가: 오르면 기타포괄이익(재평가잉여금), 내리면 당기손실. 단, 예전에 반대로 인식한 금액만큼은 먼저 되돌린다.<small>손상: 장부금액 &gt; 회수가능액(= 순공정가치와 사용가치 중 큰 것)이면 차액이 손상차손. 환입은 '손상 안 했으면 됐을 장부금액'까지만.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 연도별 당기손익·기타포괄이익 영향, 재평가잉여금, 손상차손·환입액 계산. 모두 표를 그려 연도별로 쌓으면 풀린다</p>
+  <div class="lab">
+    <h3>토지 재평가 3년 실험 · 원가 1,000 (상각 없음)</h3>
+    <div class="slider"><label for="rv1">1년 말 공정가치</label><input type="range" id="rv1" min="500" max="1500" step="50" value="1200"><output id="rv1Out">1200</output></div>
+    <div class="slider"><label for="rv2">2년 말 공정가치</label><input type="range" id="rv2" min="500" max="1500" step="50" value="800"><output id="rv2Out">800</output></div>
+    <div class="slider"><label for="rv3">3년 말 공정가치</label><input type="range" id="rv3" min="500" max="1500" step="50" value="1100"><output id="rv3Out">1100</output></div>
+    <div class="tw"><table><thead><tr><th>연도</th><th class="n">공정가치</th><th class="n">변동</th><th class="n">당기손익</th><th class="n">기타포괄</th><th class="n">잉여금 잔액</th></tr></thead><tbody id="rvBody"></tbody></table></div>
+    <div class="readout" id="rvOut" aria-live="polite"></div>
+  </div>
+  <h3>손상 숫자 예시 (원가모형)</h3>
+  <p class="ask">기계 5,000 · 5년 · 잔존 0 · 정액. 1년 말 장부 4,000, 순공정가치 2,700 · 사용가치 3,000. 2년 말 회수가능액 3,500</p>
+  <ol class="steps">
+    <li>1년 말 회수가능액 = max(2,700, 3,000) = 3,000 → 손상차손 4,000 − 3,000 = <b>1,000</b></li>
+    <li>2년차 감가상각비 = 3,000 ÷ 남은 4년 = <b>750</b> → 2년 말 장부 2,250</li>
+    <li>환입 한도 = 손상 안 했으면 2년 말 장부 = 5,000 − 1,000×2 = <b>3,000</b></li>
+    <li>회수가능액 3,500이지만 한도 3,000까지만 → 환입 = 3,000 − 2,250 = <b>750</b> (당기이익)</li>
+  </ol>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>원가모형</th><th>재평가모형</th></tr></thead>
+    <tbody>
+      <tr><td>적용 단위</td><td colspan="2">유형자산 '분류'(토지, 건물 …) 전체에 같은 모형</td></tr>
+      <tr><td>손상차손</td><td>당기손실</td><td>재평가잉여금 먼저 감소, 넘는 부분 당기손실</td></tr>
+      <tr><td>재평가잉여금 처리</td><td>—</td><td>이익잉여금으로 직접 대체 가능(사용 중 일부 또는 처분 시). 당기손익으로 재분류 X</td></tr>
+      <tr><td>감가상각누계액</td><td>—</td><td>비례수정법 또는 누계액 제거법</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>전기에 당기손실을 낸 뒤 오르면, 그 손실만큼은 당기이익이고 넘는 부분만 잉여금(28회 52번 · 35회 57번).</span>
+    <span>상각자산 재평가: 먼저 그해 감가상각 → 상각 후 장부금액과 공정가치 비교(30회 43번: 취득 100,000, 1년 상각 후 80,000 → 공정가치 100,000이면 잉여금 20,000).</span>
+    <span>환입 한도를 회수가능액으로 착각. 한도는 '손상 없었을 때 장부금액'(29회 69번 · 28회 67번).</span>
+    <span>순공정가치 = 공정가치 − 처분부대원가. 회수가능액은 둘 중 '큰' 값(30회 48번 · 31회 46번).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>재평가모형에 손상까지 겹친 문제(29회 43번 · 33회 68번 · 36회 47번 · 31회 67번)는 과락 회피 목표라면 넘긴다. 원가모형 손상, 토지 재평가(상각 없음)부터 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 8. 차입원가 -->
+<section id="bc" class="sec" aria-labelledby="h-bc">
+  <div class="shead"><h2 id="h-bc">차입원가 자본화</h2><span class="badge mid">비중 중 · 6문항</span><span class="lec">8단원</span></div>
+  <div class="key">짓는 데 오래 걸리는 자산(적격자산)에 쓴 돈의 이자는 비용이 아니라 자산 원가에 넣는다. 특정차입금 먼저, 남은 지출은 일반차입금 이자율로.<small>공식 하나로 매번 같은 형태가 나온다 → 과락 회피용 가성비 최고 단원. 버리지 말 것.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · "20×1년에 자본화할 차입원가는?" 계산 1문항. 사업 착공·완공 시점과 지출 일자가 표로 주어진다</p>
+  <ol class="steps">
+    <li><b>연평균지출액</b> = Σ 지출액 × (그해 자본화 기간 중 남은 개월 ÷ 12). 정부보조금으로 낸 지출은 빼고 계산(36회 45번)</li>
+    <li><b>특정차입금</b> 자본화 = 차입액 × 이자율 × 기간 − 일시투자수익</li>
+    <li><b>자본화이자율</b> = 일반차입금 이자비용 합계 ÷ 일반차입금 연평균액</li>
+    <li><b>일반차입금</b> 자본화 = (연평균지출액 − 특정차입금 연평균 사용액) × 자본화이자율. 한도 = 일반차입금 실제 이자비용</li>
+    <li>2 + 4 = 자본화할 차입원가</li>
+  </ol>
+  <h3>숫자 예시 · 20×1.1.1 착공, 다음 해 완공</h3>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th>자료</th><th class="n">계산</th></tr></thead>
+    <tbody>
+      <tr><td>지출</td><td>1.1 600, 7.1 400</td><td class="n">600×12/12 + 400×6/12 = 800</td></tr>
+      <tr><td>특정차입금</td><td>1.1 300, 연 8%</td><td class="n">300 × 8% = 24</td></tr>
+      <tr><td>일반차입금 A</td><td>연초부터 500, 연 10%</td><td class="n">이자 50 · 연평균 500</td></tr>
+      <tr><td>일반차입금 B</td><td>7.1 500, 연 6%</td><td class="n">이자 15 · 연평균 250</td></tr>
+      <tr><td>자본화이자율</td><td></td><td class="n">65 ÷ 750 = 8.67%</td></tr>
+      <tr><td>일반 자본화</td><td>(800 − 300) × 8.67%</td><td class="n">43 (한도 65 이내)</td></tr>
+      <tr><td><b>합계</b></td><td></td><td class="n"><b>24 + 43 = 67</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>자본화 기간</h3><p>개시: 지출 + 차입원가 발생 + 준비활동 진행, 세 가지 모두</p><p>중단: 적극적 개발이 장기간 중단된 기간</p><p>종료: 사용·판매 준비가 실질적으로 끝난 때</p></div>
+    <div class="mini"><h3>적격자산이 아닌 것</h3><p>금융자산, 단기간에 생산되는 재고자산, 취득 즉시 쓸 수 있는 자산</p><p>도로 공사처럼 수년 걸리는 건설은 대표적인 적격자산.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>착공이 연중(4월·5월)이면 지출 '개월 수'를 착공일 이후로만 센다(36회 45번 · 37회 47번). 착공 전 지출도 착공일부터 센다.</span>
+    <span>일반차입금 자본화액이 실제 이자비용을 넘으면 실제 이자비용까지만(한도).</span>
+  </div>
+  <p class="mine"></p>
+</section>
+
+<!-- 9. 무형자산 -->
+<section id="ia" class="sec" aria-labelledby="h-ia">
+  <div class="shead"><h2 id="h-ia">무형자산</h2><span class="badge hi">비중 상 · 11문항</span><span class="lec">9단원</span></div>
+  <div class="key">연구는 비용, 개발은 6가지 요건을 다 갖추면 자산. 구분이 안 되면 전부 연구(비용).<small>내부에서 만든 영업권·브랜드·고객목록은 자산이 아니다. 내용연수 '비한정'이면 상각하지 않고 매년 손상검사.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항. 대부분 이론 O·X(옳은 것 모두 고르기), 가끔 개발비 상각·손상 계산</p>
+  <div class="flow"><span>내부 프로젝트 지출</span><i>→</i><span>연구단계<small> 지식 탐색·평가·대체안 선택</small></span><i>→ 비용</i></div>
+  <div class="flow"><i>→</i><span>개발단계<small> 시제품·모형·시험공장·금형</small></span><i>→ 6요건 충족 후 지출만</i><span>개발비(자산)</span><i>· 충족 전 지출은 비용, 나중에 자산으로 못 돌림</i></div>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>규정</th><th>함정</th></tr></thead>
+    <tbody>
+      <tr><td>정의 3요소</td><td>식별가능성 · 통제 · 미래경제적효익</td><td>법적 집행가능성은 통제의 필요조건 X</td></tr>
+      <tr><td>인식요건</td><td>효익 유입 가능성 높음 + 원가 신뢰성 측정</td><td>36회 49번 정답 문장</td></tr>
+      <tr><td>개발 6요건</td><td>기술적 실현가능성 · 완성 의도 · 사용·판매 능력 · 효익 창출 방법 · 자원 확보 · 지출 측정</td><td>하나라도 빠지면 비용</td></tr>
+      <tr><td>상각 시작</td><td>사용 가능한 때</td><td>쓰지 않아도 상각 계속(34회 42번)</td></tr>
+      <tr><td>상각 방법</td><td>효익 소비 형태, 결정 못 하면 정액법</td><td>유형자산과 달리 '정액법' 기본값 명시</td></tr>
+      <tr><td>잔존가치</td><td>원칙 0</td><td>제3자 구입 약정 또는 활성시장이 있으면 0 아님(37회 49번)</td></tr>
+      <tr><td>비한정 내용연수</td><td>상각 X, 매년 + 징후 있을 때 손상검사</td><td>"징후 있을 때만" → X(33회 66번)</td></tr>
+      <tr><td>영업권</td><td>사업결합으로만 인식, 상각 X, 매년 손상검사</td><td>손상차손 환입 X (비한정 무형자산은 환입 O)</td></tr>
+      <tr><td>재평가모형</td><td>활성시장이 있을 때만</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <h3>개발비 숫자 예시</h3>
+  <p class="ask">20×1년 연구 500, 개발 800 지출. 개발 800 중 요건 충족(10.1) 이후 지출 500. 20×2.1.1부터 사용 가능, 5년 정액</p>
+  <ol class="steps">
+    <li>20×1 비용 = 연구 500 + 요건 충족 전 개발 300 = <b>800</b></li>
+    <li>개발비(자산) = <b>500</b> (요건 충족 후 지출만)</li>
+    <li>20×1 상각비 = 0 (아직 사용 가능 전), 20×2부터 매년 500 ÷ 5 = <b>100</b></li>
+  </ol>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>대체안 '제안·설계·평가·선택' = 연구, 시험공장 '설계·건설·가동' = 개발. 동사가 비슷해 바꿔치기한다.</span>
+    <span>시제품처럼 물리적 형태가 생겨도 무형자산 요소가 주된 것이면 무형자산. 반대로 기계가 그 소프트웨어 없이 안 돌아가면 소프트웨어는 유형자산.</span>
+    <span>외부에서 산 브랜드·고객목록은 자산 O, 내부 창출만 X.</span>
+  </div>
+  <p class="mine"></p>
+</section>
+
+<!-- 암기카드 -->
+<section id="card" class="sec" aria-labelledby="h-card">
+  <h2 id="h-card">암기카드</h2>
+  <div class="tw"><table>
+    <thead><tr><th>외울 것</th><th>압축</th></tr></thead>
+    <tbody>
+      <tr><td>보강적 질적특성</td><td>비검적이 (비교·검증·적시·이해)</td></tr>
+      <tr><td>충실한 표현</td><td>완중오 (완전·중립·오류 없음)</td></tr>
+      <tr><td>목적적합성</td><td>예확중 (예측·확인·중요성)</td></tr>
+      <tr><td>측정기준 거래원가</td><td>역사적원가·현행원가 포함 / 공정가치·사용가치 미포함</td></tr>
+      <tr><td>무조건 비유동</td><td>이연법인세자산·부채</td></tr>
+      <tr><td>무조건 금지</td><td>특별손익(본문·주석), 후입선출법, 내부창출 영업권, 영업권 손상 환입</td></tr>
+      <tr><td>매출원가</td><td>기초 + 매입 − 기말 (정상감모·평가손실 포함이 기본)</td></tr>
+      <tr><td>회수가능액</td><td>max(공정가치 − 처분부대원가, 사용가치)</td></tr>
+      <tr><td>재평가 방향</td><td>↑ 잉여금(전에 손실 낸 만큼은 이익) / ↓ 손실(잉여금 있는 만큼은 잉여금 감소)</td></tr>
+      <tr><td>추정 변경</td><td>전진법 (방법·내용연수·잔존가치)</td></tr>
+      <tr><td>교환 원가</td><td>실질 O: 준 것 공정가치 + 현금지급 / 실질 X: 준 것 장부금액 + 현금지급</td></tr>
+      <tr><td>차입원가</td><td>연평균지출 → 특정 먼저 → 나머지 × 자본화이자율(한도 실제 이자)</td></tr>
+      <tr><td>연구 vs 개발</td><td>찾고 고르면 연구(비용) / 만들어 보면 개발(6요건 → 자산)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const NS="http://www.w3.org/2000/svg";
+function plot(svg,xmax,ymax,xl,yl){const X=v=>40+v/xmax*280,Y=v=>222-v/ymax*208;
+  svg.innerHTML=`<line class="ax" x1="40" y1="222" x2="324" y2="222"/><line class="ax" x1="40" y1="222" x2="40" y2="10"/>
+  <text x="8" y="16">${yl}</text><text x="${320-xl.length*7}" y="240">${xl}</text><text x="30" y="236">0</text><g id="g-${svg.id}"></g><g id="t-${svg.id}"></g>`;
+  return {X,Y,g:svg.querySelector("#g-"+svg.id),t:svg.querySelector("#t-"+svg.id)}}
+function el(parent,tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;parent.appendChild(e);return e}
+function rect(p,cls,x0,y0,x1,y1){if(x1<=x0||y1<=y0)return;return el(p.g,"rect",{class:cls,x:p.X(x0),y:p.Y(y1),width:p.X(x1)-p.X(x0),height:p.Y(y0)-p.Y(y1)})}
+const w=v=>Math.round(v).toLocaleString("ko-KR");
+
+/* 빈출 지도 */
+const MAP=[
+ ["재고자산","#iv","4단원",31,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
+ ["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["재무제표 표시","#ps","3단원",9,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
+$("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
+
+/* 1. 거래 → 분개 → 등식 */
+const TX=[
+ {n:"① 현금 출자 1,000",je:[["현금",1000,"자본금",1000]],A:1000,L:0,E:1000,why:"주주가 돈을 넣었다 → 자산(현금)↑ · 자본↑"},
+ {n:"② 은행 차입 500",je:[["현금",500,"차입금",500]],A:1500,L:500,E:1000,why:"빌린 돈 → 자산↑ · 부채↑. 이익과는 무관"},
+ {n:"③ 상품 외상 매입 600",je:[["상품",600,"매입채무",600]],A:2100,L:1100,E:1000,why:"외상으로 샀다 → 자산(상품)↑ · 부채(매입채무)↑"},
+ {n:"④ 원가 400 상품을 700에 외상 판매",je:[["매출채권",700,"매출(수익)",700],["매출원가(비용)",400,"상품",400]],A:2400,L:1100,E:1300,why:"수익 700 − 비용 400 = 이익 300 → 자본↑"},
+ {n:"⑤ 급여 100 현금 지급",je:[["급여(비용)",100,"현금",100]],A:2300,L:1100,E:1200,why:"비용 → 자본↓ · 현금↓"},
+ {n:"⑥ 외상대금 500 회수",je:[["현금",500,"매출채권",500]],A:2300,L:1100,E:1200,why:"자산끼리 자리만 바뀜(매출채권 → 현금). 합계 그대로"}];
+let txi=0;
+function drawTx(){const t=TX[txi],svg=$("#svgTx"),p=plot(svg,2,2600,"","금액");
+  rect(p,"f-a",0.25,0,0.85,t.A);rect(p,"f-l",1.15,0,1.75,t.L);rect(p,"f-e",1.15,t.L,1.75,t.L+t.E);
+  el(p.t,"text",{x:p.X(.55)-14,y:p.Y(t.A)-6,class:"lbl"},w(t.A));el(p.t,"text",{x:p.X(.55)-12,y:236},"자산");
+  el(p.t,"text",{x:p.X(1.45)-28,y:236},"부채 + 자본");el(p.t,"text",{x:p.X(1.45)-14,y:p.Y(t.L+t.E)-6,class:"lbl"},w(t.L+t.E));
+  if(t.L)el(p.t,"text",{x:p.X(1.45)-20,y:p.Y(t.L/2)+4},"부채 "+w(t.L));el(p.t,"text",{x:p.X(1.45)-20,y:p.Y(t.L+t.E/2)+4},"자본 "+w(t.E));
+  const je=t.je.map(r=>`<tr><td>${r[0]}</td><td class="n">${w(r[1])}</td><td>${r[2]}</td><td class="n">${w(r[3])}</td></tr>`).join("");
+  $("#txOut").innerHTML=`<span><b>${t.n}</b> · ${t.why}</span><div class="je"><table><thead><tr><th>차변</th><th class="n">금액</th><th>대변</th><th class="n">금액</th></tr></thead><tbody>${je}</tbody></table></div><span>자산 <b>${w(t.A)}</b> = 부채 <b>${w(t.L)}</b> + 자본 <b>${w(t.E)}</b></span>${txi===5?"<span>당기순이익 = 매출 700 − 매출원가 400 − 급여 100 = <b>200</b> → 자본 1,000 + 200 = 1,200</span>":""}`;
+  document.querySelectorAll("#txBtns button").forEach((b,i)=>b.setAttribute("aria-pressed",i===txi))}
+$("#txBtns").innerHTML=TX.map((x,i)=>`<button type="button" data-i="${i}">${x.n.split(" ")[0]}</button>`).join("");
+$("#txBtns").onclick=e=>{const b=e.target.closest("button");if(!b)return;txi=+b.dataset.i;drawTx()};drawTx();
+
+/* 4. 감모·평가 박스 */
+function drawIv(){const B=100,C=100,G=30000,Q=+$("#ivQ").value,N=+$("#ivN").value,r=+$("#ivR").value/100;
+  $("#ivQOut").textContent=Q;$("#ivNOut").textContent=N;$("#ivROut").textContent=Math.round(r*100)+"%";
+  const p=plot($("#svgIv"),110,140,"수량","단가"),m=Math.min(C,N);
+  rect(p,"f-inv",0,0,Q,m);rect(p,"f-loss",0,N,Q,C);rect(p,"f-short",Q,0,B,C);
+  el(p.g,"rect",{class:"guide",x:p.X(0),y:p.Y(C),width:p.X(B)-p.X(0),height:p.Y(0)-p.Y(C)});
+  el(p.g,"line",{class:"s old",x1:p.X(0),y1:p.Y(N),x2:p.X(108),y2:p.Y(N)});
+  el(p.t,"text",{x:p.X(Q/2)-24,y:p.Y(m/2)+4,class:"lbl"},"재무상태표");
+  if(N<C)el(p.t,"text",{x:p.X(Q/2)-20,y:p.Y((N+C)/2)+4},"평가손실");
+  if(Q<B)el(p.t,"text",{x:p.X((Q+B)/2)-6,y:p.Y(C/2)+4},"감모");
+  el(p.t,"text",{x:6,y:p.Y(C)+4},"100");el(p.t,"text",{x:6,y:p.Y(N)+4},"NRV");el(p.t,"text",{x:p.X(Q)-8,y:236},String(Q));el(p.t,"text",{x:p.X(B)-8,y:236},"100");
+  const sh=(B-Q)*C,nor=sh*r,ab=sh-nor,val=Q*Math.max(0,C-N),bs=Q*m,cogs=G-B*C+nor+val;
+  $("#ivOut").innerHTML=`<span>① 감모손실 = (장부 100 − 실사 ${Q}) × 원가 100 = <b>${w(sh)}</b> (정상 ${w(nor)} → 매출원가 · 비정상 ${w(ab)} → 기타비용)</span>
+   <span>② 평가손실 = 실사 ${Q} × (원가 100 − NRV ${N})${N>=C?" → NRV가 원가 이상이라 <b>0</b> (저가법은 올려 주지 않는다)":` = <b>${w(val)}</b> → 매출원가`}</span>
+   <span>③ 재무상태표 재고 = 실사 ${Q} × min(원가, NRV) = <b>${w(bs)}</b></span>
+   <span>판매가능재고(기초 + 매입) 30,000이면 매출원가 = 30,000 − 장부 기말 10,000 + 정상감모 ${w(nor)} + 평가손실 ${w(val)} = <b>${w(cogs)}</b> (검산: 30,000 − ${w(bs)} − 비정상 ${w(ab)} = ${w(G-bs-ab)})</span>
+   <span>순서: 원가로 감모 먼저(가로로 자르고) → 남은 실사 수량에 단가 하락(세로로 자른다). 순서를 바꾸면 금액이 틀린다.</span>`}
+["#ivQ","#ivN","#ivR"].forEach(s=>$(s).oninput=drawIv);drawIv();
+
+/* 6. 감가상각 비교 */
+const DM={sl:"정액법",syd:"연수합계법",ddb:"이중체감법(정률법 계열)"};let dk="sl";
+function sched(k,C,S,n){const out=[];let bv=C;const sum=n*(n+1)/2;
+  for(let t=1;t<=n;t++){let d;if(k==="sl")d=(C-S)/n;else if(k==="syd")d=(C-S)*(n-t+1)/sum;else d=t<n?Math.min(bv*2/n,bv-S):bv-S;bv-=d;out.push([d,bv])}return out}
+function drawDep(){const C=1000,n=+$("#depN").value,S=+$("#depS").value;$("#depNOut").textContent=n;$("#depSOut").textContent=S;
+  const sc=sched(dk,C,S,n),mx=Math.max(...["sl","syd","ddb"].flatMap(k=>sched(k,C,S,n).map(x=>x[0]))),p=plot($("#svgDep"),n,mx*1.15,"연도","상각비");
+  sc.forEach(([d],i)=>{rect(p,"f-bar",i+.18,0,i+.82,d);el(p.t,"text",{x:p.X(i+.5)-10,y:p.Y(d)-5},w(d));el(p.t,"text",{x:p.X(i+.5)-3,y:236},String(i+1))});
+  const f=dk==="sl"?`(1,000 − ${S}) ÷ ${n} = ${w((C-S)/n)} 매년 같음`:dk==="syd"?`(1,000 − ${S}) × 남은 연수 ÷ ${n*(n+1)/2} (1년차 ${n}/${n*(n+1)/2})`:`기초 장부금액 × 2/${n}, 마지막 해는 잔존가치 ${S}까지 맞춤 (잔존가치를 먼저 빼지 않는다)`;
+  $("#depOut").innerHTML=`<span><b>${DM[dk]}</b> · ${f}</span><span>연도별 기말 장부금액: ${sc.map(x=>w(x[1])).join(" → ")}</span><span>3가지 모두 총 상각액 = ${w(C-S)}. 다른 것은 '언제 많이 떨어내나'뿐.</span>`;
+  document.querySelectorAll("#depBtns button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===dk))}
+$("#depBtns").innerHTML=Object.entries(DM).map(([k,v])=>`<button type="button" data-k="${k}">${v}</button>`).join("");
+$("#depBtns").onclick=e=>{const b=e.target.closest("button");if(!b)return;dk=b.dataset.k;drawDep()};
+$("#depN").oninput=drawDep;$("#depS").oninput=drawDep;drawDep();
+
+/* 7. 토지 재평가 */
+function drawRv(){let carry=1000,sur=0,pll=0;const rows=[],notes=[];
+  [1,2,3].forEach(y=>{const fv=+$("#rv"+y).value;$("#rv"+y+"Out").textContent=fv;const d=fv-carry;let pl=0,oci=0;
+    if(d>0){const back=Math.min(d,pll);pl=back;pll-=back;oci=d-back;if(back)notes.push(`${y}년: 전에 낸 손실 ${w(back)}만큼은 당기이익으로 먼저 되돌림`)}
+    else if(d<0){const use=Math.min(-d,sur);oci=-use;sur-=use;pl=d+use;pll+=-pl;if(use&&pl)notes.push(`${y}년: 잉여금 ${w(use)}을 다 쓰고 남은 ${w(-pl)}은 당기손실`)}
+    if(d>0)sur+=oci;carry=fv;
+    const sg=v=>v>0?`<span class="up">+${w(v)}</span>`:v<0?`<span class="dn">−${w(-v)}</span>`:"0";
+    rows.push(`<tr><td>${y}년 말</td><td class="n">${w(fv)}</td><td class="n">${sg(d)}</td><td class="n">${sg(pl)}</td><td class="n">${sg(oci)}</td><td class="n">${w(sur)}</td></tr>`)});
+  $("#rvBody").innerHTML=rows.join("");
+  $("#rvOut").innerHTML=`<span>규칙: 오르면 → 이전 당기손실 되돌리기 먼저, 나머지 잉여금 / 내리면 → 잉여금 먼저 줄이고, 모자라면 당기손실</span>${notes.map(s=>`<span>${s}</span>`).join("")}`}
+[1,2,3].forEach(y=>$("#rv"+y).oninput=drawRv);drawRv();
+</script>
+
+</body></html>

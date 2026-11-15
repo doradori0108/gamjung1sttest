@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.3.0";
+const APP_VER = "1.4.0";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -122,7 +122,7 @@ async function syncNow() {
 function drawSync() {
   const el = $("#syncPill"); if (!el) return;
   const t = syncState.at ? new Date(syncState.at).toTimeString().slice(0, 5) : "";
-  const [cls, txt] = !syncOn() ? ["", "기기 간 동기화 꺼짐"] : syncState.status === "busy" ? ["", "동기화 중…"] : syncState.status === "ok" ? ["ok", `동기화됨 ${t}`] : syncState.status === "offline" ? ["", "오프라인 · 나중에 동기화"] : syncState.status === "err" ? ["err", "동기화 오류 · 눌러서 확인"] : ["", "동기화 대기"];
+  const [cls, txt] = !syncOn() ? ["", "☁️ 동기화 꺼짐"] : syncState.status === "busy" ? ["", "🔄 동기화 중…"] : syncState.status === "ok" ? ["ok", `✅ 동기화 ${t}`] : syncState.status === "offline" ? ["", "📴 오프라인"] : syncState.status === "err" ? ["err", "⚠️ 동기화 오류"] : ["", "☁️ 동기화 대기"];
   el.className = "pill " + cls; el.textContent = txt;
 }
 
@@ -274,10 +274,11 @@ function refreshHomeIfShown() { if (V.route === "home") renderHome() }
 /* ───────── 공통 머리 ───────── */
 function chrome({ subject = "", back = null, eyebrow = "", title = "", meta = "", tabs = false, stats = false }) {
   document.body.dataset.subject = subject;
-  $("#topbar").innerHTML = `${back ? `<button class="back" id="backBtn">‹ ${back.label}</button>` : `<span class="note">감정평가사 1차</span>`}<button class="pill" id="syncPill"></button>`;
+  $("#topbar").innerHTML = `${back ? `<button class="back" id="backBtn">‹ ${back.label}</button>` : `<span class="brand">🎯 감평 1차</span>`}<span class="tright"><button class="iconbtn" id="themeBtn"></button><button class="pill" id="syncPill"></button></span>`;
   if (back) $("#backBtn").onclick = () => go(back.hash);
   $("#syncPill").onclick = () => go("#/settings");
-  drawSync();
+  $("#themeBtn").onclick = () => { localStorage.setItem(LS_THEME, isDark() ? "light" : "dark"); applyTheme(); if (V.route === "settings") renderSettings() };
+  drawSync(); drawThemeBtn();
   $("#eyebrow").textContent = eyebrow; $("#title").innerHTML = title; $("#meta").innerHTML = meta;
   $("#tabs").hidden = !tabs; $("#stats").hidden = !stats;
   $("#timerbar").hidden = true; $("#progress").hidden = true; $("#foot").textContent = "";
@@ -286,24 +287,88 @@ function chrome({ subject = "", back = null, eyebrow = "", title = "", meta = ""
 const dateLabel = () => { const d = new Date(day + "T00:00:00"); return `<b>${day.replace(/-/g, ".")}</b> (${"일월화수목금토"[d.getDay()]})` };
 function lecLabel(sub, lec) { const m = D[sub].meta; return m.stepLabel === "강" ? `${lec}강 · ${m.lectures[lec - 1] || ""}` : `${m.lectures[lec - 1] || ""}` }
 
+/* ───────── 게임 요소 (기록에서 계산만 하고 따로 저장하지 않음) ───────── */
+const EMO = { acct: "🧮", econ: "📈", civil: "⚖️", law: "🏛️", re: "🏠" };
+const emoOf = s => EMO[s] || "📘";
+const starRow = (n, max) => `<span class="stars" role="img" aria-label="별 ${max}개 중 ${n}개">${'<i class="on">★</i>'.repeat(n)}${"<i>★</i>".repeat(Math.max(0, max - n))}</span>`;
+function accOf(sub) { let s = 0, o = 0; for (const [id, h] of Object.entries(S.hist)) if (id.startsWith(sub + ":")) { s++; if (h.ok) o++ } return { s, o, p: s ? Math.round(o / s * 100) : 0 } }
+function bestStreak(sub) {
+  const ds = Object.keys(S.days).filter(d => { const v = S.days[d][sub]; return v && v.total && v.done >= v.total }).sort();
+  let best = 0, run = 0, prev = 0;
+  for (const d of ds) { const t = Date.parse(d); run = prev && t - prev === 864e5 ? run + 1 : 1; prev = t; best = Math.max(best, run) }
+  return best;
+}
+function badgeList() {
+  const subs = SUBJ.map(s => s.id), hist = Object.entries(S.hist);
+  const seenEx = hist.filter(([id]) => !/:ox\d+$/.test(id)).length, fixed = hist.filter(([, h]) => h.ok && h.wrong > 0).length;
+  const best = Math.max(0, ...subs.map(bestStreak)), vals = Object.values(S.days).flatMap(v => Object.values(v));
+  const B = [
+    ["first", "🌱", "첫걸음", "문제 1개 풀기", hist.length > 0],
+    ["clear", "✅", "오늘 클리어", "오늘의 문제 한 세트 끝내기", vals.some(x => x.total && x.done >= x.total)],
+    ["double", "🎯", "올클리어", "하루에 모든 과목 오늘의 문제 끝내기", Object.values(S.days).some(v => subs.every(s => v[s] && v[s].total && v[s].done >= v[s].total))],
+    ["perfect", "💯", "만점", "오늘의 문제 20개 전부 맞히기", vals.some(x => x.total && x.ok >= x.total)],
+    ["s3", "🔥", "3일 연속", "한 과목 3일 연속 완료", best >= 3],
+    ["s7", "☄️", "7일 연속", "한 과목 7일 연속 완료", best >= 7],
+    ["s30", "💎", "30일 연속", "한 과목 30일 연속 완료", best >= 30],
+    ["ex100", "📚", "기출 100", "서로 다른 기출 100문항 풀기", seenEx >= 100],
+    ["ex300", "🏆", "기출 300", "서로 다른 기출 300문항 풀기", seenEx >= 300],
+    ["fix10", "🧹", "오답 정리왕", "틀렸던 문제 10개 다시 맞히기", fixed >= 10],
+    ["half", "🗺️", "반환점", "한 과목 진도 절반 넘기기", subs.some(s => lecOf(s) * 2 >= D[s].meta.lectures.length)]
+  ];
+  return B.map(([id, e, n, d, ok]) => ({ id, e, n, d, ok }));
+}
+const LS_BADGE = "dora-exam-badges";
+/* 새로 딴 배지: 이 기기에서 아직 축하하지 않은 배지 */
+function newBadges() {
+  let seen = []; try { seen = JSON.parse(localStorage.getItem(LS_BADGE)) || [] } catch (e) { }
+  const got = badgeList().filter(b => b.ok), fresh = got.filter(b => !seen.includes(b.id));
+  try { localStorage.setItem(LS_BADGE, JSON.stringify(got.map(b => b.id))) } catch (e) { }
+  return fresh;
+}
+function toast(html) {
+  let t = $("#toast"); if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t) }
+  t.innerHTML = html; t.hidden = false; t.classList.remove("show"); void t.offsetWidth; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(() => { t.hidden = true }, 4200);
+}
+function celebrate() { const f = newBadges(); if (f.length) toast(`<b>🏅 새 배지!</b> ${f.map(b => `${b.e} ${b.n}`).join(" · ")}`) }
+function pathDots(sub) {
+  const m = D[sub].meta, L = lecOf(sub);
+  return `<div class="path" role="img" aria-label="진도 ${L} / ${m.lectures.length}">${m.lectures.map((_, i) => `<i class="${i + 1 < L ? "done" : i + 1 === L ? "cur" : ""}"></i>`).join("")}</div>`;
+}
+
 /* ───────── 홈 ───────── */
 function renderHome() {
   chrome({ eyebrow: "감정평가사 1차 · 문제풀이", title: "오늘의 공부", meta: `<span>${dateLabel()}</span>` });
+  const bl = badgeList(), got = bl.filter(b => b.ok).length;
+  const best = Math.max(0, ...SUBJ.map(s => streak(s.id)));
+  const tot = SUBJ.reduce((a, s) => { const sm = summary(s.id); a.d += sm.done; a.t += sm.total; return a }, { d: 0, t: 0 });
   const cards = SUBJ.map(s => {
-    const sm = summary(s.id), st = streak(s.id), wr = wrongList(s.id).length, m = D[s.id].meta, L = lecOf(s.id);
-    const state = !sm.started ? "오늘 시작 전" : sm.done >= sm.total ? "오늘 완료 ✓" : `오늘 ${sm.done}/${sm.total} 푸는 중`;
+    const sm = summary(s.id), st = streak(s.id), wr = wrongList(s.id).length, m = D[s.id].meta, L = lecOf(s.id), ac = accOf(s.id);
+    const done = sm.done >= sm.total, state = !sm.started ? "오늘 시작 전" : done ? "클리어! 🎉" : `${sm.done}/${sm.total} 진행 중`;
+    const nx = m.lectures[L];
     return `<div class="scard" data-s="${s.id}">
-      <div class="row1"><h2>${m.name}</h2><span class="sub">${m.teacher} ${m.course} · ${m.stepLabel === "강" ? L + "강까지" : esc2(m.lectures[L - 1]) + "까지"}</span></div>
-      <span class="bar"><i style="width:${Math.round(sm.done / Math.max(1, sm.total) * 100)}%"></i></span>
-      <div class="nums"><span>오늘 <b>${sm.done}/${sm.total}</b>${sm.done ? ` (맞힘 ${sm.ok})` : ""}</span><span>연속 완료 <b>${st}</b>일</span><span>누적 틀린 문제 <b>${wr}</b>개</span></div>
-      <div class="two"><button data-go="note">1 개념정리<small>${m.notes ? "요약노트" : "준비 중"}</small></button><button class="main" data-go="daily">2 문제풀이<small>${state}</small></button></div>
+      <div class="row1"><span class="semo" aria-hidden="true">${emoOf(s.id)}</span><span class="ttl"><h2>${m.name}</h2><span class="sub">${m.teacher} ${m.course}</span></span><span class="lvl">Lv.<b>${L}</b><small>/${m.lectures.length}</small></span></div>
+      ${pathDots(s.id)}
+      <div class="cap">📍 ${esc2(lecLabel(s.id, L))}${nx ? `<span>다음 ▶ ${esc2(m.stepLabel === "강" ? L + 1 + "강" : nx)}</span>` : ""}</div>
+      <div class="today">${starRow(Math.floor(sm.done / Math.max(1, sm.total) * 5), 5)}<span>오늘 <b>${sm.done}</b>/${sm.total}${sm.done ? ` · 맞힘 ${sm.ok}` : ""}</span></div>
+      <div class="chips"><span class="chip ${st ? "fire" : ""}">🔥 ${st}일 연속</span><span class="chip">🎯 정답률 ${ac.s ? ac.p + "%" : "–"}</span><span class="chip ${wr ? "bad" : ""}">❌ 오답 ${wr}</span></div>
+      <div class="two"><button data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button class="main ${done ? "clear" : ""}" data-go="daily">⚔️ 도전하기<small>${state}</small></button></div>
     </div>`;
   }).join("");
-  $("#main").innerHTML = `<div class="subjects">${cards}</div>
-    ${syncOn() ? "" : `<div class="warnbox">지금은 이 기기에만 기록이 저장돼요. 휴대폰과 PC 기록을 이으려면 <a href="#/settings">설정 → 기기 간 동기화</a>를 한 번 연결해 주세요.</div>`}
-    <div class="row"><a class="btn ghost sm" href="#/settings">설정</a></div>`;
+  $("#main").innerHTML = `<div class="hero">
+      <div class="hx"><span class="he" aria-hidden="true">🔥</span><b>${best}</b><small>일 연속</small></div>
+      <div class="hx"><span class="he" aria-hidden="true">⭐</span><b>${tot.d}</b><small>/${tot.t} 오늘</small></div>
+      <a class="hx" href="#badges"><span class="he" aria-hidden="true">🏅</span><b>${got}</b><small>/${bl.length} 배지</small></a>
+    </div>
+    <div class="subjects">${cards}</div>
+    ${syncOn() ? "" : `<div class="warnbox">☁️ 지금은 이 기기에만 기록이 저장돼요. 휴대폰과 PC 기록을 이으려면 <a href="#/settings">설정 → 기기 간 동기화</a>를 한 번 연결해 주세요.</div>`}
+    <section class="card" id="badges"><h2 class="sec" style="margin:0">🏅 배지 ${got}/${bl.length}</h2>
+      <ul class="badges">${bl.map(b => `<li class="${b.ok ? "got" : ""}"><span class="be" aria-hidden="true">${b.e}</span><b>${b.n}</b><small>${b.ok ? "획득" : b.d}</small></li>`).join("")}</ul></section>
+    <div class="row"><a class="btn ghost sm" href="#/settings">⚙️ 설정</a></div>`;
   document.querySelectorAll(".scard button[data-go]").forEach(b => b.onclick = () => go(`#/s/${b.closest(".scard").dataset.s}/${b.dataset.go}`));
-  $("#foot").textContent = `오늘의 문제는 매일 자정(한국시간)에 새로 바뀌고, 과목마다 ${DAILY_N}문제 · ${DAILY_N * SEC_PER_Q / 60}분입니다.`;
+  $("#main").querySelector('a[href="#badges"]').onclick = e => { e.preventDefault(); $("#badges").scrollIntoView({ behavior: "smooth" }) };
+  $("#foot").textContent = `오늘의 문제는 매일 자정(한국시간)에 새로 바뀌고, 과목마다 ${DAILY_N}문제 · ${DAILY_N * SEC_PER_Q / 60}분입니다. 별은 오늘 푼 비율(4문제당 ★1), 배지는 지금까지 기록으로 계산합니다.`;
+  celebrate();
 }
 const esc2 = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
@@ -314,12 +379,12 @@ function render() {
   const wrN = wrongList(sub).length;
   chrome({
     subject: sub, back: { label: "홈", hash: "#/" }, eyebrow: `감정평가사 1차 · ${m.name} · ${m.teacher} ${m.course}`,
-    title: V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "틀린 문제 다시 풀기" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 기출" : V.tab === "wrong" ? "틀린 문제" : V.tab === "note" ? `${m.name} 개념정리` : "진도 · 출제 지도",
-    meta: `<span>${dateLabel()}</span><span>진도 <b>${esc2(lecLabel(sub, L))}</b>까지</span>`, tabs: true, stats: true
+    title: `<span class="temo" aria-hidden="true">${emoOf(sub)}</span>` + (V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "오답 정리" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 도전" : V.tab === "wrong" ? "오답 정리" : V.tab === "note" ? `${m.name} 개념정리` : "진도 지도"),
+    meta: `<span>${dateLabel()}</span><span>Lv.${L} · <b>${esc2(lecLabel(sub, L))}</b>까지</span>`, tabs: true, stats: true
   });
   drawSeg();
   if (V.tab === "note") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderNote() }
-  const tabs = [["daily", "오늘의 문제"], ["unit", "단원별"], ["wrong", "틀린 문제"], ["map", "진도 지도"]];
+  const tabs = [["daily", "🎯 오늘"], ["unit", "🧩 단원별"], ["wrong", "❌ 오답"], ["map", "🗺️ 진도"]];
   $("#tabs").innerHTML = tabs.map(([t, n]) => `<button role="tab" data-t="${t}" aria-selected="${V.tab === t}">${n}${t === "wrong" && wrN ? `<span class="cnt">${wrN}</span>` : ""}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b => b.onclick = () => go(`#/s/${sub}/${b.dataset.t}`));
   stats();
@@ -331,50 +396,59 @@ function render() {
 function stats() {
   const sub = V.sub, sm = summary(sub), st = streak(sub);
   const ex = D[sub].exam.filter(x => !x.skip && !x.gen), seen = ex.filter(x => S.hist[`${sub}:${x.k}`]).length, wr = wrongList(sub).length;
-  $("#stats").innerHTML = `<span class="st"><span><b>${sm.done}</b>/${sm.total}</span><small>오늘 푼 문제</small></span><span class="st"><span><b>${st}</b>일</span><small>연속 완료</small></span><span class="st"><span><b>${seen}</b>문항</span><small>풀어 본 기출 (수록 ${ex.length})</small></span><span class="st ${wr ? "warn" : ""}"><span><b>${wr}</b>개</span><small>누적 틀린 문제</small></span>`;
+  const tile = (e, v, u, l, cls = "") => `<span class="st ${cls}"><span class="si" aria-hidden="true">${e}</span><span><b>${v}</b>${u}</span><small>${l}</small></span>`;
+  $("#stats").innerHTML = tile("⭐", sm.done, "/" + sm.total, "오늘") + tile("🔥", st, "일", "연속", st ? "fire" : "") + tile("📚", seen, "/" + ex.length, "푼 기출") + tile("❌", wr, "개", "오답", wr ? "warn" : "");
 }
 
-/* 단원 행 */
+/* 단원 노드 (스테이지) */
+function mastery(sub, x) {
+  const ex = exOfU(sub, x.u), hs = ex.map(q => S.hist[`${sub}:${q.k}`]).filter(Boolean), ok = hs.filter(h => h.ok).length;
+  const st = !ex.length || !hs.length ? 0 : hs.length === ex.length && ok / hs.length >= .8 ? 3 : hs.length * 2 >= ex.length && ok / hs.length >= .6 ? 2 : 1;
+  return { ex: ex.length, seen: hs.length, ok, wr: hs.length - ok, st };
+}
 function unitRow(sub, x, withBtn) {
-  const L = Math.min(lecOf(sub), D[sub].meta.dataThrough), open = x.lec <= L, m = D[sub].meta;
-  const ex = exOfU(sub, x.u), ox = oxOfU(sub, x.u).length, done = ex.filter(q => S.hist[`${sub}:${q.k}`]).length;
-  const wr = ex.filter(q => (S.hist[`${sub}:${q.k}`] || {}).ok === false).length;
-  const lecTxt = m.stepLabel === "강" ? `${x.lec}강~ · ` : "";
-  const sub2 = x.lec > lecOf(sub) ? `${lecTxt}아직 수강 전` : !open ? `${lecTxt}수강했지만 기출 추가 전` : ex.length ? `${lecTxt}수록 ${ex.length}문항 · ${done}문항 풀어 봄${wr ? ` · 틀림 ${wr}` : ""}${ox ? ` · 개념 O·X ${ox}` : ""}` : `${lecTxt}기출 미수록`;
-  return `<li class="unit ${open ? "open" : "locked"}"><span class="nm">${esc2(x.nm)}<small>${sub2}</small></span>
-   <span class="ct"><span class="lv ${lvOf(x.n) === "상" ? "h" : ""}">${lvOf(x.n)}</span><span class="bar" title="10년간 ${x.n}문항"><i style="width:${Math.round(Math.min(1, x.n / 31) * 100)}%"></i></span>${String(x.n).padStart(2, " ")}${withBtn && open && ex.length ? `<button data-u="${x.u}">풀기</button>` : ""}</span></li>`;
+  const m = D[sub].meta, Lr = lecOf(sub), L = Math.min(Lr, m.dataThrough), open = x.lec <= L, ox = oxOfU(sub, x.u).length, ms = mastery(sub, x);
+  const lecTxt = m.stepLabel === "강" ? `${x.lec}강~ · ` : `${x.lec}단원 · `;
+  const sub2 = x.lec > Lr ? `${lecTxt}아직 수강 전` : !open ? `${lecTxt}수강했지만 기출 추가 전` : ms.ex ? `${lecTxt}${ms.seen}/${ms.ex}문항 풀어 봄${ms.wr ? ` · ❌ ${ms.wr}` : ""}${ox ? ` · O·X ${ox}` : ""}` : `${lecTxt}기출 미수록`;
+  const cur = x.lec === Lr, icon = x.lec > Lr ? "🔒" : cur ? "📍" : ms.st === 3 ? "👑" : open ? "✅" : "⏳";
+  const lv = lvOf(x.n);
+  return `<li class="unit ${x.lec > Lr ? "locked" : "open"} ${cur ? "cur" : ""}"><span class="node" aria-hidden="true">${icon}</span><span class="nm">${esc2(x.nm)}<small>${sub2}</small>${open && ms.ex ? starRow(ms.st, 3) : ""}</span>
+   <span class="ct"><span class="lv ${lv === "상" ? "h" : lv === "중" ? "m" : ""}" title="10년간 ${x.n}문항">${lv === "상" ? "🔥" : ""}${lv} ${x.n}</span>${withBtn && open && ms.ex ? `<button data-u="${x.u}">▶ 도전</button>` : ""}</span></li>`;
 }
 function renderUnitPick() {
   const sub = V.sub, L = Math.min(lecOf(sub), D[sub].meta.dataThrough);
   const list = D[sub].meta.units.filter(x => x.lec <= L);
-  $("#main").innerHTML = list.length ? `<ul class="units">${list.map(x => unitRow(sub, x, true)).join("")}</ul>` : `<p class="exp">아직 열린 단원이 없어요. '진도 · 출제 지도'에서 진도를 올려 주세요.</p>`;
+  $("#main").innerHTML = list.length ? `<ul class="units stage">${list.map(x => unitRow(sub, x, true)).join("")}</ul>` : `<p class="exp">아직 열린 단원이 없어요. '🗺️ 진도'에서 진도를 올려 주세요.</p>`;
   $("#main").querySelectorAll("button[data-u]").forEach(b => b.onclick = () => go(`#/s/${sub}/unit/${b.dataset.u}`));
-  $("#foot").textContent = "수강한 단원만 열립니다. 숫자와 막대는 제28~37회(10년) 중 그 단원 출제 문항 수, 상·중·하는 출제 비중(15문항 이상 상, 8~14 중, 7 이하 하). 단원 안에서는 안 푼 문제 → 틀린 문제 → 맞힌 문제 순으로 나옵니다.";
+  $("#foot").textContent = "별 = 그 단원 정복도(★ 풀기 시작 · ★★ 절반 이상 풀고 60% 이상 맞힘 · ★★★ 전부 풀고 80% 이상 맞힘 → 👑). 상·중·하와 숫자 = 제28~37회(10년) 출제 비중(15문항 이상 상, 8~14 중, 7 이하 하). 단원 안에서는 안 푼 문제 → 틀린 문제 → 맞힌 문제 순으로 나옵니다.";
 }
 function renderWrongPick() {
   const sub = V.sub, list = wrongList(sub);
-  if (!list.length) { $("#main").innerHTML = `<section class="card"><p class="exp">지금은 틀린 채로 남은 문제가 없어요. 다시 풀어서 맞히면 이 목록에서 빠집니다.</p></section>`; return }
+  if (!list.length) { $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">✨</div><p class="exp">틀린 채로 남은 문제가 없어요. 다시 풀어서 맞히면 이 목록에서 빠집니다.</p></section>`; return }
   const byU = {};
   for (const x of list) { const u = x.q.t === "ex" ? D[sub].ex[x.q.k].u : D[sub].oxBy[x.q.id].u; byU[u] = (byU[u] || 0) + 1 }
-  $("#main").innerHTML = `<section class="card"><div class="qhead"><span class="qno">틀린 채로 남은 문제</span><span class="tag">${list.length}개</span></div>
-    <p class="exp">마지막으로 풀었을 때 틀린 문제만 모았어요. 여러 번 틀린 문제부터 나오고, 맞히면 목록에서 빠집니다. 제한시간은 없어요.</p>
-    <div class="row"><button class="btn" id="goWrong">${list.length}문제 풀기</button></div></section>
-    <ul class="units">${D[sub].meta.units.filter(u => byU[u.u]).map(u => `<li class="unit"><span class="nm">${esc2(u.nm)}</span><span class="ct">${byU[u.u]}개</span></li>`).join("")}</ul>`;
+  const mx = Math.max(...Object.values(byU));
+  $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">🧹</div><div class="score">${list.length}<small> 문제</small></div>
+    <p class="exp">마지막에 틀린 문제만 모았어요. 여러 번 틀린 문제부터 나오고, 맞히면 목록에서 빠집니다. 제한시간 없음.</p>
+    <div class="row" style="justify-content:center"><button class="btn" id="goWrong">⚔️ 오답 ${list.length}문제 정리하기</button></div></section>
+    <h2 class="sec">단원별 남은 오답</h2>
+    <ul class="units">${D[sub].meta.units.filter(u => byU[u.u]).map(u => `<li class="unit"><span class="nm">${esc2(u.nm)}</span><span class="ct"><span class="bar"><i style="width:${Math.round(byU[u.u] / mx * 100)}%;background:var(--x)"></i></span>❌ ${byU[u.u]}</span></li>`).join("")}</ul>`;
   $("#goWrong").onclick = () => go(`#/s/${sub}/wrong/play`);
 }
 function renderMap() {
   const sub = V.sub, m = D[sub].meta, L = lecOf(sub), units = m.units;
   const openN = units.filter(x => x.lec <= Math.min(L, m.dataThrough)).reduce((a, b) => a + b.n, 0), all = units.reduce((a, b) => a + b.n, 0);
   const nxt = units.filter(x => x.lec > L).sort((a, b) => a.lec - b.lec)[0];
-  const grps = [...new Set(units.map(u => u.grp))];
-  $("#main").innerHTML = `<div class="lec"><button id="lm" aria-label="진도 한 ${m.stepLabel} 빼기">−</button><span class="num">지금 들은 ${m.stepLabel === "강" ? "강의" : "단원"}<b>${esc2(lecLabel(sub, L))}</b></span><button id="lp" aria-label="진도 한 ${m.stepLabel} 더하기">+</button>
-     <span class="lname">10년 기출 ${all}문항 중 <b>${openN}문항(${Math.round(openN / all * 100)}%)</b>이 지금까지 배운 범위입니다.${nxt ? ` 다음 단원: ${esc2(nxt.nm)} (10년 ${nxt.n}문항, 비중 ${lvOf(nxt.n)})` : ""}</span></div>
-   ${L <= m.dataThrough && units.some(x => x.lec <= L && !exOfU(sub, x.u).length && !oxOfU(sub, x.u).length) ? `<div class="warnbox">수강한 단원 중 아직 기출이 들어 있지 않은 단원이 있어요. Claude에게 "${m.name} ○○ 단원 들었어"라고 알려 주시면 그 단원 기출을 해설과 함께 추가합니다. 그 전까지는 문제가 있는 단원에서만 냅니다.</div>` : ""}
-   ${L > m.dataThrough ? `<div class="warnbox">문제는 ${m.stepLabel === "강" ? m.dataThrough + "강" : esc2(m.lectures[m.dataThrough - 1])}까지 들어 있어요. Claude에게 "${m.name} ${m.stepLabel === "강" ? L + "강" : "○○ 단원"}까지 들었어"라고 알려 주시면 그 범위 기출을 해설과 함께 추가합니다.</div>` : ""}
-   ${grps.map(g => { const us = units.filter(u => u.grp === g), n = us.reduce((a, b) => a + b.n, 0); return `<h2 class="sec">${g} · 10년 ${n}문항 (${Math.round(n / all * 100)}%)</h2><ul class="units">${us.map(x => unitRow(sub, x, false)).join("")}</ul>` }).join("")}`;
-  const step = d => { const nl = Math.max(1, Math.min(m.lectures.length, L + d)); if (nl === L) return; setLec(sub, nl); const e = entry(sub); if (e && !(e.res || []).filter(Boolean).length) delete S.daily[day][sub]; touch(); render() };
+  const grps = [...new Set(units.map(u => u.grp))], pc = Math.round(openN / all * 100);
+  $("#main").innerHTML = `<div class="lec"><button id="lm" aria-label="진도 한 ${m.stepLabel} 빼기">◀</button><span class="num"><span class="lvbig">Lv.${L}<small>/${m.lectures.length}</small></span><b>${esc2(lecLabel(sub, L))}</b></span><button id="lp" aria-label="진도 한 ${m.stepLabel} 더하기">▶</button>
+     ${pathDots(sub)}
+     <span class="lname">🗺️ 10년 기출 ${all}문항 중 <b>${openN}문항(${pc}%)</b>을 정복할 수 있어요.${nxt ? `<br>다음 스테이지 ▶ ${esc2(nxt.nm)} (10년 ${nxt.n}문항, 비중 ${lvOf(nxt.n)})` : ""}</span></div>
+   ${L <= m.dataThrough && units.some(x => x.lec <= L && !exOfU(sub, x.u).length && !oxOfU(sub, x.u).length) ? `<div class="warnbox">⏳ 수강한 단원 중 아직 기출이 들어 있지 않은 단원이 있어요. Claude에게 "${m.name} ○○ 단원 들었어"라고 알려 주시면 그 단원 기출을 해설과 함께 추가합니다. 그 전까지는 문제가 있는 단원에서만 냅니다.</div>` : ""}
+   ${L > m.dataThrough ? `<div class="warnbox">⏳ 문제는 ${m.stepLabel === "강" ? m.dataThrough + "강" : esc2(m.lectures[m.dataThrough - 1])}까지 들어 있어요. Claude에게 "${m.name} ${m.stepLabel === "강" ? L + "강" : "○○ 단원"}까지 들었어"라고 알려 주시면 그 범위 기출을 해설과 함께 추가합니다.</div>` : ""}
+   ${grps.map(g => { const us = units.filter(u => u.grp === g), n = us.reduce((a, b) => a + b.n, 0); return `<h2 class="sec">${g} · 10년 ${n}문항 (${Math.round(n / all * 100)}%)</h2><ul class="units stage">${us.map(x => unitRow(sub, x, false)).join("")}</ul>` }).join("")}`;
+  const step = d => { const nl = Math.max(1, Math.min(m.lectures.length, L + d)); if (nl === L) return; setLec(sub, nl); const e = entry(sub); if (e && !(e.res || []).filter(Boolean).length) delete S.daily[day][sub]; touch(); render(); if (d > 0) celebrate() };
   $("#lm").onclick = () => step(-1); $("#lp").onclick = () => step(1);
-  $("#foot").textContent = (m.mapNote || "") + " 진도를 바꾸면 아직 한 문제도 안 푼 오늘 세트는 새 범위로 다시 만들어집니다.";
+  $("#foot").textContent = "📍 지금 진도 · ✅ 열린 단원 · 👑 정복(전부 풀고 80% 이상) · 🔒 수강 전. " + (m.mapNote || "") + " 진도를 바꾸면 아직 한 문제도 안 푼 오늘 세트는 새 범위로 다시 만들어집니다.";
 }
 
 /* ───────── 개념정리 ───────── */
@@ -386,7 +460,7 @@ function noteOf(sub, q) {
 function drawSeg() {
   const sub = V.sub, m = D[sub].meta, sm = summary(sub), seg = $("#seg"); seg.hidden = false;
   const onNote = V.tab === "note";
-  seg.innerHTML = `<button role="tab" aria-selected="${onNote}" data-go="note">1 개념정리<small>${m.notes ? "결론 · 그래프 · 함정 · 기출" : "준비 중"}</small></button><button role="tab" aria-selected="${!onNote}" data-go="daily">2 문제풀이<small>오늘 ${sm.done}/${sm.total}</small></button>`;
+  seg.innerHTML = `<button role="tab" aria-selected="${onNote}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리 · 함정 · 기출" : "준비 중"}</small></button><button role="tab" aria-selected="${!onNote}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button>`;
   seg.querySelectorAll("button").forEach(b => b.onclick = () => { if ((b.dataset.go === "note") !== onNote) go(`#/s/${sub}/${b.dataset.go}`) });
 }
 function renderNote() {
@@ -414,8 +488,7 @@ addEventListener("resize", () => fitNote());
 function enhanceNote(sub) {
   let doc; try { doc = $("#noteFrame").contentDocument } catch (e) { return }
   if (!doc || !doc.body) return;
-  const t = localStorage.getItem(LS_THEME) || "auto";
-  if (t === "auto") doc.documentElement.removeAttribute("data-theme"); else doc.documentElement.dataset.theme = t;
+  setThemeOn(doc);
   if (!doc.getElementById("appStyle")) {
     const st = doc.createElement("style"); st.id = "appStyle";
     st.textContent = `header .eyebrow,header h1{display:none}.appgo{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}.appgo button{font:500 14px var(--f-body);padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}.appgo button.gh{background:transparent;color:var(--accent)}`;
@@ -466,7 +539,7 @@ function renderPlay() {
   progressNav();
   if (tmPaused()) {
     tmDraw();
-    m.innerHTML = `<section class="card"><div class="qhead"><span class="qno">일시정지</span><span class="tag">${answered()} / ${V.Q.length} 풀이</span></div>
+    m.innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">⏸️</div><div class="qhead" style="justify-content:center"><span class="qno">일시정지</span><span class="tag">${answered()} / ${V.Q.length} 풀이</span></div>
       <p class="exp">문제는 가려 두었어요. 남은 시간 <b>${fmt(Math.max(0, tmLimit() - tmUsed()))}</b>${tmLimit() < tmUsed() ? " (제한시간 초과)" : ""} 그대로 멈춰 있습니다.</p>
       <div class="row"><button class="btn" id="resume">▶ 이어서 풀기</button></div></section>`;
     $("#resume").onclick = () => { T.paused = false; tmGo(); saveTimer(); render() }; return;
@@ -476,26 +549,26 @@ function renderPlay() {
   let html;
   if (q.t === "ox") {
     const b = D[sub].oxBy[q.id], un = D[sub].ub[b.u];
-    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tags"><span class="tag">O·X · ${esc2(un ? un.nm : "")}</span></span></div>
-      <p class="stem">${b.s}</p><div class="ox"><button data-v="1" aria-label="O 맞다">O</button><button data-v="0" aria-label="X 틀리다">X</button></div>`;
+    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tags"><span class="tag">⭕ O·X · ${esc2(un ? un.nm : "")}</span></span></div>
+      <p class="stem">${b.s}</p><div class="ox"><button data-v="1" class="o" aria-label="O 맞다">O<small>맞다</small></button><button data-v="0" class="x" aria-label="X 틀리다">X<small>틀리다</small></button></div>`;
   } else if (q.t === "ex") {
     const x = D[sub].ex[q.k];
-    const tag = x.gen ? `<span class="tag gen">보충 문제 · 기출 아님</span>` : `<span class="tag exb">기출 · 제${x.y}회(${x.yr}) ${x.n}번${x.old ? " · 구 기준" : ""}</span>`;
-    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tags">${tag}${q.after ? '<span class="tag">방금 지문이 나온 문제</span>' : ""}</span></div>
+    const tag = x.gen ? `<span class="tag gen">✏️ 보충 문제 · 기출 아님</span>` : `<span class="tag exb">📜 기출 · 제${x.y}회(${x.yr}) ${x.n}번${x.old ? " · 구 기준" : ""}</span>`;
+    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tags">${tag}${q.after ? '<span class="tag">🔗 방금 지문이 나온 문제</span>' : ""}</span></div>
       <p class="stem">${x.q}</p>
       ${x.fig ? `<div class="fig">${x.fig}</div>` : ""}
       ${x.tbl ? `<div class="tblw"><table class="tbl">${x.tbl.map((r, i) => `<tr>${r.map(c => i ? `<td>${c}</td>` : `<th>${c}</th>`).join("")}</tr>`).join("")}</table></div>` : ""}
       ${x.box ? `<div class="box">${x.box.map(b => `<p>${b.t}</p>`).join("")}</div>` : ""}
-      ${x.h && !V.res[V.idx] ? `<button class="hintbtn" id="hintBtn">힌트 보기</button><p class="hint" id="hint" hidden>${x.h}</p>` : ""}
+      ${x.h && !V.res[V.idx] ? `<button class="hintbtn" id="hintBtn">💡 힌트 보기</button><p class="hint" id="hint" hidden>${x.h}</p>` : ""}
       <ul class="opts">${x.o.map((t, i) => `<li><button data-v="${i}"><span class="n">${N5[i]}</span><span>${t}</span></button></li>`).join("")}</ul>`;
   } else {
     const un = D[sub].ub[q.u];
-    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tag">5지선다 · 개념 O·X로 구성</span></div>
+    html = `<section class="card q"><div class="qhead"><span class="qno">${no}</span><span class="tag">🧠 5지선다 · 개념 O·X로 구성</span></div>
       <p class="stem">${esc2(un ? un.nm : "")}에 관한 설명으로 <b>${q.neg ? "옳지 않은" : "옳은"}</b> 것은?</p>
       <ul class="opts">${q.opts.map((id, i) => `<li><button data-v="${i}"><span class="n">${N5[i]}</span><span>${D[sub].oxBy[id].s}</span></button></li>`).join("")}</ul>`;
   }
   const r = V.res[V.idx], nx = nextUn(V.idx);
-  if (r) html += `<p class="done-note">이미 푼 문제 · 내 답 ${q.t === "ox" ? (r.v ? "O" : "X") : N5[r.v]} (${r.ok ? "정답" : "오답"}) <button class="btn ghost sm" id="review">해설 보기</button></p>`;
+  if (r) html += `<p class="done-note">${r.ok ? "✅" : "❌"} 이미 푼 문제 · 내 답 ${q.t === "ox" ? (r.v ? "O" : "X") : N5[r.v]} (${r.ok ? "정답" : "오답"}) <button class="btn ghost sm" id="review">해설 보기</button></p>`;
   html += `</section><div class="qnav"><button class="btn ghost" id="prevQ" ${V.idx === 0 ? "disabled" : ""}>◀ 이전</button>${nx >= 0 && nx !== V.idx ? `<button class="btn ghost" id="skipQ">${r ? "다음 안 푼 문제" : "건너뛰기"} ▶</button>` : ""}</div>`;
   m.innerHTML = html;
   m.querySelectorAll(".ox button,.opts button").forEach(b => { if (r) { b.disabled = true; b.style.opacity = .55 } else b.onclick = () => answer(q.t === "ox" ? b.dataset.v === "1" : +b.dataset.v) });
@@ -534,12 +607,14 @@ function answer(v, review) {
       const e = entry(sub); e.res = V.res; e.t = Date.now(); e.tm = { used: tmUsed(), paused: false };
       (S.days[day] = S.days[day] || {})[sub] = { done: answered(), ok: V.res.filter(r => r && r.ok).length, total: V.Q.length };
     }
+    V.combo = ok ? (V.combo || 0) + 1 : 0;
     touch(); stats(); progressNav();
   }
   const nx = nextUn(V.idx), last = nx < 0;
   $("#sheet").className = "sheet " + (ok ? "good" : "bad");
-  $("#sheet").innerHTML = `<div class="verdict"><span class="mark">${ok ? "O" : "X"}</span><span id="vtext">${ok ? "정답입니다" : "오답입니다"}</span></div>${html}
-    <div class="row"><button class="btn" id="next">${review ? "닫기" : last ? "결과 보기" : "다음 문제"}</button>${noteOf(sub, q) ? `<button class="notelink" id="toNote">개념정리에서 보기</button>` : ""}</div>`;
+  const cheer = ok ? ["좋아요!", "정확해요!", "완벽!", "그대로 가요!"][(V.combo || 1) % 4] : "괜찮아요, 해설 보고 다음에 맞혀요";
+  $("#sheet").innerHTML = `<div class="verdict"><span class="mark" aria-hidden="true">${ok ? "🎉" : "💥"}</span><span><span id="vtext">${ok ? "정답!" : "오답"}</span><small>${review ? "다시 보는 해설" : cheer}</small></span>${!review && ok && V.combo >= 2 ? `<span class="combo">🔥 ${V.combo}콤보</span>` : ""}</div>${html}
+    <div class="row"><button class="btn" id="next">${review ? "닫기" : last ? "🏁 결과 보기" : "다음 문제 ▶"}</button>${noteOf(sub, q) ? `<button class="notelink" id="toNote">📖 개념정리에서 보기</button>` : ""}</div>`;
   $("#modal").hidden = false; $("#sheet").scrollTop = 0; $("#next").focus({ preventScroll: true });
   $("#next").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; render(); scrollTo({ top: 0 }) };
   if ($("#toNote")) $("#toNote").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; tmStop(); T.paused = timed(); saveTimer(); go(`#/s/${sub}/note/${noteOf(sub, q)}`) };
@@ -560,11 +635,17 @@ function result() {
     const b = D[sub].oxBy[q.t === "ox" ? q.id : q.key]; return `<li>${b.s}<span>정답 ${b.a ? "O" : "X"} · ${b.e}</span></li>`;
   };
   $("#progress").hidden = true;
-  $("#main").innerHTML = `<section class="card"><div class="qhead"><span class="qno">결과</span><span class="tag">${V.mode === "daily" ? "오늘 세트 완료" : "완료"}</span></div>
-    <div class="score">${n}<small> / ${V.Q.length}</small></div>
-    ${timed() ? `<p class="note">걸린 시간 ${fmt(tmUsed())} / 제한 ${fmt(tmLimit())}${V.res.some(r => r && r.late) ? ` · 제한시간 지나서 푼 문제 ${V.res.filter(r => r && r.late).length}개` : " · 제한시간 안에 완료"}</p>` : ""}
-    ${wr.length ? `<ul class="wrong">${wr.map(item).join("")}</ul>` : `<p class="exp">모두 맞혔습니다.</p>`}
-    <div class="row">${wr.length ? `<button class="btn" id="retry">틀린 문제 다시 풀기</button>` : ""}${V.mode === "daily" || V.mode === "extra" ? `<button class="btn ghost" id="extra">추가 ${DAILY_N}문제</button>` : ""}<button class="btn ghost" id="home">홈으로</button></div></section>`;
+  const ratio = n / Math.max(1, V.Q.length), st3 = ratio >= .9 ? 3 : ratio >= .7 ? 2 : ratio >= .5 ? 1 : 0;
+  const [me, mt] = ratio === 1 ? ["🏆", "퍼펙트! 전부 맞혔어요"] : ratio >= .8 ? ["🥇", "훌륭해요!"] : ratio >= .6 ? ["🥈", "잘했어요! 틀린 것만 정리하면 끝"] : ratio >= .4 ? ["🥉", "절반은 넘었어요. 오답을 다시 봐요"] : ["💪", "괜찮아요. 오답 정리로 한 번 더!"];
+  $("#main").innerHTML = `<section class="card center result"><div class="qhead" style="justify-content:center"><span class="tag">🏁 ${V.mode === "daily" ? "오늘의 문제 클리어" : "스테이지 완료"}</span></div>
+    <div class="bigemo" aria-hidden="true">${me}</div>${starRow(st3, 3)}
+    <div class="score">${n}<small> / ${V.Q.length}</small></div><p class="exp"><b>${mt}</b> · 정답률 ${Math.round(ratio * 100)}%</p>
+    ${timed() ? `<p class="note">⏱️ ${fmt(tmUsed())} / 제한 ${fmt(tmLimit())}${V.res.some(r => r && r.late) ? ` · 제한시간 지나서 푼 문제 ${V.res.filter(r => r && r.late).length}개` : " · 시간 안에 완료 ⚡"}</p>` : ""}
+    <div id="newBadge"></div>
+    <div class="row" style="justify-content:center">${wr.length ? `<button class="btn" id="retry">🔁 틀린 ${wr.length}문제 다시</button>` : ""}${V.mode === "daily" || V.mode === "extra" ? `<button class="btn ghost" id="extra">➕ 추가 ${DAILY_N}문제</button>` : ""}<button class="btn ghost" id="home">🏠 홈으로</button></div></section>
+    ${wr.length ? `<h2 class="sec">❌ 틀린 문제</h2><section class="card"><ul class="wrong">${wr.map(item).join("")}</ul></section>` : ""}`;
+  const fresh = newBadges();
+  if (fresh.length) $("#newBadge").innerHTML = `<div class="newb"><b>🏅 새 배지!</b>${fresh.map(b => `<span><i aria-hidden="true">${b.e}</i>${b.n}</span>`).join("")}</div>`;
   if ($("#retry")) $("#retry").onclick = () => { V.Q = wr.map(x => x.q); V.res = []; V.idx = 0; V.mode = "retry"; render() };
   if ($("#extra")) $("#extra").onclick = () => { V.key = ""; go(`#/s/${sub}/daily/extra`) };
   $("#home").onclick = () => go("#/");
@@ -584,12 +665,13 @@ function tmDraw() {
   bar.hidden = false;
   const left = tmLimit() - tmUsed(), over = left < 0; bar.classList.toggle("over", over);
   if (!$("#tmBtn")) {
-    bar.innerHTML = `<span class="tt" id="tmT"></span><span class="tl" id="tmL"></span><button id="tmBtn"></button>`;
+    bar.innerHTML = `<span class="tico" aria-hidden="true">⏱️</span><span class="tt" id="tmT"></span><span class="tl" id="tmL"></span><button id="tmBtn"></button><span class="tfill"><i id="tmF"></i></span>`;
     $("#tmBtn").onclick = () => { if (T.paused) { T.paused = false; tmGo() } else { tmStop(); T.paused = true } saveTimer(); render() };
   }
   $("#tmT").textContent = (over ? "+" : "") + fmt(left);
-  $("#tmL").textContent = T.paused ? "일시정지 중" : over ? `제한 ${fmt(tmLimit())} 초과 · 남은 문제는 계속 풀 수 있어요` : `남은 시간 · 제한 ${fmt(tmLimit())}`;
+  $("#tmL").textContent = T.paused ? "일시정지 중" : over ? `제한 초과 · 계속 풀 수 있어요` : `남은 시간 · 제한 ${fmt(tmLimit())}`;
   $("#tmBtn").textContent = T.paused ? "▶ 계속" : "⏸ 일시정지";
+  const f = Math.max(0, Math.min(1, left / tmLimit())); $("#tmF").style.width = (f * 100).toFixed(1) + "%"; bar.classList.toggle("low", !over && f < .2);
 }
 setInterval(() => { if (timed()) tmDraw() }, 1000);
 document.addEventListener("visibilitychange", () => {
@@ -605,10 +687,10 @@ setInterval(() => { if (today() !== day) { day = today(); if (!timed() || answer
 
 /* ───────── 설정 ───────── */
 function renderSettings() {
-  chrome({ back: { label: "홈", hash: "#/" }, eyebrow: "감정평가사 1차 · 문제풀이", title: "설정" });
+  chrome({ back: { label: "홈", hash: "#/" }, eyebrow: "감정평가사 1차 · 문제풀이", title: "⚙️ 설정" });
   const theme = localStorage.getItem(LS_THEME) || "auto";
   $("#main").innerHTML = `
-  <section class="card"><h2 class="sec" style="margin:0">기기 간 동기화 (GitHub 비공개 저장소)</h2>
+  <section class="card"><h2 class="sec" style="margin:0">☁️ 기기 간 동기화 (GitHub 비공개 저장소)</h2>
     <p class="exp" style="font-size:14.5px">휴대폰과 PC 기록을 잇는 설정이에요. 기기마다 <b>한 번씩</b> 입력하면 됩니다. 입력한 토큰은 이 기기 안에만 저장돼요.</p>
     <div class="form">
       <label>GitHub 아이디<small>github.com 오른쪽 위 프로필 사진을 누르면 보이는 이름</small><input id="fOwner" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc2(SY.owner || "")}"></label>
@@ -617,14 +699,14 @@ function renderSettings() {
       <div class="row"><button class="btn" id="fSave">연결하고 동기화</button>${syncOn() ? `<button class="btn ghost" id="fOff">이 기기 연결 끊기</button>` : ""}</div>
       <p class="msg ${syncState.status === "ok" ? "ok" : syncState.status === "err" ? "err" : ""}" id="fMsg">${syncOn() ? (syncState.msg || (syncState.status === "ok" ? "연결됨 · 마지막 동기화 " + new Date(syncState.at).toLocaleTimeString("ko-KR") : "연결 정보가 저장돼 있어요.")) : "아직 연결 전이에요."}</p>
     </div></section>
-  <section class="card"><h2 class="sec" style="margin:0">화면</h2>
-    <div class="form"><label>밝기<select id="fTheme"><option value="auto">기기 설정 따르기</option><option value="light">밝게</option><option value="dark">어둡게</option></select></label></div></section>
-  <section class="card"><h2 class="sec" style="margin:0">기록 백업</h2>
+  <section class="card"><h2 class="sec" style="margin:0">🎨 화면 밝기</h2>
+    <div class="themes" role="radiogroup" aria-label="화면 밝기">${[["auto", "🖥️", "기기 설정"], ["light", "☀️", "라이트"], ["dark", "🌙", "다크"]].map(([v, e, n]) => `<button role="radio" aria-checked="${theme === v}" data-t="${v}"><span aria-hidden="true">${e}</span>${n}</button>`).join("")}</div>
+    <p class="note">화면 위 오른쪽 ${isDark() ? "☀️" : "🌙"} 버튼으로도 바로 바꿀 수 있어요.</p></section>
+  <section class="card"><h2 class="sec" style="margin:0">💾 기록 백업</h2>
     <p class="exp" style="font-size:14.5px">기록을 파일로 내려받거나, 내려받은 파일을 불러와 합칠 수 있어요(기존 기록은 지워지지 않고 합쳐집니다).</p>
     <div class="row"><button class="btn ghost" id="fExport">기록 내려받기</button><label class="btn ghost" style="cursor:pointer">기록 불러오기<input type="file" id="fImport" accept="application/json,.json" hidden></label></div></section>
   <p class="note">앱 버전 ${APP_VER} · 문제 회계 ${D.acct ? D.acct.exam.length + D.acct.ox.length : 0}개, 경제 ${D.econ ? D.econ.exam.length : 0}개</p>`;
-  $("#fTheme").value = theme;
-  $("#fTheme").onchange = e => { localStorage.setItem(LS_THEME, e.target.value); applyTheme() };
+  document.querySelectorAll(".themes button").forEach(b => b.onclick = () => { localStorage.setItem(LS_THEME, b.dataset.t); applyTheme(); renderSettings() });
   $("#fSave").onclick = async () => {
     SY.owner = $("#fOwner").value.trim().replace(/^@/, ""); SY.repo = $("#fRepo").value.trim(); SY.token = $("#fToken").value.trim();
     const msg = $("#fMsg"); msg.className = "msg"; msg.textContent = "확인 중…";
@@ -650,7 +732,16 @@ function renderSettings() {
     try { const j = JSON.parse(await f.text()); if (!j.hist) throw 0; S = merge(S, j); touch(); alert("기록을 합쳤어요.") } catch (err) { alert("이 파일은 기록 파일이 아니에요.") }
   };
 }
-function applyTheme() { const t = localStorage.getItem(LS_THEME) || "auto"; if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.dataset.theme = t }
+function setThemeOn(doc) { const t = localStorage.getItem(LS_THEME) || "auto"; if (t === "auto") doc.documentElement.removeAttribute("data-theme"); else doc.documentElement.dataset.theme = t }
+function isDark() { const t = localStorage.getItem(LS_THEME) || "auto"; return t === "dark" || (t === "auto" && matchMedia("(prefers-color-scheme: dark)").matches) }
+function drawThemeBtn() { const b = $("#themeBtn"); if (!b) return; const d = isDark(); b.textContent = d ? "☀️" : "🌙"; b.setAttribute("aria-label", d ? "라이트 모드로 바꾸기" : "다크 모드로 바꾸기"); b.title = b.getAttribute("aria-label") }
+function applyTheme() {
+  setThemeOn(document);
+  try { const d = $("#noteFrame").contentDocument; if (d && d.documentElement) setThemeOn(d) } catch (e) { }
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.content = isDark() ? "#141a17" : "#f3f5f2");
+  drawThemeBtn();
+}
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => applyTheme());
 
 /* ───────── 시작 ───────── */
 (async function init() {

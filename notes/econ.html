@@ -61,6 +61,7 @@ td.tn{min-width:9.5em}
 td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 .up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
 ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.c1 td:first-child{min-width:8em}.c1 table{min-width:540px}
 .trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
 .trap b{color:var(--hi)}
 .mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
@@ -100,7 +101,7 @@ a{color:var(--accent)}
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">감정평가사 1차 · 경제학원론 · 손병익 기본이론 <span id="rangeLec">1~19강</span> · 소비자이론까지</div>
+  <div class="eyebrow">감정평가사 1차 · 경제학원론 · 손병익 기본이론 <span id="rangeLec">1~20강</span> · 생산자이론 시작</div>
   <h1>경제학 요약노트</h1>
   <p class="lede">제28~37회 경제학 400문항 중 지금까지 배운 범위는 71문항(매년 약 7문항, 경제학의 18%)입니다. 자주 나온 순서대로 '결론 한 줄 → 그래프 → 함정 → 기출'로 정리했습니다. 그래프는 버튼과 슬라이더로 직접 움직여 볼 수 있습니다. 문제는 <a href="https://claude.ai/artifact/5LNwruGZUdGcVd9SzJ9mLj" target="_blank" rel="noopener">경제학 진도별 기출</a>에서 풉니다.</p>
 </header>
@@ -116,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -351,7 +352,36 @@ a{color:var(--accent)}
       <tr><td>위험애호</td><td>볼록</td><td>우하향</td></tr>
     </tbody>
   </table></div>
-  <p class="foot">19강은 수강 중이라 핵심만 넣었습니다. 강의를 마치면 문제풀이 페이지에 기출 3문항(29회 73·76번, 30회 51번)이 열립니다.</p>
+  <div class="grid2">
+    <div class="mini"><h3>위험을 없애는 투자 비율 (29회 73번)</h3><p>상태(성공·실패)마다 수익을 x로 쓰고 <b>두 식을 같게</b> 놓는다.</p><p>A에 x, B에 100−x: 성공 0.3x − 0.1(100−x), 실패 0.1(100−x) → x = 40, 어느 쪽이든 수익 6.</p></div>
+    <div class="mini"><h3>행동경제학 용어 (30회 51번)</h3><p><b>틀짜기</b>: 같은 내용도 제시 방식(생존율 90% / 사망률 10%)에 따라 선택이 바뀜</p><p><b>닻내림</b>: 처음 본 숫자에 끌려감 · <b>현상유지·기정 편향</b>: 기본값을 그대로 둠 · <b>부존효과</b>: 내 것을 더 비싸게 평가</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b><span>평균-표준편차 평면은 가로축이 '위험'. 기피 = 우상향, 애호 = 우하향, 중립 = 수평. 효용함수 모양(오목·볼록)과 기울기 방향을 헷갈리지 말 것(29회 76번).</span><span>헤지 문제는 기대값을 구하는 게 아니라 '상태별 수익을 같게' 만드는 문제다(29회 73번).</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 11. 생산함수 (20강~) -->
+<section id="pf" class="sec" aria-labelledby="h-pf">
+  <div class="shead"><h2 id="h-pf">생산함수 · 등량곡선</h2><span class="badge mid">비중 중 · 9문항</span><span class="lec">20강~ (수강 중)</span></div>
+  <div class="key">생산자이론은 소비자이론의 이름만 바꾼 것이다. 효용 → 생산량, 무차별곡선 → 등량곡선, MRS → MRTS(한계기술대체율) = MP<sub>L</sub> ÷ MP<sub>K</sub>.<small>등량곡선: 같은 생산량을 내는 노동(L)·자본(K) 조합을 이은 선. 장기 = L, K 모두 바꿀 수 있는 기간, 단기 = 자본은 고정.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 생산함수 모양별 MRTS·한계생산 판정(30회 44·52번), 기술진보와 등량곡선 이동(30회 45번), 규모에 대한 수익(21강). 거의 매년 1문항</p>
+  <div class="tw c1"><table>
+    <thead><tr><th>생산함수</th><th>등량곡선</th><th>MRTS = MP<sub>L</sub>/MP<sub>K</sub></th><th>소비자이론 짝</th></tr></thead>
+    <tbody>
+      <tr><td>Q = aL + bK (완전대체)</td><td>직선</td><td>a/b로 <b>일정</b></td><td>선형 효용함수</td></tr>
+      <tr><td>Q = min{aL, bK} (완전보완)</td><td>L자 꺾인 선</td><td>정의 안 됨(꺾인 점)</td><td>레온티에프 효용</td></tr>
+      <tr><td>Q = AL<sup>α</sup>K<sup>β</sup> (콥-더글러스)</td><td>원점에 볼록</td><td>(α/β)·(K/L) → L↑이면 체감</td><td>콥-더글러스 효용</td></tr>
+    </tbody>
+  </table></div>
+  <h3>숫자 예시 (30회 44·52번 구조)</h3>
+  <ol class="steps">
+    <li>Q = L + 3K: MP<sub>L</sub> = 1, MP<sub>K</sub> = 3 → MRTS = 1/3, <b>투입량과 무관하게 일정</b></li>
+    <li>Q = min{L, 3K}, (L, K) = (10, 5): L = 10, 3K = 15 → 작은 쪽인 <b>L이 생산량을 결정</b>(Q = 10)</li>
+    <li>L을 1 늘리면 Q = 11 → MP<sub>L</sub> = 1 / K를 1 늘려도 Q = 10 그대로 → MP<sub>K</sub> = 0</li>
+  </ol>
+  <div class="trap"><b>자주 틀리는 지점</b><span>완전보완형의 한계생산은 '남는 요소' 쪽이 0이다. min 안의 두 값을 먼저 계산해 어느 쪽이 묶여 있는지 확인(30회 44번).</span><span>선형 생산함수에서 "노동이 늘면 MRTS가 감소한다" → X. 직선이므로 일정(30회 52번).</span></div>
+  <p class="foot">20강(장기생산함수)까지 들은 내용만 넣었습니다. 이 단원 기출 9문항은 규모에 대한 수익(21강)까지 들으면 문제풀이에 열립니다.</p>
+  <p class="mine"></p>
 </section>
 
 <!-- 11. 암기카드 -->
@@ -370,6 +400,8 @@ a{color:var(--accent)}
       <tr><th>기펜재</th><td>소득효과 &gt; 대체효과인 열등재 · 보통수요 우상향 · 보상수요는 우하향</td></tr>
       <tr><th>후방굴절</th><td>여가 정상재 + 소득효과 &gt; 대체효과</td></tr>
       <tr><th>위험기피</th><td>오목 효용 · 확실성등가 &lt; 기대값 · 위험프리미엄 = 기대값 − 확실성등가</td></tr>
+      <tr><th>평균-표준편차</th><td>기피 우상향 · 애호 우하향 · 중립 수평</td></tr>
+      <tr><th>MRTS</th><td>MP<sub>L</sub>/MP<sub>K</sub> · 선형 = 일정 · min형 = 남는 요소 MP 0</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -393,7 +425,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["기대효용","#eu","19강",3,"lo","수강 중"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·등량곡선","#pf","20~21강",9,"mid","21강 후 열림"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */

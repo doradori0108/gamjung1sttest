@@ -66,8 +66,8 @@
   "국제수지론",
   "국제무역론"
  ],
- "dataThrough": 18,
- "defaultLec": 18,
+ "dataThrough": 20,
+ "defaultLec": 20,
  "units": [
   {
    "u": "U00",
@@ -162,7 +162,8 @@
    "nm": "생산함수 · 규모에 대한 수익",
    "lec": 21,
    "n": 9,
-   "grp": "미시경제학"
+   "grp": "미시경제학",
+   "note": "pf"
   },
   {
    "u": "U11",

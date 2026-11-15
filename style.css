@@ -10,6 +10,10 @@
   --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   color-scheme:light;
 }
+/* 브라우저 기본 부품(입력칸·스크롤바)과 휴대폰 브라우저의 '강제 어둡게'가 앱 설정을 따르도록 문서 전체의 color-scheme도 바꾼다 */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark}}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:only light}
 body[data-subject="acct"]{--bg:#f3f5f2; --paper:#fbfcfa; --rule:#dde4dc; --accent:#1f5f4f}
 body[data-subject="econ"]{--bg:#f2f4f7; --paper:#fbfcfd; --rule:#d5dce6; --grid:#e3e8ef; --accent:#1f4f8a; --ink:#1b2230; --muted:#5a6578}
 @media (prefers-color-scheme: dark){

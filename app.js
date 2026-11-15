@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.4.0";
+const APP_VER = "1.4.1";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -752,5 +752,15 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => appl
   S.daily = S.daily || {}; S.days = S.days || {}; S.subjects = S.subjects || {};
   route();
   if (syncOn()) syncNow();
-  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => { });
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    const hadSW = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register("sw.js").then(r => r.update()).catch(() => { });
+    /* 새 버전이 설치되면 한 번 새로고침해 바로 적용 (풀던 시험 중이면 다음에 열 때 적용) */
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!hadSW || reloaded) return;
+      if (timed() && answered() > 0 && answered() < V.Q.length) { toast("🆕 새 버전이 준비됐어요. 앱을 다시 열면 적용돼요."); return }
+      reloaded = true; saveTimer(); location.reload();
+    });
+  }
 })();

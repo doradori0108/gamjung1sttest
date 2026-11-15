@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.5.0";
+const APP_VER = "1.5.1";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -254,7 +254,14 @@ function bookList(sub, tag) {
     if (!b.on || !id.startsWith(sub + ":") || (tag && !(b.tags || []).includes(tag))) continue;
     const q = qOfId(sub, id); if (q) out.push({ id, q, b });
   }
-  return out.sort((a, b) => (b.b.t || 0) - (a.b.t || 0));
+  /* 같은 문제가 다른 번호로 두 번 들어간 경우(앞으로 문제를 추가하다 생길 수 있음)도 한 번만: 내용이 같으면 최근 것만 */
+  const seen = new Set();
+  return out.sort((a, b) => (b.b.t || 0) - (a.b.t || 0)).filter(x => { const g = sigOf(sub, x.q); if (seen.has(g)) return false; seen.add(g); return true });
+}
+function sigOf(sub, q) {
+  const n = t => plain(t).replace(/\s+/g, "");
+  if (q.t === "ex") { const x = D[sub].ex[q.k]; return "ex|" + n(x.q) + "|" + x.o.map(n).join("|") }
+  return "ox|" + n(D[sub].oxBy[q.id].s);
 }
 function bookSet(id, patch) {
   const b = Object.assign({ tags: [], memo: "", on: true }, S.book[id], patch, { t: Date.now() });

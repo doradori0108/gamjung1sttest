@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.5.1";
+const APP_VER = "1.5.2";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -57,9 +57,14 @@ function merge(A, B) {
       const x = a[s], y = b[s];
       if (!x || !y) { M.daily[d][s] = x || y; continue }
       const nx = (x.res || []).filter(Boolean).length, ny = (y.res || []).filter(Boolean).length;
-      if (nx !== ny) M.daily[d][s] = nx > ny ? x : y;
-      else if (JSON.stringify(x.set) !== JSON.stringify(y.set)) M.daily[d][s] = (x.c || 0) <= (y.c || 0) ? x : y;
-      else M.daily[d][s] = (x.t || 0) >= (y.t || 0) ? x : y;
+      const same = JSON.stringify(x.set) === JSON.stringify(y.set), ux = (x.tm || {}).used || 0, uy = (y.tm || {}).used || 0;
+      let pick;
+      if (nx !== ny) pick = nx > ny ? x : y;
+      else if (!same) pick = ux !== uy ? (ux > uy ? x : y) : (x.c || 0) <= (y.c || 0) ? x : y;   // 둘 다 안 풀었으면 시간을 더 쓴(먼저 시작한) 쪽
+      else pick = (x.t || 0) >= (y.t || 0) ? x : y;
+      /* 같은 세트면 쓴 시간은 줄어들지 않는다: 두 기기 중 더 긴 시간을 남긴다 (예전엔 다른 기기의 짧은 시간으로 덮여 '리셋'처럼 보였음) */
+      if (same && ((pick.tm || {}).used || 0) < Math.max(ux, uy)) pick = Object.assign({}, pick, { tm: Object.assign({}, pick.tm, { used: Math.max(ux, uy) }) });
+      M.daily[d][s] = pick;
     }
   }
   return M;
@@ -326,7 +331,12 @@ function route() {
     if (V.key === key && V.route === "subject") return render();
     V = { route: "subject", sub, tab, mode: null, unit: null, Q: [], res: [], idx: 0, key, arg };
     if (tab === "note") return render();
-    if (tab === "daily" && arg === "extra") { V.mode = "extra"; V.Q = buildSet(sub, day + "#" + Math.random(), day); T = { used: 0, run: 0, paused: false } }
+    if (tab === "daily" && arg === "extra") {
+      /* 추가 문제는 화면을 나갔다 와도 같은 세트·남은 시간 그대로 (예전엔 나갈 때마다 새 세트 + 20분으로 리셋) */
+      const x = extraGet(sub); V.mode = "extra";
+      if (x) { V.Q = x.Q; V.res = x.res; T = { used: x.used, run: 0, paused: !!x.paused } }
+      else { V.Q = buildSet(sub, day + "#" + Math.random(), day); T = { used: 0, run: 0, paused: false }; V.res = []; extraPut(sub) }
+    }
     else if (tab === "daily") { const e = dailyEntry(sub, true); V.mode = "daily"; V.Q = e.set; V.res = e.res; T = { used: e.tm ? e.tm.used : 0, run: 0, paused: !!(e.tm && e.tm.paused) } }
     else if (tab === "unit" && arg && D[sub].ub[arg]) {
       V.mode = "unit"; V.unit = arg;
@@ -684,9 +694,10 @@ function answer(v, review) {
   if (!review) {
     record(qid(sub, q), ok);
     V.res[V.idx] = { ok, v }; if (timed() && tmUsed() > tmLimit()) V.res[V.idx].late = true;
+    if (V.mode === "extra") extraPut(sub);
     if (answered() >= V.Q.length) tmStop();
     if (V.mode === "daily") {
-      const e = entry(sub); e.res = V.res; e.t = Date.now(); e.tm = { used: tmUsed(), paused: false };
+      const e = entry(sub); e.res = V.res; e.t = Date.now(); e.tm = { used: Math.max(tmUsed(), (e.tm || {}).used || 0), paused: false };
       (S.days[day] = S.days[day] || {})[sub] = { done: answered(), ok: V.res.filter(r => r && r.ok).length, total: V.Q.length };
     }
     V.combo = ok ? (V.combo || 0) + 1 : 0;
@@ -730,7 +741,7 @@ function result() {
   const fresh = newBadges();
   if (fresh.length) $("#newBadge").innerHTML = `<div class="newb"><b>🏅 새 배지!</b>${fresh.map(b => `<span><i aria-hidden="true">${b.e}</i>${b.n}</span>`).join("")}</div>`;
   if ($("#retry")) $("#retry").onclick = () => { V.Q = wr.map(x => x.q); V.res = []; V.idx = 0; V.mode = "retry"; render() };
-  if ($("#extra")) $("#extra").onclick = () => { V.key = ""; go(`#/s/${sub}/daily/extra`) };
+  if ($("#extra")) $("#extra").onclick = () => { extraClear(sub); V.key = ""; go(`#/s/${sub}/daily/extra`) };
   $("#home").onclick = () => go("#/");
 }
 
@@ -741,7 +752,26 @@ function tmStop() { if (T.run) { T.used += Date.now() - T.run; T.run = 0 } }
 function tmGo() { if (!T.run && !T.paused && answered() < V.Q.length) T.run = Date.now() }
 const tmPaused = () => timed() && T.paused;
 const fmt = ms => { const s = Math.floor(Math.abs(ms) / 1000); return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}` };
-function saveTimer() { if (V.route === "subject" && V.mode === "daily") { const e = entry(V.sub); if (e) { e.tm = { used: tmUsed(), paused: T.paused }; e.t = Date.now(); touch() } } }
+function saveTimer() {
+  if (V.route !== "subject") return;
+  if (V.mode === "extra") return extraPut(V.sub);
+  if (V.mode !== "daily") return;
+  const e = entry(V.sub);
+  if (!e || JSON.stringify(e.set) !== JSON.stringify(V.Q)) return;          // 다른 세트로 바뀌었으면 이 화면의 시간을 덮어쓰지 않음
+  e.tm = { used: Math.max(tmUsed(), (e.tm || {}).used || 0), paused: T.paused }; e.t = Date.now(); touch();
+}
+/* 추가 문제 세트: 이 기기에만 그날 하나 보관 */
+const LS_EXTRA = "dora-exam-extra";
+function extraAll() { try { return JSON.parse(localStorage.getItem(LS_EXTRA)) || {} } catch (e) { return {} } }
+function extraGet(sub) {
+  const x = extraAll()[sub];
+  if (!x || x.day !== day || !Array.isArray(x.Q) || !x.Q.length) return null;
+  if ((x.res || []).filter(Boolean).length >= x.Q.length) return null;
+  if (!x.Q.every(q => q.t === "ex" ? D[sub].ex[q.k] : q.t === "ox" ? D[sub].oxBy[q.id] : D[sub].oxBy[q.key])) return null;
+  return x;
+}
+function extraPut(sub) { const a = extraAll(); a[sub] = { day, Q: V.Q, res: V.res, used: tmUsed(), paused: T.paused }; try { localStorage.setItem(LS_EXTRA, JSON.stringify(a)) } catch (e) { } }
+function extraClear(sub) { const a = extraAll(); delete a[sub]; try { localStorage.setItem(LS_EXTRA, JSON.stringify(a)) } catch (e) { } }
 function tmDraw() {
   const bar = $("#timerbar");
   if (!timed() || !V.Q.length || answered() >= V.Q.length || V.idx >= V.Q.length) { bar.hidden = true; return }
@@ -756,7 +786,15 @@ function tmDraw() {
   $("#tmBtn").textContent = T.paused ? "▶ 계속" : "⏸ 일시정지";
   const f = Math.max(0, Math.min(1, left / tmLimit())); $("#tmF").style.width = (f * 100).toFixed(1) + "%"; bar.classList.toggle("low", !over && f < .2);
 }
-setInterval(() => { if (timed()) tmDraw() }, 1000);
+let tick = 0;
+setInterval(() => {
+  if (!timed()) return; tmDraw();
+  /* 15초마다 흐른 시간을 이 기기에 저장 (앱이 갑자기 꺼져도 시간이 되돌아가지 않게) */
+  if (T.run && ++tick % 15 === 0) {
+    if (V.mode === "extra") extraPut(V.sub);
+    else { const e = entry(V.sub); if (e && JSON.stringify(e.set) === JSON.stringify(V.Q)) { e.tm = { used: Math.max(tmUsed(), (e.tm || {}).used || 0), paused: false }; saveLocal() } }
+  }
+}, 1000);
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     if (timed() && T.run) { tmStop(); T.paused = true; saveTimer(); render() }

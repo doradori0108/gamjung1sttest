@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.5.3";
+const APP_VER = "1.6.0";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -353,13 +353,14 @@ function route() {
 }
 window.addEventListener("hashchange", route);
 function onRemoteChange() {
-  if (V.route === "subject" && V.mode === "daily" && $("#modal").hidden) { const e = entry(V.sub); if (e && e !== V.entryRef) { V.key = ""; route() } }
+  if (V.route === "subject" && V.mode === "daily" && $("#modal").hidden && !$("#psheet.in")) { const e = entry(V.sub); if (e && e !== V.entryRef) { V.key = ""; route() } }
   else if (V.route === "home") renderHome();
 }
 function refreshHomeIfShown() { if (V.route === "home") renderHome() }
 
 /* ───────── 공통 머리 ───────── */
 function chrome({ subject = "", back = null, eyebrow = "", title = "", meta = "", tabs = false, stats = false }) {
+  document.body.classList.remove("split");
   document.body.dataset.subject = subject;
   $("#topbar").innerHTML = `${back ? `<button class="back" id="backBtn">‹ ${back.label}</button>` : `<span class="brand">🎯 감평 1차</span>`}<span class="tright"><button class="iconbtn" id="themeBtn"></button><button class="pill" id="syncPill"></button></span>`;
   if (back) $("#backBtn").onclick = () => go(back.hash);
@@ -660,7 +661,9 @@ function renderPlay() {
   const r = V.res[V.idx], nx = nextUn(V.idx);
   if (r) html += `<p class="done-note">${r.ok ? "✅" : "❌"} 이미 푼 문제 · 내 답 ${q.t === "ox" ? (r.v ? "O" : "X") : N5[r.v]} (${r.ok ? "정답" : "오답"}) <button class="btn ghost sm" id="review">해설 보기</button></p>`;
   html += `</section><div class="qnav"><button class="btn ghost" id="prevQ" ${V.idx === 0 ? "disabled" : ""}>◀ 이전</button>${nx >= 0 && nx !== V.idx ? `<button class="btn ghost" id="skipQ">${r ? "다음 안 푼 문제" : "건너뛰기"} ▶</button>` : ""}</div>`;
-  m.innerHTML = html;
+  document.body.classList.remove("split");
+  const cut = html.indexOf('<div class="qnav">');
+  m.innerHTML = `<div class="playgrid"><div class="pq">${html.slice(0, cut)}</div><div class="ps" id="psheet"></div></div>${html.slice(cut)}`;
   m.querySelector(".card.q .qhead").insertAdjacentHTML("afterend", bookBar(qid(sub, q), q));
   bindBook(m);
   m.querySelectorAll(".ox button,.opts button").forEach(b => { if (r) { b.disabled = true; b.style.opacity = .55 } else b.onclick = () => answer(q.t === "ox" ? b.dataset.v === "1" : +b.dataset.v) });
@@ -703,23 +706,52 @@ function answer(v, review) {
     V.combo = ok ? (V.combo || 0) + 1 : 0;
     touch(); stats(); progressNav();
   }
-  const nx = nextUn(V.idx), last = nx < 0;
-  $("#sheet").className = "sheet " + (ok ? "good" : "bad");
+  const nx = nextUn(V.idx), last = nx < 0, inline = sheetMode() === "inline";
   const cheer = ok ? ["좋아요!", "정확해요!", "완벽!", "그대로 가요!"][(V.combo || 1) % 4] : "괜찮아요, 해설 보고 다음에 맞혀요";
-  $("#sheet").innerHTML = `<div class="verdict"><span class="mark" aria-hidden="true">${ok ? "🎉" : "💥"}</span><span><span id="vtext">${ok ? "정답!" : "오답"}</span><small>${review ? "다시 보는 해설" : cheer}</small></span>${!review && ok && V.combo >= 2 ? `<span class="combo">🔥 ${V.combo}콤보</span>` : ""}</div>${bookBar(qid(sub, q), q, !ok)}${html}
-    <div class="row"><button class="btn" id="next">${review ? "닫기" : last ? "🏁 결과 보기" : "다음 문제 ▶"}</button>${noteOf(sub, q) ? `<button class="notelink" id="toNote">📖 개념정리에서 보기</button>` : ""}</div>`;
-  bindBook($("#sheet"));
-  $("#modal").hidden = false; $("#sheet").scrollTop = 0; $("#next").focus({ preventScroll: true });
-  $("#next").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; render(); scrollTo({ top: 0 }) };
-  if ($("#toNote")) $("#toNote").onclick = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; tmStop(); T.paused = timed(); saveTimer(); go(`#/s/${sub}/note/${noteOf(sub, q)}`) };
+  const body = `<div class="verdict"><span class="mark" aria-hidden="true">${ok ? "🎉" : "💥"}</span><span><span id="vtext">${ok ? "정답!" : "오답"}</span><small>${review ? "다시 보는 해설" : cheer}</small></span>${!review && ok && V.combo >= 2 ? `<span class="combo">🔥 ${V.combo}콤보</span>` : ""}</div>${inline ? "" : bookBar(qid(sub, q), q, !ok)}${html}
+    <div class="row"><button class="btn" id="next">${review ? "해설 닫기" : last ? "🏁 결과 보기" : "다음 문제 ▶"}</button>${noteOf(sub, q) ? `<button class="notelink" id="toNote">📖 개념정리에서 보기</button>` : ""}${inline ? `<button class="notelink upq" id="upQ">⬆ 문제 다시 보기</button>` : ""}</div>`;
+  let box;
+  if (inline) {
+    /* 문제를 가리지 않고 문제 바로 아래(넓은 화면은 오른쪽)에 해설을 펼친다 */
+    markQuestion(q, v, ok);
+    box = $("#psheet"); box.className = "ps sheet in " + (ok ? "good" : "bad"); box.innerHTML = body;
+    box.closest(".playgrid").classList.add("has-sheet"); document.body.classList.add("split");
+    const bk = $("#main .card.q .bk"); if (bk && !review && !ok && !(S.book[qid(sub, q)] || {}).on) bk.dataset.w = "1";
+    if ($("#hintBtn")) $("#hintBtn").remove();
+    const wide = matchMedia("(min-width: 1100px)").matches;
+    if (!wide) box.scrollIntoView({ behavior: "smooth", block: "start" });
+    $("#upQ").onclick = () => $("#main .card.q").scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    box = $("#sheet"); box.className = "sheet " + (ok ? "good" : "bad"); box.innerHTML = body;
+    bindBook(box); $("#modal").hidden = false; box.scrollTop = 0;
+  }
+  $("#next").focus({ preventScroll: true });
+  const leave = () => { closeModal(); if (!review) V.idx = last ? V.Q.length : nx; };
+  $("#next").onclick = () => { if (review && inline) { render(); return } leave(); render(); scrollTo({ top: 0 }) };
+  if ($("#toNote")) $("#toNote").onclick = () => { leave(); tmStop(); T.paused = timed(); saveTimer(); go(`#/s/${sub}/note/${noteOf(sub, q)}`) };
 }
+/* 해설을 펼친 뒤 문제 쪽 보기에도 정답·내 답 표시 */
+function markQuestion(q, v, ok) {
+  const sub = V.sub, card = $("#main .card.q"); if (!card) return;
+  const key = q.t === "ox" ? (D[sub].oxBy[q.id].a ? "1" : "0") : q.t === "ex" ? String(D[sub].ex[q.k].a - 1) : String(q.opts.indexOf(q.key));
+  const mine = q.t === "ox" ? (v ? "1" : "0") : String(v);
+  card.querySelectorAll(".ox button,.opts button").forEach(b => {
+    b.disabled = true; b.onclick = null; b.style.opacity = "";
+    if (b.dataset.v === key) b.classList.add("is-key");
+    else if (b.dataset.v === mine && !ok) b.classList.add("is-picked");
+    else b.classList.add("is-dim");
+  });
+  const dn = card.querySelector(".done-note"); if (dn) dn.remove();
+}
+const LS_SHEET = "dora-exam-sheet";
+const sheetMode = () => localStorage.getItem(LS_SHEET) === "modal" ? "modal" : "inline";
 function linkLine(b) {
   if (!b || !b.links) return "";
   const lab = s => { const [k, o] = s.split(" "), [y, n] = k.split("-"); return `제${y}회 ${n}번${o ? " " + o : ""}` };
   return `<p class="point">기출 출제 · ${b.links.map(lab).join(", ")}</p>`;
 }
 function closeModal() { $("#modal").hidden = true }
-document.addEventListener("keydown", e => { if (e.target.closest && e.target.closest("input,textarea")) return; if (!$("#modal").hidden && (e.key === "Enter" || e.key === "Escape")) { e.preventDefault(); $("#next").click() } });
+document.addEventListener("keydown", e => { if (e.target.closest && e.target.closest("input,textarea")) return; if ((!$("#modal").hidden || $("#psheet.in")) && $("#next") && (e.key === "Enter" || (e.key === "Escape" && !$("#modal").hidden))) { e.preventDefault(); $("#next").click() } });
 $("#modal").addEventListener("click", e => { if (e.target.id === "modal") $("#next").click() });
 
 function result() {
@@ -823,11 +855,14 @@ function renderSettings() {
   <section class="card"><h2 class="sec" style="margin:0">🎨 화면 밝기</h2>
     <div class="themes" role="radiogroup" aria-label="화면 밝기">${[["auto", "🖥️", "기기 설정"], ["light", "☀️", "라이트"], ["dark", "🌙", "다크"]].map(([v, e, n]) => `<button role="radio" aria-checked="${theme === v}" data-t="${v}"><span aria-hidden="true">${e}</span>${n}</button>`).join("")}</div>
     <p class="note">화면 위 오른쪽 ${isDark() ? "☀️" : "🌙"} 버튼으로도 바로 바꿀 수 있어요.</p></section>
+  <section class="card"><h2 class="sec" style="margin:0">📝 해설 보기 방식</h2>
+    <div class="themes two" role="radiogroup" aria-label="해설 보기 방식">${[["inline", "📄", "문제와 함께", "문제 아래에 펼침 · PC는 오른쪽"], ["modal", "🪟", "팝업", "문제 위에 창으로"]].map(([v, e, n, d]) => `<button role="radio" aria-checked="${sheetMode() === v}" data-sm="${v}"><span aria-hidden="true">${e}</span>${n}<small>${d}</small></button>`).join("")}</div></section>
   <section class="card"><h2 class="sec" style="margin:0">💾 기록 백업</h2>
     <p class="exp" style="font-size:14.5px">기록을 파일로 내려받거나, 내려받은 파일을 불러와 합칠 수 있어요(기존 기록은 지워지지 않고 합쳐집니다).</p>
     <div class="row"><button class="btn ghost" id="fExport">기록 내려받기</button><label class="btn ghost" style="cursor:pointer">기록 불러오기<input type="file" id="fImport" accept="application/json,.json" hidden></label></div></section>
   <p class="note">앱 버전 ${APP_VER} · 문제 회계 ${D.acct ? D.acct.exam.length + D.acct.ox.length : 0}개, 경제 ${D.econ ? D.econ.exam.length : 0}개</p>`;
-  document.querySelectorAll(".themes button").forEach(b => b.onclick = () => { localStorage.setItem(LS_THEME, b.dataset.t); applyTheme(); renderSettings() });
+  document.querySelectorAll(".themes button[data-sm]").forEach(b => b.onclick = () => { localStorage.setItem(LS_SHEET, b.dataset.sm); renderSettings() });
+  document.querySelectorAll(".themes button[data-t]").forEach(b => b.onclick = () => { localStorage.setItem(LS_THEME, b.dataset.t); applyTheme(); renderSettings() });
   $("#fSave").onclick = async () => {
     SY.owner = $("#fOwner").value.trim().replace(/^@/, ""); SY.repo = $("#fRepo").value.trim(); SY.token = $("#fToken").value.trim();
     const msg = $("#fMsg"); msg.className = "msg"; msg.textContent = "확인 중…";

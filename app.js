@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.8.0";
+const APP_VER = "1.8.1";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -572,6 +572,7 @@ function migrateOxToSent() {
 }
 /* ───────── 문장 훈련 (문제풀이와 별개: 기록은 S.sent, 오늘의 문제·배지·통계에 안 섞임) ───────── */
 const LS_SENT = "dora-exam-sent";
+const SENT_N = 20;               // 오늘의 문장 수 (과목별)
 const sid = (sub, b) => `${sub}:s${b.id}`;
 function sentOpen(sub) { const us = new Set(openUnits(sub).map(u => u.u)); return (D[sub].sent || []).filter(b => us.has(b.u)) }
 const sentH = (sub, b) => (S.sent || {})[sid(sub, b)];
@@ -581,9 +582,9 @@ function sentBuild(sub, kind) {
   const all = sentOpen(sub), r = rng(sub + day + kind + (kind === "today" ? "" : Math.random()));
   if (kind === "wrong") return shuffle(all.filter(b => { const h = sentH(sub, b); return h && !h.ok }), r).map(b => b.id);
   if (kind.startsWith("u-")) { const u = kind.slice(2); return all.filter(b => b.u === u).map(b => b.id) }
-  /* 오늘의 10개: 안 본 문장 → 헷갈린 문장 → 익힌 지 오래된 문장 */
+  /* 오늘의 문장 SENT_N개: 안 본 문장 → 헷갈린 문장 → 익힌 지 오래된 문장 */
   const rank = b => { const h = sentH(sub, b); return !h ? 0 : !h.ok ? 1 : 2 };
-  return shuffle(all.slice(), r).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? (sentH(sub, a).t - sentH(sub, b).t) : 0)).slice(0, 10).map(b => b.id);
+  return shuffle(all.slice(), r).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? (sentH(sub, a).t - sentH(sub, b).t) : 0)).slice(0, SENT_N).map(b => b.id);
 }
 function renderSent() {
   const sub = V.sub, m = D[sub].meta, all = sentOpen(sub);
@@ -592,7 +593,7 @@ function renderSent() {
   const by = Object.fromEntries((D[sub].sent || []).map(b => [b.id, b]));
   let c = sentCur(sub);
   if (V.arg && V.arg !== "home") {
-    if (!c || c.kind !== V.arg || (V.arg === "today" && c.day !== day)) { c = { kind: V.arg, day, Q: sentBuild(sub, V.arg), idx: 0, res: [] }; sentSave(sub, c) }
+    if (!c || c.kind !== V.arg || (V.arg === "today" && (c.day !== day || (!c.res.length && c.Q.length < Math.min(SENT_N, sentOpen(sub).length))))) { c = { kind: V.arg, day, Q: sentBuild(sub, V.arg), idx: 0, res: [] }; sentSave(sub, c) }
     c.Q = c.Q.filter(id => by[id]);
     if (!c.Q.length) { sentSave(sub, null); return go(`#/s/${sub}/sent`) }
     return c.idx >= c.Q.length ? sentEnd(sub, c, by) : sentCard(sub, c, by);
@@ -605,7 +606,7 @@ function renderSent() {
     <p class="answer">열린 문장 <b>${all.length}</b> · 익힘 <b>${ok}</b> · 헷갈림 <b>${wr}</b></p>
     <div class="row" style="justify-content:center;flex-wrap:wrap;gap:8px">
       ${resume ? `<button class="btn" data-k="${c.kind}">↩️ 하던 것 이어서 (${c.res.length}/${c.Q.length})</button>` : ""}
-      <button class="btn ${resume ? "ghost" : ""}" data-k="today">▶ 오늘의 문장 ${Math.min(10, all.length)}개</button>
+      <button class="btn ${resume ? "ghost" : ""}" data-k="today">▶ 오늘의 문장 ${Math.min(SENT_N, all.length)}개</button>
       ${wr ? `<button class="btn ghost" data-k="wrong">🔁 헷갈린 문장 ${wr}개</button>` : ""}</div></section>
     <h2 class="sec">단원별</h2>
     <ul class="units">${us.map(({ u, n }) => { const o = n.filter(b => { const h = sentH(sub, b); return h && h.ok }).length; return `<li class="unit open"><span class="nm">${esc2(u.nm)}<small>${n.length}문장 중 ${o}개 익힘</small></span><span class="ct"><span class="bar"><i style="width:${Math.round(o / n.length * 100)}%"></i></span><button data-k="u-${u.u}">▶ 훈련</button></span></li>` }).join("")}</ul>`;

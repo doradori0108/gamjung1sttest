@@ -3,9 +3,9 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.7.0";
-const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
-const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
+const APP_VER = "1.8.0";
+const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
+const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
 const N5 = "①②③④⑤";
 const $ = s => document.querySelector(s);
@@ -217,7 +217,8 @@ function dailyEntry(sub, create) {
   let e = entry(sub);
   const L = Math.min(lecOf(sub), D[sub].meta.dataThrough);
   const valid = e && e.set && e.set.every(q => q.t === "ex" ? D[sub].ex[q.k] : q.t === "ox" ? D[sub].oxBy[q.id] : D[sub].oxBy[q.key]);
-  if (e && valid && !((e.res || []).filter(Boolean).length === 0 && e.lec !== L)) return e;
+  const none = (e && (e.res || []).filter(Boolean).length) === 0;
+  if (e && valid && !(none && (e.lec !== L || e.set.length !== DAILY_N))) return e;
   if (!create) return null;
   S.daily[day] = S.daily[day] || {};
   e = S.daily[day][sub] = { set: buildSet(sub, `${day}|${sub}|${L}`, day), res: [], tm: { used: 0, paused: false }, lec: L, c: Date.now(), t: Date.now() };
@@ -397,7 +398,7 @@ function badgeList() {
     ["first", "🌱", "첫걸음", "문제 1개 풀기", hist.length > 0],
     ["clear", "✅", "오늘 클리어", "오늘의 문제 한 세트 끝내기", vals.some(x => x.total && x.done >= x.total)],
     ["double", "🎯", "올클리어", "하루에 모든 과목 오늘의 문제 끝내기", Object.values(S.days).some(v => subs.every(s => v[s] && v[s].total && v[s].done >= v[s].total))],
-    ["perfect", "💯", "만점", "오늘의 문제 20개 전부 맞히기", vals.some(x => x.total && x.ok >= x.total)],
+    ["perfect", "💯", "만점", `오늘의 문제 ${DAILY_N}개 전부 맞히기`, vals.some(x => x.total && x.ok >= x.total)],
     ["s3", "🔥", "3일 연속", "한 과목 3일 연속 완료", best >= 3],
     ["s7", "☄️", "7일 연속", "한 과목 7일 연속 완료", best >= 7],
     ["s30", "💎", "30일 연속", "한 과목 30일 연속 완료", best >= 30],
@@ -459,7 +460,7 @@ function renderHome() {
     <div class="row"><a class="btn ghost sm" href="#/settings">⚙️ 설정</a></div>`;
   document.querySelectorAll(".scard button[data-go]").forEach(b => b.onclick = () => go(`#/s/${b.closest(".scard").dataset.s}/${b.dataset.go}`));
   $("#main").querySelector('a[href="#badges"]').onclick = e => { e.preventDefault(); $("#badges").scrollIntoView({ behavior: "smooth" }) };
-  $("#foot").textContent = `오늘의 문제는 매일 자정(한국시간)에 새로 바뀌고, 과목마다 ${DAILY_N}문제 · ${DAILY_N * SEC_PER_Q / 60}분입니다. 별은 오늘 푼 비율(4문제당 ★1), 배지는 지금까지 기록으로 계산합니다.`;
+  $("#foot").textContent = `오늘의 문제는 매일 자정(한국시간)에 새로 바뀌고, 과목마다 ${DAILY_N}문제 · ${DAILY_N * SEC_PER_Q / 60}분입니다. 별은 오늘 푼 비율(★5 = 다 풂), 배지는 지금까지 기록으로 계산합니다.`;
   celebrate();
 }
 const esc2 = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
@@ -559,6 +560,16 @@ function drawSeg() {
   seg.innerHTML = `<button role="tab" aria-selected="${cur === "note"}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button role="tab" aria-selected="${cur === "daily"}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button>${hasS ? `<button role="tab" aria-selected="${cur === "sent"}" data-go="sent">📝 문장 훈련<small>O·X 해석</small></button>` : ""}<button role="tab" aria-selected="${cur === "map"}" data-go="map">🗺️ 진도<small>Lv.${lecOf(sub)} 바꾸기</small></button>`;
   seg.querySelectorAll("button").forEach(b => b.onclick = () => { if (b.dataset.go !== cur) go(`#/s/${sub}/${b.dataset.go}`) });
 }
+/* 문제풀이에서 빠진 개념 O·X(★개념문제)의 예전 풀이 기록을 문장 훈련 기록으로 이어 준다 (한 번만, 이미 있으면 그대로) */
+function migrateOxToSent() {
+  let n = 0;
+  for (const s of SUBJ) for (const b of D[s.id].sent || []) {
+    if (!b.ox) continue;
+    const h = S.hist[`${s.id}:ox${b.ox}`], k = `${s.id}:s${b.id}`;
+    if (h && !S.sent[k]) { S.sent[k] = { seen: h.seen || 1, wrong: h.wrong || 0, ok: h.ok, last: h.last, t: h.t || Date.now() }; n++ }
+  }
+  if (n) saveLocal();
+}
 /* ───────── 문장 훈련 (문제풀이와 별개: 기록은 S.sent, 오늘의 문제·배지·통계에 안 섞임) ───────── */
 const LS_SENT = "dora-exam-sent";
 const sid = (sub, b) => `${sub}:s${b.id}`;
@@ -605,11 +616,17 @@ function renderSent() {
   });
   $("#foot").textContent = "익힘 = 마지막에 맞힌 문장, 헷갈림 = 마지막에 틀린 문장. 오늘의 문장은 안 본 문장 → 헷갈린 문장 → 오래전에 익힌 문장 순으로 뽑습니다. 진도를 올리면 그 단원 문장이 열립니다.";
 }
+const srcTag = b => b.src === "보충" ? "✏️ 보충" : b.src === "개념문제" ? "📘 개념문제" : "📜 " + b.src;
+function srcLine(b) {
+  if (b.src === "보충") return "📜 출처 · 보충 문장(기출 아님)";
+  if (b.src === "개념문제") return "📘 출처 · ★개념문제 파일" + (b.links && b.links.length ? " · 기출에 나온 곳: " + b.links.map(l => { const [k, o] = l.split(" "), [y, n] = k.split("-"); return `${y}회 ${n}번${o ? " " + o : ""}` }).join(", ") : "");
+  return "📜 출처 · 제" + b.src;
+}
 function sentCard(sub, c, by) {
   const b = by[c.Q[c.idx]], un = D[sub].ub[b.u] || {}, r = c.res[c.idx];
   const terms = (b.terms || []).map(([t, d]) => `<li><b>${t}</b> · ${d}</li>`).join("");
   $("#main").innerHTML = `<section class="card q sent">
-    <div class="qhead"><span class="qno">문장 ${c.idx + 1} / ${c.Q.length}</span><span class="tags"><span class="tag">${esc2(un.nm || "")}</span><span class="tag exb">${b.src === "보충" ? "✏️ 보충" : "📜 " + b.src}</span></span></div>
+    <div class="qhead"><span class="qno">문장 ${c.idx + 1} / ${c.Q.length}</span><span class="tags"><span class="tag">${esc2(un.nm || "")}</span><span class="tag exb">${srcTag(b)}</span></span></div>
     ${b.ctx ? `<p class="ctx">📌 <b>문제 상황</b> · ${b.ctx}</p>` : ""}
     <p class="stem">${b.s}</p>
     <button class="hintbtn" id="plainBtn" ${r ? "hidden" : ""}>🗣️ 쉬운 말로 보기</button>
@@ -622,7 +639,7 @@ function sentCard(sub, c, by) {
     $("#main").querySelectorAll(".ox button").forEach(x => { x.disabled = true; const xv = x.dataset.v === "1"; x.classList.add(xv === b.a ? "is-key" : xv === v ? "is-picked" : "is-dim") });
     $("#sfb").innerHTML = `<p class="answer">${ok ? "✅" : "❌"} 정답 <b>${b.a ? "O" : "X"}</b> · 내 답 <b>${v ? "O" : "X"}</b></p><p class="exp">${b.e}</p>
       ${!b.a && b.fix ? `<p class="fix">✅ <b>바르게 고치면</b> · ${b.fix}</p>` : ""}
-      <p class="point">📜 출처 · ${b.src === "보충" ? "보충 문장(기출 아님)" : "제" + b.src.replace("회 ", "회 ")}${un.note && D[sub].meta.notes ? ` · <a href="#/s/${sub}/note/${un.note}">📖 개념정리에서 보기</a>` : ""}</p>`;
+      <p class="point">${srcLine(b)}${un.note && D[sub].meta.notes ? ` · <a href="#/s/${sub}/note/${un.note}">📖 개념정리에서 보기</a>` : ""}</p>`;
     $("#sNext").hidden = false;
   };
   if (r) fb(r.v, r.ok);
@@ -996,7 +1013,8 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => appl
   try { await loadData() } catch (e) { $("#title").textContent = "문제를 불러오지 못했어요"; $("#main").innerHTML = `<p class="exp">인터넷 연결을 확인하고 다시 열어 주세요. (${esc2(e.message)})</p>`; return }
   S = loadLocal();
   if (!S || !S.hist) { S = blank(); try { S = merge(S, await getJSON("data/migrate.json")) } catch (e) { } saveLocal() }
-  S.daily = S.daily || {}; S.days = S.days || {}; S.subjects = S.subjects || {}; S.book = S.book || {};
+  S.daily = S.daily || {}; S.days = S.days || {}; S.subjects = S.subjects || {}; S.book = S.book || {}; S.sent = S.sent || {};
+  migrateOxToSent();
   route();
   if (syncOn()) syncNow();
   if ("serviceWorker" in navigator && location.protocol === "https:") {

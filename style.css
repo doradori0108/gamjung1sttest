@@ -407,3 +407,15 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
   .playgrid.has-sheet .ps{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;overscroll-behavior:contain}
 }
 @media (min-width:1100px){.upq{display:none}}
+/* 문장 훈련 */
+.seg.four{grid-template-columns:repeat(4,1fr)}
+@media (max-width:520px){.seg.four{gap:4px;padding:4px}.seg.four button{font-size:13.5px;padding:10px 2px;letter-spacing:-.02em}.seg.four button small{font-size:10.5px}}
+.card.sent .stem{font-size:17px;line-height:1.75}
+.ctx{margin:0;font-size:14px;line-height:1.65;padding:9px 12px;border-radius:8px;background:var(--rule);color:var(--ink)}
+.plain{border:1px solid var(--accent);border-radius:10px;padding:12px 14px;background:var(--paper);display:grid;gap:8px}
+.plain p{margin:0;font-size:15px;line-height:1.75}
+.plain p b{display:block;font-size:12.5px;color:var(--accent);margin-bottom:2px}
+.plain ul{margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:var(--muted)}
+.plain ul b{color:var(--ink)}
+.fix{margin:0;font-size:15px;line-height:1.75;padding:10px 12px;border-radius:8px;background:var(--o-bg)}
+#sfb{display:grid;gap:10px}#sfb:empty{display:none}

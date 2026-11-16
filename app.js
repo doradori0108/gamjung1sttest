@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.6.0";
+const APP_VER = "1.7.0";
 const DAILY_N = 20;               // 오늘의 문제 수 (과목별)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 20문제 = 20분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -19,14 +19,14 @@ async function getJSON(p) { const r = await fetch(p, { cache: "no-cache" }); if 
 async function loadData() {
   SUBJ = await getJSON("data/subjects.json");
   await Promise.all(SUBJ.map(async s => {
-    const [meta, exam, ox] = await Promise.all([getJSON(`data/${s.id}/units.json`), getJSON(`data/${s.id}/exam.json`), getJSON(`data/${s.id}/ox.json`).catch(() => [])]);
-    D[s.id] = { meta, exam, ox, ex: Object.fromEntries(exam.map(x => [x.k, x])), oxBy: Object.fromEntries(ox.map(b => [b.id, b])), ub: Object.fromEntries(meta.units.map(u => [u.u, u])) };
+    const [meta, exam, ox, sent] = await Promise.all([getJSON(`data/${s.id}/units.json`), getJSON(`data/${s.id}/exam.json`), getJSON(`data/${s.id}/ox.json`).catch(() => []), getJSON(`data/${s.id}/sent.json`).catch(() => [])]);
+    D[s.id] = { meta, exam, ox, sent, ex: Object.fromEntries(exam.map(x => [x.k, x])), oxBy: Object.fromEntries(ox.map(b => [b.id, b])), ub: Object.fromEntries(meta.units.map(u => [u.u, u])) };
   }));
 }
 
 /* ───────── 기록 ───────── */
 let S = null;
-function blank() { return { v: 1, subjects: {}, hist: {}, days: {}, daily: {}, book: {} } }
+function blank() { return { v: 1, subjects: {}, hist: {}, days: {}, daily: {}, book: {}, sent: {} } }
 function loadLocal() { try { return JSON.parse(localStorage.getItem(LS_STATE)) } catch (e) { return null } }
 function saveLocal() { try { localStorage.setItem(LS_STATE, JSON.stringify(S)) } catch (e) { } }
 function touch() { saveLocal(); schedulePush() }
@@ -44,6 +44,9 @@ function merge(A, B) {
   /* 합격노트: 문항마다 더 나중에 고친 쪽 (뺀 것도 on:false로 남겨 두어 다른 기기에도 빠짐이 전달됨) */
   M.book = Object.assign({}, A.book);
   for (const [k, b] of Object.entries(B.book || {})) { const a = M.book[k]; if (!a || (b.t || 0) > (a.t || 0)) M.book[k] = b }
+  /* 문장 훈련: 문장마다 더 나중 기록 (문제풀이 기록 hist와 따로) */
+  M.sent = Object.assign({}, A.sent);
+  for (const [k, b] of Object.entries(B.sent || {})) { const a = M.sent[k]; if (!a || (b.t || 0) > (a.t || 0)) M.sent[k] = b }
   for (const [k, h] of Object.entries(B.hist || {})) { const a = M.hist[k]; if (!a || (h.t || 0) > (a.t || 0)) M.hist[k] = h }
   for (const src of [A.days || {}, B.days || {}]) for (const [d, v] of Object.entries(src)) {
     M.days[d] = M.days[d] || {};
@@ -326,11 +329,11 @@ function route() {
   tmStop(); saveTimer();
   if (p[0] === "settings") { V = { route: "settings", key: "settings" }; return renderSettings() }
   if (p[0] === "s" && D[p[1]]) {
-    const sub = p[1], tab = ["note", "daily", "unit", "wrong", "book", "map"].includes(p[2]) ? p[2] : "daily", arg = p[3] || "";
+    const sub = p[1], tab = ["note", "daily", "unit", "wrong", "book", "map", "sent"].includes(p[2]) ? p[2] : "daily", arg = p[3] || "";
     const key = [sub, tab, arg].join("/");
     if (V.key === key && V.route === "subject") return render();
     V = { route: "subject", sub, tab, mode: null, unit: null, Q: [], res: [], idx: 0, key, arg };
-    if (tab === "note") return render();
+    if (tab === "note" || tab === "sent") return render();
     if (tab === "daily" && arg === "extra") {
       /* 추가 문제는 화면을 나갔다 와도 같은 세트·남은 시간 그대로 (예전엔 나갈 때마다 새 세트 + 20분으로 리셋) */
       const x = extraGet(sub); V.mode = "extra";
@@ -468,12 +471,13 @@ function render() {
   const wrN = wrongList(sub).length;
   chrome({
     subject: sub, back: { label: "홈", hash: "#/" }, eyebrow: `감정평가사 1차 · ${m.name} · ${m.teacher} ${m.course}`,
-    title: `<span class="temo" aria-hidden="true">${emoOf(sub)}</span>` + (V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "오답 정리" : V.mode === "book" ? "합격노트 복습" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 도전" : V.tab === "wrong" ? "오답 정리" : V.tab === "book" ? "합격노트" : V.tab === "note" ? `${m.name} 개념정리` : "진도 설정"),
+    title: `<span class="temo" aria-hidden="true">${emoOf(sub)}</span>` + (V.mode === "daily" ? `오늘의 ${V.Q.length}문제` : V.mode === "extra" ? `추가 ${V.Q.length}문제` : V.mode === "unit" ? esc2(D[sub].ub[V.unit].nm) : V.mode === "wrong" ? "오답 정리" : V.mode === "book" ? "합격노트 복습" : V.mode === "retry" ? "방금 틀린 문제" : V.tab === "unit" ? "단원별 도전" : V.tab === "wrong" ? "오답 정리" : V.tab === "book" ? "합격노트" : V.tab === "note" ? `${m.name} 개념정리` : V.tab === "sent" ? "문장 훈련" : "진도 설정"),
     meta: `<span>${dateLabel()}</span><span>Lv.${L} · <b>${esc2(lecLabel(sub, L))}</b>까지</span>`, tabs: true, stats: true
   });
   drawSeg();
   if (V.tab === "note") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderNote() }
   if (V.tab === "map") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderMap() }
+  if (V.tab === "sent") { $("#tabs").hidden = true; $("#stats").hidden = true; return renderSent() }
   const bkN = bookList(sub).length;
   const tabs = [["daily", "🎯 오늘"], ["unit", "🧩 단원별"], ["wrong", "❌ 오답"], ["book", "📒 합격노트"]];
   $("#tabs").innerHTML = tabs.map(([t, n]) => `<button role="tab" data-t="${t}" aria-selected="${V.tab === t}">${n}${t === "wrong" && wrN ? `<span class="cnt">${wrN}</span>` : t === "book" && bkN ? `<span class="cnt bk">${bkN}</span>` : ""}</button>`).join("");
@@ -550,9 +554,96 @@ function noteOf(sub, q) {
 }
 function drawSeg() {
   const sub = V.sub, m = D[sub].meta, sm = summary(sub), seg = $("#seg"); seg.hidden = false;
-  const cur = V.tab === "note" ? "note" : V.tab === "map" ? "map" : "daily";
-  seg.innerHTML = `<button role="tab" aria-selected="${cur === "note"}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button role="tab" aria-selected="${cur === "daily"}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button><button role="tab" aria-selected="${cur === "map"}" data-go="map">🗺️ 진도<small>Lv.${lecOf(sub)} 바꾸기</small></button>`;
+  const cur = V.tab === "note" ? "note" : V.tab === "map" ? "map" : V.tab === "sent" ? "sent" : "daily", hasS = sentOpen(sub).length > 0;
+  seg.classList.toggle("four", hasS);
+  seg.innerHTML = `<button role="tab" aria-selected="${cur === "note"}" data-go="note">📖 공부하기<small>${m.notes ? "개념정리" : "준비 중"}</small></button><button role="tab" aria-selected="${cur === "daily"}" data-go="daily">⚔️ 도전하기<small>오늘 ${sm.done}/${sm.total}</small></button>${hasS ? `<button role="tab" aria-selected="${cur === "sent"}" data-go="sent">📝 문장 훈련<small>O·X 해석</small></button>` : ""}<button role="tab" aria-selected="${cur === "map"}" data-go="map">🗺️ 진도<small>Lv.${lecOf(sub)} 바꾸기</small></button>`;
   seg.querySelectorAll("button").forEach(b => b.onclick = () => { if (b.dataset.go !== cur) go(`#/s/${sub}/${b.dataset.go}`) });
+}
+/* ───────── 문장 훈련 (문제풀이와 별개: 기록은 S.sent, 오늘의 문제·배지·통계에 안 섞임) ───────── */
+const LS_SENT = "dora-exam-sent";
+const sid = (sub, b) => `${sub}:s${b.id}`;
+function sentOpen(sub) { const us = new Set(openUnits(sub).map(u => u.u)); return (D[sub].sent || []).filter(b => us.has(b.u)) }
+const sentH = (sub, b) => (S.sent || {})[sid(sub, b)];
+function sentCur(sub) { try { const x = JSON.parse(localStorage.getItem(LS_SENT)) || {}; return x[sub] || null } catch (e) { return null } }
+function sentSave(sub, c) { try { const x = JSON.parse(localStorage.getItem(LS_SENT)) || {}; if (c) x[sub] = c; else delete x[sub]; localStorage.setItem(LS_SENT, JSON.stringify(x)) } catch (e) { } }
+function sentBuild(sub, kind) {
+  const all = sentOpen(sub), r = rng(sub + day + kind + (kind === "today" ? "" : Math.random()));
+  if (kind === "wrong") return shuffle(all.filter(b => { const h = sentH(sub, b); return h && !h.ok }), r).map(b => b.id);
+  if (kind.startsWith("u-")) { const u = kind.slice(2); return all.filter(b => b.u === u).map(b => b.id) }
+  /* 오늘의 10개: 안 본 문장 → 헷갈린 문장 → 익힌 지 오래된 문장 */
+  const rank = b => { const h = sentH(sub, b); return !h ? 0 : !h.ok ? 1 : 2 };
+  return shuffle(all.slice(), r).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? (sentH(sub, a).t - sentH(sub, b).t) : 0)).slice(0, 10).map(b => b.id);
+}
+function renderSent() {
+  const sub = V.sub, m = D[sub].meta, all = sentOpen(sub);
+  $("#eyebrow").hidden = true;
+  if (!all.length) { $("#main").innerHTML = `<section class="card"><p class="exp">${m.name}은 아직 문장 훈련이 없어요.</p></section>`; return }
+  const by = Object.fromEntries((D[sub].sent || []).map(b => [b.id, b]));
+  let c = sentCur(sub);
+  if (V.arg && V.arg !== "home") {
+    if (!c || c.kind !== V.arg || (V.arg === "today" && c.day !== day)) { c = { kind: V.arg, day, Q: sentBuild(sub, V.arg), idx: 0, res: [] }; sentSave(sub, c) }
+    c.Q = c.Q.filter(id => by[id]);
+    if (!c.Q.length) { sentSave(sub, null); return go(`#/s/${sub}/sent`) }
+    return c.idx >= c.Q.length ? sentEnd(sub, c, by) : sentCard(sub, c, by);
+  }
+  const hs = all.map(b => sentH(sub, b)), ok = hs.filter(h => h && h.ok).length, wr = hs.filter(h => h && !h.ok).length;
+  const us = openUnits(sub).map(u => ({ u, n: all.filter(b => b.u === u.u) })).filter(x => x.n.length);
+  const resume = c && c.idx < c.Q.length && c.res.length && !(c.kind === "today" && c.day !== day);
+  $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">📝</div>
+    <p class="exp">기출 지문을 한 문장씩 쪼갰어요. <b>문장이 무슨 말인지</b> 먼저 읽고, 맞는 말인지 O·X로 골라 보세요. 막히면 <b>🗣️ 쉬운 말로 보기</b>를 누르면 됩니다. 여기 기록은 문제풀이 점수에 섞이지 않아요.</p>
+    <p class="answer">열린 문장 <b>${all.length}</b> · 익힘 <b>${ok}</b> · 헷갈림 <b>${wr}</b></p>
+    <div class="row" style="justify-content:center;flex-wrap:wrap;gap:8px">
+      ${resume ? `<button class="btn" data-k="${c.kind}">↩️ 하던 것 이어서 (${c.res.length}/${c.Q.length})</button>` : ""}
+      <button class="btn ${resume ? "ghost" : ""}" data-k="today">▶ 오늘의 문장 ${Math.min(10, all.length)}개</button>
+      ${wr ? `<button class="btn ghost" data-k="wrong">🔁 헷갈린 문장 ${wr}개</button>` : ""}</div></section>
+    <h2 class="sec">단원별</h2>
+    <ul class="units">${us.map(({ u, n }) => { const o = n.filter(b => { const h = sentH(sub, b); return h && h.ok }).length; return `<li class="unit open"><span class="nm">${esc2(u.nm)}<small>${n.length}문장 중 ${o}개 익힘</small></span><span class="ct"><span class="bar"><i style="width:${Math.round(o / n.length * 100)}%"></i></span><button data-k="u-${u.u}">▶ 훈련</button></span></li>` }).join("")}</ul>`;
+  $("#main").querySelectorAll("button[data-k]").forEach(b => b.onclick = () => {
+    const k = b.dataset.k, cc = sentCur(sub);
+    if (!(resume && cc && cc.kind === k && b.textContent.includes("이어서"))) sentSave(sub, { kind: k, day, Q: sentBuild(sub, k), idx: 0, res: [] });
+    go(`#/s/${sub}/sent/${k}`);
+  });
+  $("#foot").textContent = "익힘 = 마지막에 맞힌 문장, 헷갈림 = 마지막에 틀린 문장. 오늘의 문장은 안 본 문장 → 헷갈린 문장 → 오래전에 익힌 문장 순으로 뽑습니다. 진도를 올리면 그 단원 문장이 열립니다.";
+}
+function sentCard(sub, c, by) {
+  const b = by[c.Q[c.idx]], un = D[sub].ub[b.u] || {}, r = c.res[c.idx];
+  const terms = (b.terms || []).map(([t, d]) => `<li><b>${t}</b> · ${d}</li>`).join("");
+  $("#main").innerHTML = `<section class="card q sent">
+    <div class="qhead"><span class="qno">문장 ${c.idx + 1} / ${c.Q.length}</span><span class="tags"><span class="tag">${esc2(un.nm || "")}</span><span class="tag exb">${b.src === "보충" ? "✏️ 보충" : "📜 " + b.src}</span></span></div>
+    ${b.ctx ? `<p class="ctx">📌 <b>문제 상황</b> · ${b.ctx}</p>` : ""}
+    <p class="stem">${b.s}</p>
+    <button class="hintbtn" id="plainBtn" ${r ? "hidden" : ""}>🗣️ 쉬운 말로 보기</button>
+    <div class="plain" id="plain" ${r ? "" : "hidden"}><p><b>쉬운 말로 바꾸면</b> ${b.plain}</p>${terms ? `<ul>${terms}</ul>` : ""}</div>
+    <div class="ox"><button data-v="1" class="o" aria-label="O 맞는 말">O<small>맞는 말</small></button><button data-v="0" class="x" aria-label="X 틀린 말">X<small>틀린 말</small></button></div>
+    <div id="sfb"></div></section>
+    <div class="qnav"><button class="btn ghost" id="sHome">◀ 목록</button><button class="btn" id="sNext" ${r ? "" : "hidden"}>${c.idx + 1 < c.Q.length ? "다음 문장 ▶" : "결과 보기 ▶"}</button></div>`;
+  const fb = (v, ok) => {
+    $("#plainBtn").hidden = true; $("#plain").hidden = false;
+    $("#main").querySelectorAll(".ox button").forEach(x => { x.disabled = true; const xv = x.dataset.v === "1"; x.classList.add(xv === b.a ? "is-key" : xv === v ? "is-picked" : "is-dim") });
+    $("#sfb").innerHTML = `<p class="answer">${ok ? "✅" : "❌"} 정답 <b>${b.a ? "O" : "X"}</b> · 내 답 <b>${v ? "O" : "X"}</b></p><p class="exp">${b.e}</p>
+      ${!b.a && b.fix ? `<p class="fix">✅ <b>바르게 고치면</b> · ${b.fix}</p>` : ""}
+      <p class="point">📜 출처 · ${b.src === "보충" ? "보충 문장(기출 아님)" : "제" + b.src.replace("회 ", "회 ")}${un.note && D[sub].meta.notes ? ` · <a href="#/s/${sub}/note/${un.note}">📖 개념정리에서 보기</a>` : ""}</p>`;
+    $("#sNext").hidden = false;
+  };
+  if (r) fb(r.v, r.ok);
+  $("#plainBtn").onclick = () => { $("#plain").hidden = false; $("#plainBtn").hidden = true; c.peek = c.peek || []; c.peek[c.idx] = 1; sentSave(sub, c) };
+  $("#main").querySelectorAll(".ox button").forEach(x => { if (!r) x.onclick = () => {
+    const v = x.dataset.v === "1", ok = v === b.a, k = sid(sub, b), h = Object.assign({ seen: 0, wrong: 0 }, (S.sent = S.sent || {})[k]);
+    h.seen++; if (!ok) h.wrong++; h.ok = ok; h.last = day; h.t = Date.now(); S.sent[k] = h; touch();
+    c.res[c.idx] = { v, ok }; sentSave(sub, c); fb(v, ok);
+  } });
+  $("#sNext").onclick = () => { c.idx++; sentSave(sub, c); renderSent(); scrollTo({ top: 0 }) };
+  $("#sHome").onclick = () => go(`#/s/${sub}/sent`);
+  $("#foot").textContent = "읽는 순서: ① 문장을 끝까지 읽고 주어·결론을 찾기 → ② 모르는 말이 있으면 🗣️ 쉬운 말로 보기 → ③ O·X. 틀려도 괜찮아요. 해설과 '바르게 고치면' 문장을 소리 내어 한 번 읽으면 됩니다.";
+}
+function sentEnd(sub, c, by) {
+  const ok = c.res.filter(x => x && x.ok).length, n = c.Q.length, bad = c.Q.filter((id, i) => c.res[i] && !c.res[i].ok);
+  $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">${ok === n ? "🏆" : ok * 2 >= n ? "👏" : "💪"}</div><div class="score">${ok}<small> / ${n}</small></div>
+    <p class="exp">${ok === n ? "전부 맞혔어요!" : "틀린 문장은 '헷갈린 문장'에 모여 있어요. 내일 한 번 더 보면 확 줄어듭니다."}</p>
+    ${bad.length ? `<ul class="ol">${bad.map(id => { const b = by[id]; return `<li><span class="k ${b.a ? "t" : "f"}">${b.a ? "O" : "X"}</span><span>${b.a ? b.s : b.fix || b.s}</span></li>` }).join("")}</ul>` : ""}
+    <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap"><button class="btn" id="sBack">목록으로</button>${bad.length ? `<button class="btn ghost" id="sRe">🔁 틀린 ${bad.length}개 다시</button>` : ""}</div></section>`;
+  $("#sBack").onclick = () => { sentSave(sub, null); go(`#/s/${sub}/sent`) };
+  if ($("#sRe")) $("#sRe").onclick = () => { sentSave(sub, { kind: "wrong", day, Q: bad, idx: 0, res: [] }); V.key = ""; go(`#/s/${sub}/sent/wrong`) };
 }
 function renderNote() {
   const sub = V.sub, m = D[sub].meta;

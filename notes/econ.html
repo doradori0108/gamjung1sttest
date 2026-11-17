@@ -101,9 +101,9 @@ a{color:var(--accent)}
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">감정평가사 1차 · 경제학원론 · 손병익 기본이론 <span id="rangeLec">1~20강</span> · 생산자이론 시작</div>
+  <div class="eyebrow">감정평가사 1차 · 경제학원론 · 손병익 기본이론 · 수강한 강의까지 열림</div>
   <h1>경제학 요약노트</h1>
-  <p class="lede">제28~37회 경제학 400문항 중 지금까지 배운 범위는 71문항(매년 약 7문항, 경제학의 18%)입니다. 자주 나온 순서대로 '결론 한 줄 → 그래프 → 함정 → 기출'로 정리했습니다. 그래프는 버튼과 슬라이더로 직접 움직여 볼 수 있습니다. 문제는 <a href="https://claude.ai/artifact/5LNwruGZUdGcVd9SzJ9mLj" target="_blank" rel="noopener">경제학 진도별 기출</a>에서 풉니다.</p>
+  <p class="lede">제28~37회 경제학 400문항을 손병익 기본이론 강의 순서로 정리합니다. 자주 나온 순서대로 ‘결론 한 줄 → 그래프 → 함정 → 기출’이고, 그래프는 버튼과 슬라이더로 직접 움직여 볼 수 있습니다. 아직 수강 전인 주제는 앱의 🗺️ 진도를 올리면 열립니다.</p>
 </header>
 
 <section id="map" class="sec" aria-labelledby="h-map">
@@ -361,8 +361,8 @@ a{color:var(--accent)}
 </section>
 
 <!-- 11. 생산함수 (20강~) -->
-<section id="pf" class="sec" aria-labelledby="h-pf">
-  <div class="shead"><h2 id="h-pf">생산함수 · 등량곡선</h2><span class="badge mid">비중 중 · 9문항</span><span class="lec">20강~ (수강 중)</span></div>
+<section id="pf" class="sec" data-lec="20" aria-labelledby="h-pf">
+  <div class="shead"><h2 id="h-pf">생산함수 · 등량곡선 · 규모수익</h2><span class="badge mid">비중 중 · 9문항</span><span class="lec">20~21강</span></div>
   <div class="key">생산자이론은 소비자이론의 이름만 바꾼 것이다. 효용 → 생산량, 무차별곡선 → 등량곡선, MRS → MRTS(한계기술대체율) = MP<sub>L</sub> ÷ MP<sub>K</sub>.<small>등량곡선: 같은 생산량을 내는 노동(L)·자본(K) 조합을 이은 선. 장기 = L, K 모두 바꿀 수 있는 기간, 단기 = 자본은 고정.</small></div>
   <p class="ask"><b>시험에서 묻는 방식</b> · 생산함수 모양별 MRTS·한계생산 판정(30회 44·52번), 기술진보와 등량곡선 이동(30회 45번), 규모에 대한 수익(21강). 거의 매년 1문항</p>
   <div class="tw c1"><table>
@@ -379,8 +379,31 @@ a{color:var(--accent)}
     <li>Q = min{L, 3K}, (L, K) = (10, 5): L = 10, 3K = 15 → 작은 쪽인 <b>L이 생산량을 결정</b>(Q = 10)</li>
     <li>L을 1 늘리면 Q = 11 → MP<sub>L</sub> = 1 / K를 1 늘려도 Q = 10 그대로 → MP<sub>K</sub> = 0</li>
   </ol>
-  <div class="trap"><b>자주 틀리는 지점</b><span>완전보완형의 한계생산은 '남는 요소' 쪽이 0이다. min 안의 두 값을 먼저 계산해 어느 쪽이 묶여 있는지 확인(30회 44번).</span><span>선형 생산함수에서 "노동이 늘면 MRTS가 감소한다" → X. 직선이므로 일정(30회 52번).</span></div>
-  <p class="foot">20강(장기생산함수)까지 들은 내용만 넣었습니다. 이 단원 기출 9문항은 규모에 대한 수익(21강)까지 들으면 문제풀이에 열립니다.</p>
+  <div class="trap"><b>자주 틀리는 지점</b><span>완전보완형의 한계생산은 '남는 요소' 쪽이 0이다. min 안의 두 값을 먼저 계산해 어느 쪽이 묶여 있는지 확인(30회 44번).</span><span>선형 생산함수에서 "노동이 늘면 MRTS가 감소한다" → X. 직선이므로 일정(30회 52번).</span><span>0차 동차를 규모수익 불변으로 고른다. 불변은 1차 동차(34회 46번).</span><span>콥-더글러스 MRTS를 (β/α)(K/L)로 뒤집는다. 분자는 노동 지수(37회 45번).</span><span>"비용극소화 = 이윤극대화의 필요충분조건" → X. 필요조건(32회 48번).</span><span>기술진보는 종류와 무관하게 등량곡선을 원점 쪽으로 옮긴다(30회 45번).</span></div>
+  <div class="drop"><b>버려도 되는 주제</b><span>기술진보의 종류별 MRTS 변화(힉스 중립 · 노동절약적 정의 세부)는 10년간 1문항. 동차성 판정과 콥-더글러스 4종 세트만 확실히.</span></div>
+  <h3>규모에 대한 수익 (21강) · "모든 투입을 t배 하면?"</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>t배 투입 → 산출</th><th>이름</th><th>동차 차수 k</th><th>예</th></tr></thead>
+    <tbody>
+      <tr><td>t배보다 많이</td><td><b>규모수익 체증</b></td><td>k &gt; 1</td><td>Q = 2L² + 2K² (k = 2, 29회 59번)</td></tr>
+      <tr><td>딱 t배</td><td><b>불변</b></td><td>k = 1</td><td>Q = L<sup>1/3</sup>K<sup>2/3</sup> · min{L, K} · L + 3K</td></tr>
+      <tr><td>t배보다 적게</td><td><b>체감</b></td><td>k &lt; 1 (0차 포함)</td><td>Q = L<sup>0.3</sup>K<sup>0.3</sup> · 0차 동차(34회 46번)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>한계생산 체감(단기)</h3><p>자본은 그대로, <b>노동만</b> 늘릴 때 노동 1단위가 더하는 생산량이 줄어든다. 도로 현장에 장비는 그대로인데 인부만 계속 투입하는 상황.</p></div>
+    <div class="mini"><h3>규모수익(장기)</h3><p>장비와 인부를 <b>함께</b> 같은 비율로 늘릴 때 이야기. 한계생산이 체감해도 규모수익은 불변·체증일 수 있다(콥-더글러스 L<sup>1/3</sup>K<sup>2/3</sup>).</p></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>콥-더글러스 Q = AL<sup>α</sup>K<sup>β</sup> 4종 세트</th><th>37회 45번 L<sup>1/3</sup>K<sup>2/3</sup></th></tr></thead>
+    <tbody>
+      <tr><td>규모수익 = α + β와 1 비교</td><td>1 → 불변 · 1차 동차</td></tr>
+      <tr><td>MP<sub>L</sub> 체감 ⇔ α &lt; 1</td><td>1/3 &lt; 1 → 체감</td></tr>
+      <tr><td>노동소득분배율 = α</td><td>1/3</td></tr>
+      <tr><td>MRTS = (α/β)(K/L)</td><td><b>K/(2L)</b> (보기의 2K/L은 X)</td></tr>
+      <tr><td>대체탄력성</td><td>항상 1 (완전대체 ∞ · 완전보완 0)</td></tr>
+    </tbody>
+  </table></div>
   <p class="mine"></p>
 </section>
 
@@ -402,6 +425,8 @@ a{color:var(--accent)}
       <tr><th>위험기피</th><td>오목 효용 · 확실성등가 &lt; 기대값 · 위험프리미엄 = 기대값 − 확실성등가</td></tr>
       <tr><th>평균-표준편차</th><td>기피 우상향 · 애호 우하향 · 중립 수평</td></tr>
       <tr><th>MRTS</th><td>MP<sub>L</sub>/MP<sub>K</sub> · 선형 = 일정 · min형 = 남는 요소 MP 0</td></tr>
+      <tr data-sec="pf"><th>규모수익</th><td>k차 동차: k &gt; 1 체증 · = 1 불변 · &lt; 1 체감(0차 포함) · 콥-더글러스는 α + β</td></tr>
+      <tr data-sec="pf"><th>콥-더글러스</th><td>MRTS = (α/β)(K/L) · 노동분배율 = α · σ = 1</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -425,7 +450,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·등량곡선","#pf","20~21강",9,"mid","21강 후 열림"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */

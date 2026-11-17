@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.8.1";
+const APP_VER = "1.9.0";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -691,7 +691,7 @@ function enhanceNote(sub) {
   setThemeOn(doc);
   if (!doc.getElementById("appStyle")) {
     const st = doc.createElement("style"); st.id = "appStyle";
-    st.textContent = `header .eyebrow,header h1{display:none}.appgo{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}.appgo button{font:500 14px var(--f-body);padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}.appgo button.gh{background:transparent;color:var(--accent)}`;
+    st.textContent = `[hidden]{display:none!important}header .eyebrow,header h1{display:none}.appgo{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}.appgo button{font:500 14px var(--f-body);padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}.appgo button.gh{background:transparent;color:var(--accent)}`;
     doc.head.appendChild(st);
   }
   const units = D[sub].meta.units, bySec = {};
@@ -708,8 +708,21 @@ function enhanceNote(sub) {
     if (!us) return; const r = rec(us), td = tr.lastElementChild;
     td.textContent = r.seen ? `${r.ok}/${r.seen}` : r.ex.length ? "아직 안 풂" : "문제 없음";
   });
+  /* 수강 진도 이후 단원은 숨김: 섹션 · 목차 링크 · 빈출 지도 행 · 암기카드 행(data-sec) */
+  const L = lecOf(sub), hid = [];
+  /* 섹션이 data-lec을 가지면 그 강부터 공개(단원 첫 강의 내용이 섹션에 먼저 들어간 경우) */
+  const lecOfSec = sec => { const el = doc.getElementById(sec), o = el && +el.dataset.lec; return o || Math.min(...bySec[sec].map(u => D[sub].ub[u].lec)) };
+  for (const sec of Object.keys(bySec)) {
+    const off = lecOfSec(sec) > L; if (off) hid.push(sec);
+    const el = doc.getElementById(sec); if (el) el.hidden = off;
+    doc.querySelectorAll(`nav a[href="#${sec}"], #mapBody tr a[href="#${sec}"], [data-sec="${sec}"]`).forEach(a => { const row = a.closest("tr") || a; row.hidden = off; if (a.tagName === "A" && !a.closest("tr")) a.hidden = off });
+  }
+  let ban = doc.getElementById("lockNote");
+  if (!ban) { ban = doc.createElement("p"); ban.id = "lockNote"; ban.className = "ask"; const h = doc.querySelector("header"); h && h.after(ban) }
+  ban.hidden = !hid.length;
+  ban.innerHTML = hid.length ? `🔒 아직 수강 전인 단원 ${hid.length}개는 숨겨 두었어요. 🗺️ 진도를 올리면 그 단원 개념정리가 열립니다.` : "";
   for (const [sec, us] of Object.entries(bySec)) {
-    const el = doc.getElementById(sec); if (!el) continue;
+    const el = doc.getElementById(sec); if (!el || el.hidden) continue;
     const r = rec(us), mine = el.querySelector(".mine");
     const lab = x => x.gen ? "보충 문제" : `${x.y}회 ${x.n}번`;
     if (mine) mine.innerHTML = r.wrong.length ? `내 오답 ${r.wrong.map(x => `<span>${lab(x)}</span>`).join("")}` : r.seen ? `내 오답 없음 · ${r.seen}문항 풀어 봄` : "아직 푼 문제 없음";

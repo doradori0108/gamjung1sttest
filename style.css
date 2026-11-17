@@ -419,3 +419,14 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
 .plain ul b{color:var(--ink)}
 .fix{margin:0;font-size:15px;line-height:1.75;padding:10px 12px;border-radius:8px;background:var(--o-bg)}
 #sfb{display:grid;gap:10px}#sfb:empty{display:none}
+/* 문장 훈련: 원래 문제 · 상황 부족 표시 (v1.9.1) */
+.sbtns{display:flex;flex-wrap:wrap;gap:8px}
+.hintbtn.flag{border-color:var(--muted);color:var(--muted)}
+.hintbtn.flag.on{border-style:solid;border-color:var(--accent);color:var(--accent);background:var(--rule)}
+.sidno{font-size:11.5px;color:var(--muted);font-weight:400;margin-left:4px}
+.orig{border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:10px;padding:12px 14px;display:grid;gap:8px;background:var(--paper)}
+.orig .ohead{margin:0;font-size:12.5px;font-weight:600;color:var(--accent)}
+.orig .stem{font-size:14.5px!important;line-height:1.7!important;margin:0}
+.orig .box p{font-size:14px}
+.oopts{margin:0;padding:0;font-size:14px;line-height:1.7;list-style:none}
+.oopts li span{color:var(--muted)}

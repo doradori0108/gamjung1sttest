@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.0";
+const APP_VER = "1.9.1";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -151,7 +151,7 @@ function weight(id, day) {
   return w;
 }
 function wpick(list, wf, r) { let t = list.reduce((s, x) => s + wf(x), 0) * r(), i = 0; for (; i < list.length - 1; i++) { t -= wf(list[i]); if (t <= 0) break } return i }
-const exOfU = (sub, u) => D[sub].exam.filter(x => x.u === u && !x.skip);
+const exOfU = (sub, u) => D[sub].exam.filter(x => x.u === u && !x.skip && !x.gen);   // 문제풀이 = 기출만(보충 문제 제외)
 const oxOfU = (sub, u) => D[sub].ox.filter(b => b.u === u);
 function openUnits(sub) { const m = D[sub].meta, L = Math.min(lecOf(sub), m.dataThrough); return m.units.filter(u => u.lec <= L) }
 /* 단원별 몫: 수강한 단원 중 문제가 있는 단원에 10년 출제 문항 수 비율로 나눈다 */
@@ -601,6 +601,7 @@ function renderSent() {
   const hs = all.map(b => sentH(sub, b)), ok = hs.filter(h => h && h.ok).length, wr = hs.filter(h => h && !h.ok).length;
   const us = openUnits(sub).map(u => ({ u, n: all.filter(b => b.u === u.u) })).filter(x => x.n.length);
   const resume = c && c.idx < c.Q.length && c.res.length && !(c.kind === "today" && c.day !== day);
+  const fl = (sflagGet()[sub] || []).filter(id => by[id]);
   $("#main").innerHTML = `<section class="card center"><div class="bigemo" aria-hidden="true">📝</div>
     <p class="exp">기출 지문을 한 문장씩 쪼갰어요. <b>문장이 무슨 말인지</b> 먼저 읽고, 맞는 말인지 O·X로 골라 보세요. 막히면 <b>🗣️ 쉬운 말로 보기</b>를 누르면 됩니다. 여기 기록은 문제풀이 점수에 섞이지 않아요.</p>
     <p class="answer">열린 문장 <b>${all.length}</b> · 익힘 <b>${ok}</b> · 헷갈림 <b>${wr}</b></p>
@@ -608,6 +609,7 @@ function renderSent() {
       ${resume ? `<button class="btn" data-k="${c.kind}">↩️ 하던 것 이어서 (${c.res.length}/${c.Q.length})</button>` : ""}
       <button class="btn ${resume ? "ghost" : ""}" data-k="today">▶ 오늘의 문장 ${Math.min(SENT_N, all.length)}개</button>
       ${wr ? `<button class="btn ghost" data-k="wrong">🔁 헷갈린 문장 ${wr}개</button>` : ""}</div></section>
+    ${fl.length ? `<section class="card"><p class="exp">🤔 <b>상황이 부족하다고 표시한 문장 ${fl.length}개</b> · Claude에게 아래 문구를 보내면 문제 상황을 보강해 드려요.</p><p class="fix" id="flagTxt">${m.name} 문장 상황 보강해줘: ${fl.map(i => "s" + i).join(", ")}</p><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn ghost sm" id="flagCopy">📋 문구 복사</button><button class="btn ghost sm" id="flagClear">표시 모두 지우기</button></div></section>` : ""}
     <h2 class="sec">단원별</h2>
     <ul class="units">${us.map(({ u, n }) => { const o = n.filter(b => { const h = sentH(sub, b); return h && h.ok }).length; return `<li class="unit open"><span class="nm">${esc2(u.nm)}<small>${n.length}문장 중 ${o}개 익힘</small></span><span class="ct"><span class="bar"><i style="width:${Math.round(o / n.length * 100)}%"></i></span><button data-k="u-${u.u}">▶ 훈련</button></span></li>` }).join("")}</ul>`;
   $("#main").querySelectorAll("button[data-k]").forEach(b => b.onclick = () => {
@@ -615,7 +617,31 @@ function renderSent() {
     if (!(resume && cc && cc.kind === k && b.textContent.includes("이어서"))) sentSave(sub, { kind: k, day, Q: sentBuild(sub, k), idx: 0, res: [] });
     go(`#/s/${sub}/sent/${k}`);
   });
+  if ($("#flagCopy")) $("#flagCopy").onclick = () => { const t = $("#flagTxt").textContent; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast("복사했어요"), () => toast("길게 눌러 직접 복사해 주세요")) };
+  if ($("#flagClear")) $("#flagClear").onclick = () => { const f = sflagGet(); delete f[sub]; try { localStorage.setItem(LS_SFLAG, JSON.stringify(f)) } catch (e) { } renderSent() };
   $("#foot").textContent = "익힘 = 마지막에 맞힌 문장, 헷갈림 = 마지막에 틀린 문장. 오늘의 문장은 안 본 문장 → 헷갈린 문장 → 오래전에 익힌 문장 순으로 뽑습니다. 진도를 올리면 그 단원 문장이 열립니다.";
+}
+/* 문장의 원래 기출 문제(k)와 자동 상황 문구 */
+const sentSrcK = b => { const m = /^(\d+)회 (\d+)번/.exec(b.src || ""); return m ? `${m[1]}-${m[2]}` : "" };
+const sentSrcQ = (sub, b) => { const k = sentSrcK(b); return k && D[sub].ex[k] ? D[sub].ex[k] : null };
+function sentCtx(sub, b) {
+  if (b.ctx) return b.ctx;
+  const x = sentSrcQ(sub, b); if (!x) return "";
+  let t = plain(x.q).replace(/\s*\(단,[^)]*\)\s*$/, "").replace(/\s*(으로|로)?\s*(옳은|옳지 않은|가장 옳은)\s*것(을 모두 고른 것|만을 모두 고른 것)?은\s*\?\s*$/, "").replace(/[,\s]*(아래|다음)?\s*(설명|내용)?\s*중\s*$/, "").trim();
+  if (t === plain(x.q).trim()) t = t.replace(/\?$/, "");
+  return esc2(t.length > 140 ? t.slice(0, 140) + "…" : t);
+}
+/* 상황이 부족한 문장 표시(이 기기에만 저장 → Claude에게 번호를 알려 주면 보강) */
+const LS_SFLAG = "dora-exam-sentflag";
+function sflagGet() { try { return JSON.parse(localStorage.getItem(LS_SFLAG)) || {} } catch (e) { return {} } }
+function sflagToggle(sub, id) { const f = sflagGet(), a = new Set(f[sub] || []); a.has(id) ? a.delete(id) : a.add(id); f[sub] = [...a].sort((x, y) => x - y); try { localStorage.setItem(LS_SFLAG, JSON.stringify(f)) } catch (e) { } return a.has(id) }
+function sentOrigHtml(sub, b) {
+  const x = sentSrcQ(sub, b); if (!x) return "";
+  return `<div class="orig" id="orig" hidden><p class="ohead">📜 제${x.y}회 ${x.n}번 원래 문제</p><p class="stem">${x.q}</p>
+    ${x.fig ? `<div class="fig">${x.fig}</div>` : ""}
+    ${x.tbl ? `<div class="tblw"><table class="tbl">${x.tbl.map((r, i) => `<tr>${r.map(c => i ? `<td>${c}</td>` : `<th>${c}</th>`).join("")}</tr>`).join("")}</table></div>` : ""}
+    ${x.box ? `<div class="box">${x.box.map(t => `<p>${t.t}</p>`).join("")}</div>` : ""}
+    ${x.box ? "" : `<ol class="oopts">${x.o.map((t, i) => `<li><span>${N5[i]}</span> ${t}</li>`).join("")}</ol>`}</div>`;
 }
 const srcTag = b => b.src === "보충" ? "✏️ 보충" : b.src === "개념문제" ? "📘 개념문제" : "📜 " + b.src;
 function srcLine(b) {
@@ -626,11 +652,13 @@ function srcLine(b) {
 function sentCard(sub, c, by) {
   const b = by[c.Q[c.idx]], un = D[sub].ub[b.u] || {}, r = c.res[c.idx];
   const terms = (b.terms || []).map(([t, d]) => `<li><b>${t}</b> · ${d}</li>`).join("");
+  const ctx = sentCtx(sub, b), orig = sentOrigHtml(sub, b), flagged = (sflagGet()[sub] || []).includes(b.id);
   $("#main").innerHTML = `<section class="card q sent">
-    <div class="qhead"><span class="qno">문장 ${c.idx + 1} / ${c.Q.length}</span><span class="tags"><span class="tag">${esc2(un.nm || "")}</span><span class="tag exb">${srcTag(b)}</span></span></div>
-    ${b.ctx ? `<p class="ctx">📌 <b>문제 상황</b> · ${b.ctx}</p>` : ""}
+    <div class="qhead"><span class="qno">문장 ${c.idx + 1} / ${c.Q.length} <small class="sidno">s${b.id}</small></span><span class="tags"><span class="tag">${esc2(un.nm || "")}</span><span class="tag exb">${srcTag(b)}</span></span></div>
+    ${ctx ? `<p class="ctx">📌 <b>문제 상황</b> · ${ctx}</p>` : ""}
     <p class="stem">${b.s}</p>
-    <button class="hintbtn" id="plainBtn" ${r ? "hidden" : ""}>🗣️ 쉬운 말로 보기</button>
+    <div class="row sbtns"><button class="hintbtn" id="plainBtn" ${r ? "hidden" : ""}>🗣️ 쉬운 말로 보기</button>${orig ? `<button class="hintbtn" id="origBtn">📜 원래 문제 보기</button>` : ""}<button class="hintbtn flag ${flagged ? "on" : ""}" id="flagBtn" aria-pressed="${flagged}">🤔 ${flagged ? "상황 부족 표시됨" : "상황이 부족해요"}</button></div>
+    ${orig}
     <div class="plain" id="plain" ${r ? "" : "hidden"}><p><b>쉬운 말로 바꾸면</b> ${b.plain}</p>${terms ? `<ul>${terms}</ul>` : ""}</div>
     <div class="ox"><button data-v="1" class="o" aria-label="O 맞는 말">O<small>맞는 말</small></button><button data-v="0" class="x" aria-label="X 틀린 말">X<small>틀린 말</small></button></div>
     <div id="sfb"></div></section>
@@ -644,6 +672,8 @@ function sentCard(sub, c, by) {
     $("#sNext").hidden = false;
   };
   if (r) fb(r.v, r.ok);
+  if ($("#origBtn")) $("#origBtn").onclick = () => { const o = $("#orig"); o.hidden = !o.hidden; $("#origBtn").textContent = o.hidden ? "📜 원래 문제 보기" : "📜 원래 문제 접기" };
+  $("#flagBtn").onclick = () => { const on = sflagToggle(sub, b.id); $("#flagBtn").classList.toggle("on", on); $("#flagBtn").setAttribute("aria-pressed", on); $("#flagBtn").textContent = on ? "🤔 상황 부족 표시됨" : "🤔 상황이 부족해요"; toast(on ? "표시했어요. 문장 훈련 목록에서 모아 볼 수 있어요" : "표시를 지웠어요") };
   $("#plainBtn").onclick = () => { $("#plain").hidden = false; $("#plainBtn").hidden = true; c.peek = c.peek || []; c.peek[c.idx] = 1; sentSave(sub, c) };
   $("#main").querySelectorAll(".ox button").forEach(x => { if (!r) x.onclick = () => {
     const v = x.dataset.v === "1", ok = v === b.a, k = sid(sub, b), h = Object.assign({ seen: 0, wrong: 0 }, (S.sent = S.sent || {})[k]);

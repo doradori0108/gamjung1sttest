@@ -66,7 +66,7 @@
   "국제수지론",
   "국제무역론"
  ],
- "dataThrough": 29,
+ "dataThrough": 31,
  "defaultLec": 20,
  "units": [
   {
@@ -202,7 +202,8 @@
    "nm": "요소시장 · 소득분배",
    "lec": 31,
    "n": 15,
-   "grp": "미시경제학"
+   "grp": "미시경제학",
+   "note": "factor"
   },
   {
    "u": "U16",

@@ -66,7 +66,7 @@
   "국제수지론",
   "국제무역론"
  ],
- "dataThrough": 31,
+ "dataThrough": 34,
  "defaultLec": 20,
  "units": [
   {
@@ -210,7 +210,8 @@
    "nm": "일반균형 · 후생경제",
    "lec": 34,
    "n": 12,
-   "grp": "미시경제학"
+   "grp": "미시경제학",
+   "note": "welfare"
   },
   {
    "u": "U17",

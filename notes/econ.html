@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -407,6 +407,65 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 비용이론 -->
+<section id="cost" class="sec" data-lec="22" aria-labelledby="h-cost">
+  <div class="shead"><h2 id="h-cost">비용이론 · 비용극소화</h2><span class="badge hi">비중 상 · 14문항</span><span class="lec">22~23강</span></div>
+  <div class="key">비용곡선은 생산함수를 뒤집어 본 것이다. 한계생산이 줄면 한계비용이 오르고, 규모수익이 체증이면 장기평균비용이 내려간다.<small>한계비용(MC) = 1개 더 만들 때 느는 비용 · 평균비용(AC) = 총비용 ÷ 생산량 · AFC = 고정비 ÷ 생산량 · AVC = 가변비 ÷ 생산량.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1~2문항. ① 비용곡선 모양 O·X(29·30·35회) ② 비용함수에서 AC·MC 계산(31회 42번) ③ 생산함수 → 비용함수(29회 57번 · 35회 57번) ④ 비용극소화 요소 묶음(31회 45번 · 33회 42번 · 35회 54번) ⑤ 장기비용과 규모수익(31회 57번 · 36회 52번)</p>
+
+  <div class="lab">
+    <h3>단기 비용곡선 · 고정비용을 바꿔 보세요</h3>
+    <div class="slider"><label for="cs1">고정비용 FC</label><input type="range" id="cs1" min="0" max="120" step="5" value="40"><output id="cs1Out">40</output></div>
+    <svg id="svgCost" viewBox="0 0 340 250" role="img" aria-label="한계비용, 평균비용, 평균가변비용, 평균고정비용 곡선"></svg>
+    <div class="readout" id="csOut" aria-live="polite"></div>
+  </div>
+  <p class="foot">점선 = AFC. 고정비용을 올려도 MC는 그대로, AC만 위로 · 최저점은 오른쪽으로 간다(30회 48번 ㄴ).</p>
+
+  <div class="tw c1"><table>
+    <thead><tr><th>외울 관계</th><th>이유 · 기출</th></tr></thead>
+    <tbody>
+      <tr><td>MC &lt; AC → AC↓ · MC &gt; AC → AC↑</td><td>평균 점수와 새 점수(29회 45번 ②)</td></tr>
+      <tr><td>MC는 AVC · AC의 <b>최저점</b>을 아래→위로 통과</td><td>주어가 MC(35회 53번 ㄷ)</td></tr>
+      <tr><td>AC − AVC = AFC → Q↑이면 간격 좁아짐</td><td>30회 48번 ㄷ</td></tr>
+      <tr><td>AC 최저점은 AVC 최저점보다 오른쪽</td><td>AC↑ 구간이면 AVC도 ↑(30회 48번 ㄹ)</td></tr>
+      <tr><td>MC는 고정비용과 무관</td><td>30회 48번 ㄴ</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>비용극소화 = 1원당 한계생산을 같게</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>생산함수</th><th>최소 비용 요소 묶음</th><th>기출</th></tr></thead>
+    <tbody>
+      <tr><td>콥-더글러스 L<sup>α</sup>K<sup>β</sup></td><td>MRTS = (α/β)(K/L) = w/r (접점)</td><td>35회 54번: K/L = 12/24 → L = 2K</td></tr>
+      <tr><td>완전대체 aL + bK</td><td>a/w와 b/r 중 큰 쪽 <b>하나만</b>(모서리해)</td><td>31회 45번: 8/5 &gt; 4/3 → K만 15</td></tr>
+      <tr><td>max{2x<sub>1</sub>, x<sub>2</sub>}</td><td>C = min{w<sub>1</sub>/2, w<sub>2</sub>}Q</td><td>29회 57번</td></tr>
+      <tr><td>완전보완 min{L/a, K/b}</td><td>L = aQ, K = bQ → C = (aw + br)Q (가격 무관하게 꺾인 점)</td><td>32회 50번 · 33회 42번</td></tr>
+      <tr><td>공장 2개</td><td>MC<sub>1</sub> = MC<sub>2</sub></td><td>30회 55번: 2q<sub>1</sub> = 2 → (1, 4)</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps">
+    <li>31회 60번형: MP<sub>K</sub> = 2MP<sub>L</sub>, w = 8, r = 4 → 1원당 MP: 자본 2/4 &gt; 노동 1/8</li>
+    <li>→ 자본을 늘리고 노동을 줄이면 같은 양을 더 싸게. 한계생산 체감으로 결국 두 값이 같아질 때까지</li>
+  </ol>
+
+  <h3>장기비용 = 규모수익의 거울</h3>
+  <div class="grid2">
+    <div class="mini"><h3>규모수익 체증(α + β &gt; 1)</h3><p>규모의 경제 · LAC 우하향 · LMC &lt; LAC (36회 52번 ④)</p></div>
+    <div class="mini"><h3>불변(= 1)</h3><p>LAC 수평 = LMC. 값은 A·요소가격으로 정해짐("1로 일정"은 X, 36회 52번 ①) · 31회 57번 ③</p></div>
+  </div>
+  <p class="foot">도로공사 비유: 현장사무소·장비 리스료(고정비)는 공사량이 늘수록 1m당 부담이 줄고(AFC↓), 인력만 계속 투입하면 작업 공간이 비좁아져 1m 더 까는 비용이 오른다(MC↑).</p>
+
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>"평균비용이 하락할 때 MC &gt; AC" → X. 하락 중이면 MC &lt; AC(29회 45번).</span>
+    <span>"AC가 MC의 최저점에서 교차" → X. MC가 AC의 최저점을 지난다(35회 53번).</span>
+    <span>평균비용 = 총비용곡선의 접선 기울기 → X. 원점에서 그은 직선의 기울기(30회 48번).</span>
+    <span>완전보완형에서 요소가격을 보고 한쪽을 더 쓴다. 가격과 무관하게 꺾인 점(33회 42번).</span>
+    <span>생산함수를 L로 풀지 않고 가격을 곱한다. L = Q²/16 먼저(35회 57번).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>쌍대성(비용함수 ↔ 생산함수 수식 증명), 확장경로의 수식 유도는 출제 없음. 위 두 표와 실습 그래프만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -427,6 +486,8 @@ a{color:var(--accent)}
       <tr><th>MRTS</th><td>MP<sub>L</sub>/MP<sub>K</sub> · 선형 = 일정 · min형 = 남는 요소 MP 0</td></tr>
       <tr data-sec="pf"><th>규모수익</th><td>k차 동차: k &gt; 1 체증 · = 1 불변 · &lt; 1 체감(0차 포함) · 콥-더글러스는 α + β</td></tr>
       <tr data-sec="pf"><th>콥-더글러스</th><td>MRTS = (α/β)(K/L) · 노동분배율 = α · σ = 1</td></tr>
+      <tr data-sec="cost"><th>평균-한계</th><td>MC &lt; AC → AC↓ · MC는 AVC·AC 최저점 통과 · AC − AVC = AFC</td></tr>
+      <tr data-sec="cost"><th>비용극소화</th><td>MP<sub>L</sub>/w = MP<sub>K</sub>/r · 완전대체 = 싼 요소 하나 · 완전보완 = 꺾인 점</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -450,7 +511,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -581,6 +642,17 @@ $("#pxEl").oninput=drawUf;$("#iEl").oninput=drawUf;drawUf();
   el(p.t,"text",{x:p.X(CE)-40,y:236},"CE 64");el(p.t,"text",{x:p.X(EV)+5,y:236},"EV 68");el(p.t,"text",{x:6,y:p.Y(EU)+4},"8");
   el(p.t,"text",{x:p.X(a)-10,y:p.Y(u(a))-8},"36");el(p.t,"text",{x:p.X(b)-12,y:p.Y(u(b))-8},"100");
   $("#euOut").innerHTML=`<span>기대값 EV = 0.5×36 + 0.5×100 = <b>${EV}</b></span><span>기대효용 EU = 0.5×√36 + 0.5×√100 = 0.5×6 + 0.5×10 = <b>${EU}</b> (보라 선분 위의 점)</span><span>확실성등가 CE: √CE = 8 → CE = <b>${CE}</b> (확실히 64를 받는 것과 이 복권이 똑같이 좋다)</span><span>위험프리미엄 = EV − CE = 68 − 64 = <b>${RP}</b> (위험을 피하려고 포기할 용의가 있는 금액)</span>`})();
+
+/* 비용이론: 단기 비용곡선 */
+function drawCost(){const FC=+$("#cs1").value;$("#cs1Out").textContent=FC;const svg=$("#svgCost"),p=plot(svg,10,60,"Q","비용");
+ const VC=q=>20*q-4*q*q+0.4*q*q*q,MC=q=>20-8*q+1.2*q*q,AVC=q=>VC(q)/q,AC=q=>(FC+VC(q))/q,AFC=q=>FC/q;
+ const path=(fn,cls,dash)=>{let d="";for(let q=0.3;q<=10.001;q+=0.1){const y=fn(q);d+=(d?"L":"M")+p.X(q).toFixed(1)+" "+p.Y(Math.min(y,80)).toFixed(1)}el(p.g,"path",{d,class:cls,style:dash||""})};
+ path(MC,"d");path(AC,"s");path(AVC,"g");if(FC>0)path(AFC,"guide");
+ [["MC",MC,9.3],["AC",AC,9.6],["AVC",AVC,9.6]].forEach(([n,fn,q])=>el(p.t,"text",{x:p.X(q)-4,y:p.Y(Math.min(fn(q),58))-6},n));
+ let qa=0.3,ma=1e9;for(let q=0.3;q<=10;q+=0.01){if(AC(q)<ma){ma=AC(q);qa=q}}
+ el(p.g,"circle",{cx:p.X(qa),cy:p.Y(ma),r:4,fill:"var(--supply)"});el(p.g,"circle",{cx:p.X(5),cy:p.Y(AVC(5)),r:4,fill:"var(--gov)"});
+ $("#csOut").innerHTML=`AVC 최저점: Q = 5, ${f(AVC(5),1)} (FC와 무관) · AC 최저점: Q = ${f(qa,1)}, ${f(ma,1)} — 이 점에서 MC = ${f(MC(qa),1)} ≈ AC`}
+$("#cs1").addEventListener("input",drawCost);drawCost();
 </script>
 
 </body></html>

@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.4";
+const APP_VER = "1.9.5";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";

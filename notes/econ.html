@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#infl">실업·필립스</a><a href="#rule">준칙·재량</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#infl">실업·필립스</a><a href="#rule">준칙·재량</a><a href="#solow">경제성장</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -1132,6 +1132,42 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 거시: 경제성장(솔로우 · 성장회계 · 내생적 성장) -->
+<section id="solow" class="sec" data-lec="56" aria-labelledby="h-solow">
+  <div class="shead"><h2 id="h-solow">경제성장: 솔로우 · 성장회계 · 내생적 성장</h2><span class="badge hi">비중 상 · 19문항</span><span class="lec">56강</span></div>
+  <div class="key">매년 2문항. 계산은 세 가지뿐: ① <b>균제상태</b> s·f(k) = (n + δ)k ② <b>황금률</b> MPK = n + δ(콥-더글러스면 저축률 = 자본 지수) ③ <b>성장회계</b> 생산 증가율 = 기술 + α·자본 + (1 − α)·노동.<small>1인당 자본 k = K ÷ L. 균제상태 = k가 멈춘 상태. 황금률 = 1인당 소비가 최대인 균제상태.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 19문항. ① 균제 k·y·c 계산(32·34·36회) ② 황금률(28·31·33·35·37회) ③ 성장회계·솔로우 잔차(28·29·30·31·33·35회) ④ 이론 O·X(29·33·36·37회)</p>
+  <div class="lab">
+    <h3>솔로우 그래프 · y = Ak<sup>α</sup> (36회 66번 기본값: A = 2, α = 0.5, s = 0.2, n + δ = 0.1)</h3>
+    <svg id="svgSw" viewBox="0 0 340 250" role="img" aria-label="저축곡선과 필요투자선, 균제상태"></svg>
+    <div class="slider"><label for="sw1">저축률 s</label><input type="range" id="sw1" min="0.05" max="0.8" step="0.05" value="0.2"><output id="sw1Out">0.2</output></div>
+    <div class="slider"><label for="sw2">n + δ</label><input type="range" id="sw2" min="0.05" max="0.4" step="0.05" value="0.1"><output id="sw2Out">0.1</output></div>
+    <div class="slider"><label for="sw3">자본 지수 α</label><input type="range" id="sw3" min="0.2" max="0.7" step="0.1" value="0.5"><output id="sw3Out">0.5</output></div>
+    <div class="readout" id="swOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>변화</th><th>균제 k · y</th><th>황금률 k</th></tr></thead>
+    <tbody>
+      <tr><td>저축률 ↑</td><td>↑(성장률은 장기에 원래대로)</td><td>불변(α로 결정)</td></tr>
+      <tr><td>인구증가율 ↑ · 감가상각률 ↑</td><td>↓</td><td>↓(MPK = n + δ ↑)</td></tr>
+      <tr><td>노동만 일시 감소(전쟁 · 37-75)</td><td>즉시 ↑ → 원래 균제로 복귀</td><td>불변</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>솔로우 vs 내생적 성장</h3><p>솔로우: 기술 외생, 자본 수확 체감 → 균제에서 1인당 성장 0, 조건부 수렴, S = I 항상. 내생적(AK 등): 기술·성장률이 모형 안에서, MPK 일정 → 지속 성장(sA − δ), 수렴 X, 인구·연구가 많을수록 기술진보 ↑.</p></div>
+    <div class="mini"><h3>콥-더글러스 Y = AK<sup>α</sup>L<sup>1−α</sup></h3><p>지수 = 소득분배율 = 탄력성. 지수 합 1이면 규모수익 불변. MPL = (1 − α)Ak<sup>α</sup>(A에 비례, k의 α배만큼 반응). 1인당 증가율 = 총생산 증가율 − 노동 증가율(33-79).</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>황금률 = 성장률 극대화(29-70 ③). 소비 극대화.</span>
+    <span>인구증가율 ↓ → 1인당 소득 ↓(29-70 ④). ↑.</span>
+    <span>A도 10% 늘었는데 생산 10%(31-63 ④). 20%.</span>
+    <span>수렴을 내생적 성장 이론으로(29-70 ①).</span>
+    <span>균제보다 k가 크면 투자가 늘어난다(35-73 ㄱ). k가 줄며 투자도 감소.</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>기술진보가 있는 솔로우(효율노동 단위), 로머·루카스 모형의 수식, 수렴 실증은 넘긴다. 위 세 공식과 표만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -1179,6 +1215,7 @@ a{color:var(--accent)}
       <tr data-sec="infl"><th>고용지표</th><td>실업률 = 실업자 ÷ 경활 · 고용률 = 취업자 ÷ 생산가능 · 균제 실업률 = s ÷ (s + f) · 자연실업률 = 마찰 + 구조</td></tr>
       <tr data-sec="infl"><th>필립스곡선</th><td>π − π<sup>e</sup> = −b(u − u<sub>n</sub>) · 단기 우하향, 장기 수직 · π<sup>e</sup> ↑ → 위로 · 피셔 i = r + π · 통화증가율 = π + g</td></tr>
       <tr data-sec="rule"><th>준칙 · 재량</th><td>손실함수 π로 미분 → 재량 π · 합리적 기대면 u = u<sub>n</sub>, 재량은 인플레이션만 ↑ → 준칙 · 내부시차 통화 짧음 / 재정 김 · 테일러: π·갭 ↑ → 금리 ↑</td></tr>
+      <tr data-sec="solow"><th>경제성장</th><td>균제 s·f(k) = (n + δ)k · 황금률 MPK = n + δ, 저축률 = α · 성장회계 g<sub>Y</sub> = g<sub>A</sub> + α·g<sub>K</sub> + (1 − α)·g<sub>L</sub> · 솔로우 = 기술 외생·수렴, 내생 = AK·지속성장</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -1202,7 +1239,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["실업·인플레이션·필립스곡선","#infl","53강",26,"hi","앱에서 표시"],["준칙·재량·테일러 준칙","#rule","54강",11,"mid","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["실업·인플레이션·필립스곡선","#infl","53강",26,"hi","앱에서 표시"],["준칙·재량·테일러 준칙","#rule","54강",11,"mid","앱에서 표시"],["경제성장(솔로우·성장회계)","#solow","56강",19,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -1465,6 +1502,19 @@ function rlCalc(){const b=+$("#rl1").value,a=+$("#rl2").value;$("#rl1Out").textC
  const p=b/a,L=5+a/2*p*p;
  $("#rlOut").innerHTML=`준칙(π = 0): u = 5, 손실 <b>5</b> · 재량: π = b ÷ a = <b>${f(p)}</b>, 민간이 예상해 u = 5 그대로, 손실 <b>${f(L)}</b> → 재량은 손실만 ${f(L-5)} 더 큼`}
 ["rl1","rl2"].forEach(k=>$("#"+k).addEventListener("input",rlCalc));rlCalc();
+
+/* 솔로우 */
+function swDraw(){const s=+$("#sw1").value,nd=+$("#sw2").value,a=+$("#sw3").value,A=2;["sw1","sw2","sw3"].forEach(k=>$("#"+k+"Out").textContent=$("#"+k).value);
+ const ks=Math.pow(s*A/nd,1/(1-a)),kg=Math.pow(a*A/nd,1/(1-a)),xm=Math.max(10,Math.min(60,ks*1.6,kg*1.6)),ym=A*Math.pow(xm,a)*1.05;
+ const p=plot($("#svgSw"),xm,ym,"k","");
+ let pts=[];for(let i=0;i<=40;i++){const k=xm*i/40;pts.push([k,A*Math.pow(k,a)])}
+ const path=(f,c)=>{let d="";for(let i=0;i<=40;i++){const k=xm*i/40,y=f(k);d+=(i?"L":"M")+p.X(k)+" "+p.Y(Math.min(y,ym))}el(p.g,"path",{d,class:c,fill:"none"})};
+ path(k=>A*Math.pow(k,a),"g");path(k=>s*A*Math.pow(k,a),"d");line(p,p.g,"s",0,0,Math.min(xm,ym/nd),Math.min(ym,nd*xm));
+ if(ks<=xm){line(p,p.g,"guide",ks,0,ks,nd*ks)}
+ el(p.t,"text",{x:p.X(xm*0.82),y:p.Y(A*Math.pow(xm*0.82,a))-6},"y");el(p.t,"text",{x:p.X(xm*0.82),y:p.Y(s*A*Math.pow(xm*0.82,a))-6},"sy");
+ const y=A*Math.pow(ks,a),c=(1-s)*y,yg=A*Math.pow(kg,a),cg=(1-a)*yg;
+ $("#swOut").innerHTML=`균제 k = <b>${f(ks)}</b>, y = ${f(y)}, c = ${f(c)} · 황금률(s = α = ${a}): k = ${f(kg)}, c = <b>${f(cg)}</b> · ${Math.abs(s-a)<1e-9?"지금이 황금률":s>a?"저축 과다(자본 너무 많음)":"저축 부족(자본 부족)"}`}
+["sw1","sw2","sw3"].forEach(k=>$("#"+k).addEventListener("input",swDraw));swDraw();
 </script>
 
 </body></html>

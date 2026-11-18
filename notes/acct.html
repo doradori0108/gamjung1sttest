@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#sp">보조부문</a><a href="#abc">ABC</a><a href="#pr">종합원가</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -1339,6 +1339,91 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 29. 보조부문 원가배분 -->
+<section id="sp" class="sec" aria-labelledby="h-sp">
+  <div class="shead"><h2 id="h-sp">보조부문 원가배분</h2><span class="badge mid">비중 중 · 5문항</span><span class="lec">29단원</span></div>
+  <div class="key">수선·동력 같은 보조부문의 원가를 제조부문으로 넘기는 방법 3가지. 시험은 거의 <b>상호배분법 연립방정식</b>이고, 답을 거꾸로(배부 전 원가 · 용역비율) 묻는다.<small>보조부문 = 직접 제품을 만들지 않고 제조부문을 돕는 부문. 용역제공비율 = 그 부문 서비스를 누가 몇 % 썼나.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 5문항(29·31·33·35·37회). ① 상호배분법 역산(배부 전 원가 · 용역비율) ② 직접배분법 배분액</p>
+  <div class="lab">
+    <h3>상호배분법 계산기 · 33회 74번 기본값</h3>
+    <div class="slider"><label for="sp1">S1 배부 전 원가</label><input type="range" id="sp1" min="0" max="500" step="10" value="90"><output id="sp1Out">90</output></div>
+    <div class="slider"><label for="sp2">S2 배부 전 원가</label><input type="range" id="sp2" min="0" max="500" step="10" value="180"><output id="sp2Out">180</output></div>
+    <div class="slider"><label for="sp3">S1 → S2 비율(%)</label><input type="range" id="sp3" min="0" max="80" step="5" value="50"><output id="sp3Out">50</output></div>
+    <div class="slider"><label for="sp4">S2 → S1 비율(%)</label><input type="range" id="sp4" min="0" max="80" step="5" value="20"><output id="sp4Out">20</output></div>
+    <div class="readout" id="spOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>방법</th><th>보조부문 간 용역</th><th>계산</th></tr></thead>
+    <tbody>
+      <tr><td>직접배분법</td><td>무시</td><td>제조부문 사용량 비율로만(분모에 보조부문 사용량 넣지 않기, 35-72)</td></tr>
+      <tr><td>단계배분법</td><td>일부 반영(순서대로 한 방향)</td><td>먼저 배분한 부문은 다시 받지 않음</td></tr>
+      <tr><td>상호배분법</td><td>전부 반영</td><td>S1 = 원가 + b·S2, S2 = 원가 + a·S1 연립</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>방정식 해(배분할 총원가)를 배부 전 원가로 답함(29-74 ⑤ · 37-78 ⑤).</span>
+    <span>자기부문 소비(S2 → S2)를 빼지 않고 계산(37-78).</span>
+    <span>보조부문이 제조부문에 준 총액 = 보조부문 배부 전 원가 합계(29-74 출발점).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>단계배분법 순서 결정 기준, 이중배분율법(변동·고정 나눠 배분)은 넘긴다. 상호배분법 방정식 하나면 된다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 30. 활동기준원가 -->
+<section id="abc" class="sec" aria-labelledby="h-abc">
+  <div class="shead"><h2 id="h-abc">활동기준원가(ABC)</h2><span class="badge lo">비중 하 · 3문항</span><span class="lec">30단원</span></div>
+  <div class="key">계산은 하나뿐: <b>활동별 배부율 = 활동원가 ÷ 원가동인 총수량</b>, 제품 배부액 = Σ 배부율 × 제품이 쓴 원가동인. 거꾸로 '나머지 시간'·'기본원가'를 묻는다.<small>원가동인 = 그 활동 원가를 일으키는 요인(이동 횟수, 기계시간, 검사 횟수 등).</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 3문항(29·30·33회), 모두 계산.</p>
+  <div class="tw c1"><table>
+    <thead><tr><th>33회 76번</th><th>배부율</th><th>제품 A</th><th>제품 B</th></tr></thead>
+    <tbody>
+      <tr><td>자재주문 ₩55 / 55회</td><td>1</td><td>20</td><td>35</td></tr>
+      <tr><td>품질검사 ₩84 / 28회</td><td>3</td><td>30</td><td>54</td></tr>
+      <tr><td>기계수리 ₩180 / 180시간</td><td>1</td><td>80</td><td>100</td></tr>
+      <tr><td>합계</td><td></td><td><b>130</b></td><td><b>189</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>제조원가 = 기본원가 + 제조간접원가. 기본원가를 묻는데 간접원가를 답함(30-74).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>활동 계층(단위·묶음·제품·설비 수준) 분류, ABC 도입 장단점 서술은 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 31. 종합원가 -->
+<section id="pr" class="sec" aria-labelledby="h-pr">
+  <div class="shead"><h2 id="h-pr">종합원가 · 공손</h2><span class="badge hi">비중 상 · 9문항</span><span class="lec">31단원</span></div>
+  <div class="key">거의 매년 1문항. 5단계(물량 → 환산량 → 단위원가 → 완성품·기말 배분)를 손에 익히고, 가중평균과 선입선출의 차이 <b>= 기초재공품 × 기초 완성도</b> 하나만 기억. 공손은 '<b>누가 검사를 통과했나</b>'.<small>완성품환산량 = 물량 × 완성도. 재료는 보통 공정 초 전량 투입(완성도 100%), 가공원가는 진행률만큼.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 9문항. ① 기말재공품 원가(28·31·33·34회) ② 두 방법 환산량 차이 역산(29·34회) ③ 정상·비정상 공손(32·35·36회) ④ 개념 O·X(37회)</p>
+  <div class="lab">
+    <h3>가공원가 완성품환산량 · 28회 77번 기본값</h3>
+    <div class="slider"><label for="pr1">기초재공품 수량</label><input type="range" id="pr1" min="0" max="3000" step="100" value="1000"><output id="pr1Out">1000</output></div>
+    <div class="slider"><label for="pr2">기초 완성도(%)</label><input type="range" id="pr2" min="0" max="100" step="5" value="40"><output id="pr2Out">40</output></div>
+    <div class="slider"><label for="pr3">당기 완성 수량</label><input type="range" id="pr3" min="0" max="8000" step="100" value="4000"><output id="pr3Out">4000</output></div>
+    <div class="slider"><label for="pr4">기말재공품 수량</label><input type="range" id="pr4" min="0" max="3000" step="100" value="1000"><output id="pr4Out">1000</output></div>
+    <div class="slider"><label for="pr5">기말 완성도(%)</label><input type="range" id="pr5" min="0" max="100" step="5" value="40"><output id="pr5Out">40</output></div>
+    <div class="readout" id="prOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>가중평균법</th><th>선입선출법</th></tr></thead>
+    <tbody>
+      <tr><td>환산량</td><td>완성품 + 기말 × 완성도</td><td>기초 × (1 − 기초 완성도) + 당기착수완성 + 기말 × 완성도</td></tr>
+      <tr><td>단위원가 분자</td><td>기초재공품원가 + 당기투입원가</td><td><b>당기투입원가만</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>공손 3단계</h3><p>① 공손 수량 = 기초 + 착수 − 완성 − 기말 ② 당기 합격품 = 당기에 검사시점을 지난 것(기초가 이미 지났으면 제외, 기말이 아직이면 제외) ③ 정상공손 = 합격품 × %, 나머지는 비정상.</p></div>
+    <div class="mini"><h3>공손 원가</h3><p>공손품 단위원가 = 재료 단위원가 + 가공 단위원가 × 검사시점. 정상공손원가는 합격품(완성품 · 검사 지난 기말)에, 비정상은 기간비용. 처분가치가 있으면 순정상공손원가만 배분.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>선입선출 단위원가에 기초재공품원가를 섞음(31-73).</span>
+    <span>전기에 검사를 지난 기초재공품을 당기 합격품에 넣음(32-72 ④ 57,200).</span>
+    <span>정상·비정상 구분 이유를 '단위원가가 달라서'(37-76 ⑤). 피할 수 있느냐의 차이.</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>연속공정(전공정원가), 감손, 공손 재작업은 넘긴다. 5단계와 공손 3단계만.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -1389,6 +1474,9 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="ad"><td>환율 · 매각예정</td><td>화폐성 = 기말 / 원가 비화폐성 = 거래일 / 공정가치 비화폐성 = 측정일 · 매각예정 = min(장부, 순공정가치), 상각 중단</td></tr>
       <tr data-sec="kf"><td>원가흐름</td><td>재료 사용 = 기초 + 매입 − 기말 → 제품제조원가 = 기초재공 + 총제조 − 기말재공 → 매출원가 = 기초제품 + 제품제조 − 기말제품 · 기초원가 = 재료 + 노무, 가공원가 = 노무 + 간접</td></tr>
       <tr data-sec="jo"><td>정상원가</td><td>예정배부율 = 예산 ÷ 예정조업도 · 배부액 = 배부율 × 실제조업도 · 과소배부(실제 &gt; 배부) → 매출원가 ↑ · 총원가비례 = 재공·제품·매출원가(원재료 X)</td></tr>
+      <tr data-sec="sp"><td>보조부문</td><td>직접(무시) · 단계(일부) · 상호(전부, 연립) · 방정식 해 = 배분할 총원가 ≠ 배부 전 원가 · 자기부문 소비는 빼고 비율 재계산</td></tr>
+      <tr data-sec="abc"><td>ABC</td><td>배부율 = 활동원가 ÷ 원가동인 총수량 · 제조원가 = 기본원가 + 간접원가</td></tr>
+      <tr data-sec="pr"><td>종합원가</td><td>평균 − 선입 환산량 = 기초 × 기초 완성도 · 선입선출 단위원가 = 당기원가만 · 정상공손 = 당기 합격품 × % · 공손 단위원가 = 재료 + 가공 × 검사시점</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1409,7 +1497,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["보조부문 원가배분","#sp","29단원",5,"mid"],["활동기준원가","#abc","30단원",3,"lo"],["종합원가·공손","#pr","31단원",9,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1598,6 +1686,19 @@ function joCalc(){const v=["jo1","jo2","jo3","jo4"].map(i=>{$("#"+i+"Out").textC
  const r=v[0]/v[1],ap=r*v[2],d=v[3]-ap;
  $("#joOut").innerHTML=`예정배부율 ${(Math.round(r*100)/100).toLocaleString()} · 배부액 ${Math.round(ap).toLocaleString()} · ${Math.abs(d)<0.5?"배부차이 없음":d>0?`<b>과소배부 ${Math.round(d).toLocaleString()}</b> → 매출원가 ↑, 이익 ↓`:`<b>과대배부 ${Math.round(-d).toLocaleString()}</b> → 매출원가 ↓, 이익 ↑`}`}
 ["jo1","jo2","jo3","jo4"].forEach(i=>$("#"+i).addEventListener("input",joCalc));joCalc();
+
+/* 29. 상호배분 */
+function spCalc(){const v=["sp1","sp2","sp3","sp4"].map(i=>{$("#"+i+"Out").textContent=$("#"+i).value;return +$("#"+i).value});
+ const a=v[2]/100,b=v[3]/100,d=1-a*b;
+ if(d<=0){$("#spOut").textContent="비율을 줄여 주세요";return}
+ const S1=(v[0]+b*v[1])/d,S2=v[1]+a*S1,r=x=>Math.round(x*100)/100;
+ $("#spOut").innerHTML=`S1 = ${v[0]} + ${b}·S2, S2 = ${v[1]} + ${a}·S1 → 배분할 총원가 S1 <b>${r(S1)}</b>, S2 <b>${r(S2)}</b> · 제조부문으로 가는 합계 = ${v[0]+v[1]}(배부 전 원가 합계와 같음)`}
+["sp1","sp2","sp3","sp4"].forEach(i=>$("#"+i).addEventListener("input",spCalc));spCalc();
+/* 31. 종합원가 환산량 */
+function prCalc(){const v=["pr1","pr2","pr3","pr4","pr5"].map(i=>{$("#"+i+"Out").textContent=$("#"+i).value;return +$("#"+i).value});
+ const wa=v[2]+v[3]*v[4]/100,fi=wa-v[0]*v[1]/100;
+ $("#prOut").innerHTML=`가중평균 환산량 = ${v[2]} + ${v[3]} × ${v[4]}% = <b>${wa}</b> · 선입선출 = ${wa} − ${v[0]} × ${v[1]}% = <b>${fi}</b> (차이 = 기초재공품이 전기에 해 둔 작업량)`}
+["pr1","pr2","pr3","pr4","pr5"].forEach(i=>$("#"+i).addEventListener("input",prCalc));prCalc();
 </script>
 
 </body></html>

@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -804,6 +804,65 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 거시: 국민소득 -->
+<section id="gdp" class="sec" data-lec="39" aria-labelledby="h-gdp">
+  <div class="shead"><h2 id="h-gdp">국민소득 · 물가지수(거시 시작)</h2><span class="badge hi">비중 상 · 23문항</span><span class="lec">39강</span></div>
+  <div class="key">GDP = 일정 기간 <b>국내</b>에서 <b>새로</b> 생산된 <b>최종</b> 재화·서비스의 <b>시장가치</b>. 시험은 ① 포함·제외 판단 ② 항등식 NX = (S<sub>P</sub> − I) + (T − G) ③ 물가지수 3종 비교 세 가지로 끝난다.<small>거시경제 = 나라 전체의 생산·물가·고용을 보는 분야. 도로공사 비유: 올해 새로 깐 도로(생산)는 GDP, 기존 도로 부지 매매(자산 거래)는 GDP가 아니다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 23문항, 매년 2~3문항. ① GDP 포함 O·X(29·30·34·35·36·37회) ② 항등식 계산(28·29·30·31·33·35회) ③ 물가지수 비교·계산(28·29·32·33·34·35회) ④ GDI·GNI·NI 사다리(30·36회)</p>
+
+  <h3>포함 · 제외</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>GDP에 포함</th><th>GDP에서 제외</th></tr></thead>
+    <tbody>
+      <tr><td>신축 주택(투자) · 재고 증가(재고투자) · 중개수수료</td><td>기존 주택·중고품·주식 거래, 주가·집값 상승</td></tr>
+      <tr><td>귀속임대료 · 농가 자가소비 · 정부 서비스(비시장이지만 포함)</td><td>가사노동 · 지하경제</td></tr>
+      <tr><td>외국인의 국내 생산(GDP 기준 = 장소)</td><td>이전지출(연금·출산장려금·실업수당)</td></tr>
+      <tr><td>간접세 · 감가상각(GDP는 '총'생산)</td><td>중간재(최종재에 이미 포함) · 수입품(C에 더해지고 M으로 빠짐)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="lab">
+    <h3>항등식 · 33회 61번 기본값</h3>
+    <div class="slider"><label for="gd1">민간저축 S<sub>P</sub></label><input type="range" id="gd1" min="0" max="300" step="10" value="150"><output id="gd1Out">150</output></div>
+    <div class="slider"><label for="gd2">투자 I</label><input type="range" id="gd2" min="0" max="300" step="10" value="50"><output id="gd2Out">50</output></div>
+    <div class="slider"><label for="gd3">조세 T</label><input type="range" id="gd3" min="0" max="200" step="10" value="50"><output id="gd3Out">50</output></div>
+    <div class="slider"><label for="gd4">정부지출 G</label><input type="range" id="gd4" min="0" max="200" step="10" value="70"><output id="gd4Out">70</output></div>
+    <div class="readout" id="gdOut" aria-live="polite"></div>
+  </div>
+  <ol class="steps">
+    <li>Y = C + I + G + NX 와 Y = C + S<sub>P</sub> + T 를 빼면 → <b>NX = (S<sub>P</sub> − I) + (T − G)</b></li>
+    <li>모르는 값은 정의로 역산: S<sub>P</sub> = Y − T − C(31-72에서 T = 50), G = 정부소비 + 정부투자(35-63)</li>
+    <li>균형예산(G = T)이면 S<sub>P</sub> = I + NX(30-65: 200 + 50 = 250, Y 계산 불필요)</li>
+    <li>유량 ≠ 저량: 적자가 '줄어도' 적자면 채무는 늘고, 흑자면 순대외채권은 늘어난다(29-71)</li>
+  </ol>
+
+  <h3>소득 지표 사다리</h3>
+  <p class="foot">GDP → (+ 교역조건 변화 손익) <b>GDI</b> → (+ 국외 순수취 요소소득) <b>GNI</b> → (− 고정자본소모) NNI → (− 순간접세) <b>NI</b> = 임금 + 지대 + 이자 + 이윤. 처분가능소득 = GNI − 감가상각 − 사내유보 − 세금 + 이전지출(30-64: 1,000 → 1,050 → 1,070 → 1,050). GNP = GDP + 순수취 요소소득(37-61 ㄷ X).</p>
+
+  <h3>물가지수 3종</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>CPI</th><th>GDP 디플레이터</th><th>PPI</th></tr></thead>
+    <tbody>
+      <tr><td>방식</td><td>라스파이레스(기준연도 수량 고정)</td><td>파셰(비교연도 수량, 가중치 매년 변함)</td><td>라스파이레스</td></tr>
+      <tr><td>대상</td><td>소비자 장바구니(<b>수입 소비재 O</b>)</td><td>국내 생산 최종재 전부(투자재 O, <b>수입품 X</b>)</td><td>기업 간 거래(<b>수입품 O</b>, 원자재 O)</td></tr>
+      <tr><td>특징</td><td>대체효과·신상품·품질개선 무시 → 생계비 과대평가. 그래도 생계비 지표로는 디플레이터보다 적합(32-67 ④)</td><td>명목GDP ÷ 실질GDP × 100</td><td>CPI의 선행지표</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>계산 3종</h3><p>가중평균 상승률(28-74: 0.4×10 + 0.2×10 + 0.2×5 = 7%) · 파셰(34-64: 1,800 ÷ 1,000 → 80%) · 실질GDP = 기준연도 가격 × 당해 수량(35-61: 20%).</p></div>
+    <div class="mini"><h3>증가율 근사</h3><p>실질 성장률 ≈ 명목 − 물가, 1인당 ≈ 실질 − 인구(30-76: 5 − 3 − 1 = 1%). 다른 해 금액 환산 = 금액 × 지수비(30-68: 1,000 × 120/40).</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>'시장 거래 최종생산물만' → X(귀속임대료 등 예외, 34-62 ① · 36-73 ①).</span>
+    <span>GNP = GDP − 순수취 → X. 더한다.</span>
+    <span>수입 부품을 쓴 완제품 전액을 GDP로(35-62 ②). 부가가치 = 생산액 − 중간투입.</span>
+    <span>소비 증가 → 경상수지 개선 → X(저축 감소, 28-73 ㄱ).</span>
+    <span>PPI는 수입품 제외 → X(33-62 ㄷ).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>국민계정 세부 항목(통계상 불일치, 해외 부문 계정 표), 연쇄가중 GDP는 출제 거의 없음. 포함·제외 표와 항등식만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -838,6 +897,8 @@ a{color:var(--accent)}
       <tr data-sec="welfare"><th>사회후생</th><td>공리주의 직선 · 평등주의 볼록 · 롤즈 L자 · 애로우 파레토원칙 = 만장일치</td></tr>
       <tr data-sec="fail"><th>외부성 계산</th><td>SMC = PMC + 외부 · 최적 P = SMC · 손실 ½ × ΔQ × 높이 · 피구세 = 최적 Q의 외부비용 · 코즈 = 재산권 + 거래비용 0</td></tr>
       <tr data-sec="fail"><th>공공재 · 정보</th><td>공공재 수직합(꺾임 확인) · 공유재 = 경합·비배제 / 역선택(유형·계약 전) vs 도덕적 해이(행동·계약 후)</td></tr>
+      <tr data-sec="gdp"><th>GDP 포함</th><td>신축·재고증가·귀속임대료 O / 기존자산·주가·이전지출·가사노동 X · GNP = GDP + 순수취 · GDI = GDP + 교역조건 손익</td></tr>
+      <tr data-sec="gdp"><th>항등식 · 물가</th><td>NX = (S<sub>P</sub> − I) + (T − G) · CPI 라스파이레스(수입 소비재 O) · 디플레이터 파셰(수입품 X) · PPI 수입품 O</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -861,7 +922,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -1066,6 +1127,12 @@ function drawMf(){const t=+$("#mf1").value;$("#mf1Out").textContent=t;const svg=
  const dwl=.5*(qm-qo)*hgt;
  $("#mfOut").innerHTML=`시장 Q = <b>6</b> · 최적 Q = <b>${f(qo)}</b> · 피구세 = <b>${t}</b> · 후생손실(= 피구세로 회복) <b>${f(dwl)}</b>${t===6?" (외부비용 일정한 예. 36-53은 외부비용이 Q + 2로 늘어 8)":""}`}
 $("#mf1").addEventListener("input",drawMf);drawMf();
+
+/* 국민소득 항등식 */
+function gdCalc(){const s=+$("#gd1").value,i=+$("#gd2").value,t=+$("#gd3").value,g=+$("#gd4").value;["gd1","gd2","gd3","gd4"].forEach(k=>$("#"+k+"Out").textContent=$("#"+k).value);
+ const nx=(s-i)+(t-g);
+ $("#gdOut").innerHTML=`민간 (S<sub>P</sub> − I) = ${s-i} · 정부 (T − G) = ${t-g} → 경상수지 NX = <b>${nx}</b> ${nx>0?"흑자":nx<0?"적자":"균형"}`}
+["gd1","gd2","gd3","gd4"].forEach(k=>$("#"+k).addEventListener("input",gdCalc));gdCalc();
 </script>
 
 </body></html>

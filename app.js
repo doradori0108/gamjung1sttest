@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.8";
+const APP_VER = "1.9.9";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -429,9 +429,56 @@ function pathDots(sub) {
   return `<div class="path" role="img" aria-label="진도 ${L} / ${m.lectures.length}">${m.lectures.map((_, i) => `<i class="${i + 1 < L ? "done" : i + 1 === L ? "cur" : ""}"></i>`).join("")}</div>`;
 }
 
+/* ───────── 업데이트 소식 · 사용방법 ───────── */
+const LS_SEENVER = "dora-exam-seenver";
+const NEWS = [
+  ["1.9.9", "2026.11.18", ["홈 제목 옆에 📢 업데이트 소식 · ❓ 사용방법 버튼 추가"]],
+  ["1.9.8", "2026.11.18", ["회계 18·19단원(종업원급여 · 주식기준보상), 경제 35강(시장실패) 기출 · 문장 · 개념정리 추가", "회계 33회 63번을 공식 정답(③)으로 바로잡고 해설에 논란 표시"]],
+  ["1.9.2~1.9.7", "2026.11.17", ["회계 12~17단원(금융자산 · 사채 · 전환사채 · 충당부채 · 자본 · 수익) 기출 · 문장 · 개념정리 추가", "경제 22~34강(비용이론 · 완전경쟁 · 독점 · 과점 · 요소시장 · 후생경제) 기출 · 문장 · 개념정리 추가"]],
+  ["1.9.1", "2026.11.17", ["경제 오늘의 문제를 기출만으로(보충 문제 제외)", "문장 훈련: 문제 상황 자동 표시, 📜 원래 문제 보기, 🤔 상황이 부족해요 표시"]],
+  ["1.9.0", "2026.11.17", ["개념정리도 진도까지만 보이게(안 배운 단원은 🔒)", "회계 11단원(현금 · 수취채권), 경제 21강(규모수익) 추가"]],
+  ["1.8.0~1.8.1", "2026.11.16", ["회계 문장 훈련 추가, 오늘의 문제는 기출만 10문제", "오늘의 문장 20개로"]],
+  ["1.7.0", "2026.11.16", ["경제 문장 훈련(기출 지문 O·X 해석) 추가"]],
+  ["1.6.0", "2026.11.16", ["해설을 문제와 함께 보기"]],
+  ["1.5.0~1.5.3", "2026.11.15", ["합격노트(저장 · 분류 · 메모 · 다시 풀기) 추가, 진도 버튼을 공부하기 · 도전하기 줄로", "제한시간 리셋 오류 수정, 경제 20강(기대효용) 반영"]],
+  ["1.4.0~1.4.1", "2026.11.15", ["게임형 화면: 레벨 · 진도 점 · 별 · 연속 · 배지 · 콤보, 🌙/☀️ 전환", "휴대폰 강제 어둡게 모드에 덮이던 문제 수정"]],
+];
+const HELP = () => [
+  ["🏠 홈", "과목 카드마다 오늘 진행, 🔥 연속 일수, 정답률, 오답 수, 합격노트 수가 보여요. Lv. 숫자를 누르면 진도를 바꿀 수 있어요."],
+  ["🗺️ 진도 맞추기", "인강에서 들은 강(단원)까지 Lv.을 올려 두세요. 문제 · 문장 · 개념정리 모두 그 진도까지만 나와요. 안 배운 부분은 🔒로 잠겨요."],
+  ["📖 공부하기", "개념정리. 결론 한 줄 → 시험에서 묻는 방식 → 표 · 그래프(슬라이더로 숫자 바꿔 보기) → 자주 틀리는 지점 → 버려도 되는 주제 순서예요."],
+  ["⚔️ 도전하기", `오늘의 문제 ${DAILY_N}문제 · 문제당 ${SEC_PER_Q}초. 매일 자정(한국시간)에 바뀌어요. 다 풀면 추가 문제도 풀 수 있어요.`],
+  ["🧩 단원별 · ❌ 오답", "단원별은 원하는 단원 기출만 모아 풀기(별 3개 → 👑). 오답 탭에서 틀린 문제를 다시 풀면 맞힐 때 빠져요."],
+  ["📒 합격노트", "해설 화면에서 저장한 문제를 분류 · 메모와 함께 모아 두고 다시 풀어요."],
+  ["📝 문장 훈련", `기출 지문 한 줄을 O·X로 판단하고 쉬운 말 풀이 · 용어 · 고친 문장을 봐요. 하루 ${SENT_N}개. 상황이 부족하면 📜 원래 문제 보기, 그래도 모르겠으면 🤔 표시 후 목록을 복사해 Claude에게 보내 주세요.`],
+  ["☁️ 동기화", "설정에서 한 번 연결하면 휴대폰과 PC 기록이 이어져요. 연결 전에는 이 기기에만 저장돼요."],
+  ["💬 Claude에게 부탁하기", "\"회계 ○단원 들었어\" · \"경제 ○강까지 들었어\"라고 말하면 그 범위 기출 · 문장 · 개념정리를 추가해요. 해설이 이상하면 문제 번호(예: 33-63)와 함께 알려 주세요."],
+];
+function openInfo(kind) {
+  const box = $("#infoSheet");
+  if (kind === "news") {
+    localStorage.setItem(LS_SEENVER, APP_VER);
+    box.innerHTML = `<h2 id="infoTitle">📢 업데이트 소식</h2><p class="exp">지금 버전 v${APP_VER}</p>` + NEWS.map(([v, d, items], i) => `<div class="news${i ? "" : " cur"}"><div class="nh"><b>v${v}</b><small>${d}</small></div><ul>${items.map(t => `<li>${esc2(t)}</li>`).join("")}</ul></div>`).join("");
+  } else {
+    box.innerHTML = `<h2 id="infoTitle">❓ 사용방법</h2>` + HELP().map(([h, t]) => `<div class="news"><div class="nh"><b>${h}</b></div><p>${esc2(t)}</p></div>`).join("");
+  }
+  box.insertAdjacentHTML("beforeend", `<div class="row" style="justify-content:center"><button class="btn" id="infoClose">닫기</button></div>`);
+  $("#infoClose").onclick = closeInfo; $("#info").hidden = false; $("#infoClose").focus({ preventScroll: true }); box.scrollTop = 0;
+  if (V.route === "home") drawInfoBtns();
+}
+function closeInfo() { $("#info").hidden = true }
+function drawInfoBtns() {
+  const nw = localStorage.getItem(LS_SEENVER) !== APP_VER;
+  $("#title").innerHTML = `오늘의 공부<span class="tbtns"><button class="iconbtn${nw ? " dot" : ""}" id="newsBtn" aria-label="업데이트 소식${nw ? " (새 소식 있음)" : ""}" title="업데이트 소식">📢</button><button class="iconbtn" id="helpBtn" aria-label="사용방법" title="사용방법">❓</button></span>`;
+  $("#newsBtn").onclick = () => openInfo("news"); $("#helpBtn").onclick = () => openInfo("help");
+}
+$("#info").addEventListener("click", e => { if (e.target.id === "info") closeInfo() });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#info").hidden) closeInfo() });
+
 /* ───────── 홈 ───────── */
 function renderHome() {
   chrome({ eyebrow: "감정평가사 1차 · 문제풀이", title: "오늘의 공부", meta: `<span>${dateLabel()}</span>` });
+  drawInfoBtns();
   const bl = badgeList(), got = bl.filter(b => b.ok).length;
   const best = Math.max(0, ...SUBJ.map(s => streak(s.id)));
   const tot = SUBJ.reduce((a, s) => { const sm = summary(s.id); a.d += sm.done; a.t += sm.total; return a }, { d: 0, t: 0 });

@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -1146,6 +1146,42 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 24. 현금흐름표 -->
+<section id="cs" class="sec" aria-labelledby="h-cs">
+  <div class="shead"><h2 id="h-cs">현금흐름표</h2><span class="badge hi">비중 상 · 10문항</span><span class="lec">24단원</span></div>
+  <div class="key">간접법 한 줄: <b>당기순이익 + 현금 안 나간 비용 − 현금 안 들어온 이익 − 영업자산 증가 + 영업부채 증가</b>. 공사 현장 비유: 기성(손익)은 올렸지만 아직 돈이 안 들어왔으면 빼고, 외상으로 자재를 샀으면 아직 돈이 안 나갔으니 더한다.<small>영업활동 = 본업, 투자활동 = 유형·무형자산·대여, 재무활동 = 차입·사채·증자·배당 지급.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항 계산. ① 영업활동순현금흐름(28·29·30회) ② 영업에서 창출된 현금과 역산(31·34회) ③ 직접법 고객 유입·비용 유출·이자 지급(30·33·34회) ④ 투자활동 T계정(36회) ⑤ 분류 선택으로 최대 금액(37회)</p>
+  <div class="lab">
+    <h3>간접법 계산기 · 28회 49번 기본값</h3>
+    <div class="slider"><label for="cq1">당기순이익</label><input type="range" id="cq1" min="0" max="300000" step="1000" value="147000"><output id="cq1Out">147000</output></div>
+    <div class="slider"><label for="cq2">비현금 비용 − 비현금 이익(감가상각·처분손실 등)</label><input type="range" id="cq2" min="-50000" max="100000" step="1000" value="60000"><output id="cq2Out">60000</output></div>
+    <div class="slider"><label for="cq3">영업자산 증가(매출채권·재고, 감소면 −)</label><input type="range" id="cq3" min="-50000" max="50000" step="1000" value="11000"><output id="cq3Out">11000</output></div>
+    <div class="slider"><label for="cq4">영업부채 증가(매입채무·미지급, 감소면 −)</label><input type="range" id="cq4" min="-50000" max="50000" step="1000" value="-6000"><output id="cq4Out">-6000</output></div>
+    <div class="readout" id="cqOut" aria-live="polite"></div>
+  </div>
+  <p class="foot">28-49: 감가상각 40,000 + 처분손실 20,000 = 60,000 / 매출채권 +15,000, 재고 −4,000 → 11,000 / 미지급이자 +5,000, 매입채무 −6,000, 미지급법인세 −5,000 → −6,000 → 190,000.</p>
+  <div class="tw c1"><table>
+    <thead><tr><th>묻는 것</th><th>출발점</th><th>이자 · 배당 · 법인세</th></tr></thead>
+    <tbody>
+      <tr><td>영업활동순현금흐름(이자·법인세 영업 분류)</td><td>당기순이익</td><td>비용은 그대로, 미지급·선급 변동만 조정(28-49)</td></tr>
+      <tr><td>영업에서 창출된 현금</td><td><b>세전이익</b></td><td>이자비용 가산, 이자·배당수익 차감 → 나중에 수취·지급·납부를 따로 더하고 뺌(31-61 · 34-70)</td></tr>
+      <tr><td>직접법 항목</td><td>손익 항목</td><td>고객 유입 = 매출 − 채권 증가 / 비용 유출 = 비용 − 선급 감소 − 미지급 증가(33-51) / 이자 지급 = 이자비용 − 상각액 − 미지급 증가 + 선급 증가(30-69)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>분류 선택</h3><p>이자수취·배당금수취: 영업 또는 투자 / 이자지급: 영업 또는 재무 / 배당금지급: 재무 또는 영업 / 법인세: 원칙 영업. '최대 영업현금' = 유입은 영업, 유출은 재무(37-67).</p></div>
+    <div class="mini"><h3>투자활동 T계정</h3><p>기초 원가 − 처분 원가 + 취득 = 기말 원가 → 취득액. 처분 현금 = 장부금액 + 처분이익(36-67: 60,000 − 50,000 = +10,000).</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>매출채권 순액으로 조정하면서 손상차손을 또 더함(29-54, 30-68).</span>
+    <span>이자비용·법인세비용을 영업활동 분류인데 가산(28-49 ⑤).</span>
+    <span>사채할인발행차금 상각액을 이자 지급에 포함(30-69).</span>
+    <span>'영업에서 창출된 현금'을 당기순이익에서 출발(34-70).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>간접법 한 줄과 위 표만. 현금흐름표 전체 작성, 외화 현금흐름, 연결 현금흐름은 과락 회피 목표라면 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -1190,6 +1226,7 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="tx"><td>법인세비용</td><td>당기법인세 ± 이연 변동 · 세율 일정이면 (세전이익 + 영구적차이) × 세율 · 미수이자 = 이연부채 · 한도초과 감가상각 = 이연자산</td></tr>
       <tr data-sec="ac"><td>회계변경</td><td>정책 = 소급(측정기준 변경 포함) · 추정 = 전진(구분 어려우면 추정) · 오류 = 소급 재작성</td></tr>
       <tr data-sec="ep"><td>가중평균 주식 수</td><td>무상·분할 = 기초부터 · 싼 유상증자 = 공정가치 발행분(납입일부터) + 무상분(소급) · 희석은 증분 EPS 작은 것부터</td></tr>
+      <tr data-sec="cs"><td>간접법</td><td>순이익 + 비현금비용 − 비현금이익 − 영업자산 증가 + 영업부채 증가 · 영업창출현금은 세전이익에서 출발 · 최대 영업현금 = 유입 영업, 유출 재무</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1210,7 +1247,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1370,6 +1407,12 @@ function esCalc(){const b=+$("#es1").value,n=+$("#es2").value,q=+$("#es3").value
  const fv=n*q,bon=n-fv,r=bon/(b+fv),mo=13-m,tot=b*(1+r)+fv*(1+r)*mo/12;
  $("#esOut").innerHTML=`공정가치 발행분 ${w(Math.round(fv))}주 · 무상분 ${w(Math.round(bon))}주 → 비율 ${(r*100).toFixed(1)}%<br>${w(b)} × ${(1+r).toFixed(3)} + ${w(Math.round(fv))} × ${(1+r).toFixed(3)} × ${mo}/12 = <b>${w(Math.round(tot))}주</b>`}
 ["es1","es2","es3","es4"].forEach(i=>$("#"+i).addEventListener("input",esCalc));esCalc();
+
+/* 24. 간접법 */
+function cqCalc(){const n=+$("#cq1").value,a=+$("#cq2").value,b=+$("#cq3").value,c=+$("#cq4").value;["cq1","cq2","cq3","cq4"].forEach(i=>$("#"+i+"Out").textContent=$("#"+i).value);
+ const r=n+a-b+c;
+ $("#cqOut").innerHTML=`${w(n)} + ${w(a)} − (${w(b)}) + (${w(c)}) = 영업활동순현금흐름 <b>${w(r)}</b>`}
+["cq1","cq2","cq3","cq4"].forEach(i=>$("#"+i).addEventListener("input",cqCalc));cqCalc();
 </script>
 
 </body></html>

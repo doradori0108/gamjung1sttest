@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#sp">보조부문</a><a href="#abc">ABC</a><a href="#pr">종합원가</a><a href="#jc">결합원가</a><a href="#sv">표준원가</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#sp">보조부문</a><a href="#abc">ABC</a><a href="#pr">종합원가</a><a href="#jc">결합원가</a><a href="#sv">표준원가</a><a href="#vc">변동·전부원가</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -1492,6 +1492,44 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 34. 변동 · 전부 · 초변동원가 -->
+<section id="vc" class="sec" aria-labelledby="h-vc">
+  <div class="shead"><h2 id="h-vc">변동원가 · 전부원가 · 초변동원가</h2><span class="badge hi">비중 상 · 12문항</span><span class="lec">34단원</span></div>
+  <div class="key">매년 1문항 이상. 공식 하나로 거의 다 풀린다: <b>전부원가 이익 − 변동원가 이익 = 기말재고 속 고정제조간접원가 − 기초재고 속 고정제조간접원가</b>. 문제는 이 식의 빈칸 하나를 역산시킨다.<small>전부원가 = 고정제조간접원가도 제품원가(재고로 이연). 변동원가 = 고정제조간접원가를 발생 즉시 비용. 외부보고는 전부원가만.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 12문항. ① 이익 차이 역산(28·29·30·31·32·34·35회) ② 재고·손익계산서 역산(33·37회) ③ O·X(29·36회) ④ 전부원가 손익분기점(36회)</p>
+  <div class="lab">
+    <h3>이익 차이 계산기 · 28회 80번 기본값(2월)</h3>
+    <div class="slider"><label for="vc1">기초재고 수량</label><input type="range" id="vc1" min="0" max="2000" step="50" value="300"><output id="vc1Out">300</output></div>
+    <div class="slider"><label for="vc2">기초재고 단위당 고정비</label><input type="range" id="vc2" min="0" max="100" step="1" value="25"><output id="vc2Out">25</output></div>
+    <div class="slider"><label for="vc3">기말재고 수량</label><input type="range" id="vc3" min="0" max="2000" step="50" value="200"><output id="vc3Out">200</output></div>
+    <div class="slider"><label for="vc4">당기 단위당 고정비(고정제조간접 ÷ 생산량)</label><input type="range" id="vc4" min="0" max="100" step="1" value="30"><output id="vc4Out">30</output></div>
+    <div class="slider"><label for="vc5">전부원가 영업이익</label><input type="range" id="vc5" min="0" max="50000" step="500" value="10000"><output id="vc5Out">10000</output></div>
+    <div class="readout" id="vcOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>제품원가에 들어가는 것</th><th>전부원가</th><th>변동원가</th><th>초변동원가</th></tr></thead>
+    <tbody>
+      <tr><td>직접재료</td><td>O</td><td>O</td><td>O</td></tr>
+      <tr><td>직접노무 · 변동제조간접</td><td>O</td><td>O</td><td>X(기간비용)</td></tr>
+      <tr><td>고정제조간접</td><td>O</td><td>X(기간비용)</td><td>X</td></tr>
+      <tr><td>이익에 영향</td><td>판매량 + 생산량</td><td>판매량만</td><td>판매량만(재고 쌓으면 손해)</td></tr>
+      <tr><td>용도</td><td>외부보고 · 세무</td><td colspan="2">내부 관리 · 의사결정</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>재고 속 고정비 구하기</h3><p>선입선출: 기말재고 = 당기 생산분 → 당기 고정제조간접 ÷ 당기 생산량. 기초재고 = 전기 생산분 → 전기 단위 고정비(28-80 · 30-75). 정상원가면 예정배부율(29-76).</p></div>
+    <div class="mini"><h3>재고액 차이</h3><p>전부원가 재고액 − 변동원가 재고액 = 그 재고 속 고정비. 이익 차이 = 기말 차이 − 기초 차이(31-76 · 34-75).</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>재고 수량이 같으면 이익도 같다(30-75: 단위 고정비가 다르면 다르다).</span>
+    <span>변동원가를 외부보고용으로(36-76 ④).</span>
+    <span>고정 공장 임차료를 변동원가 제품원가에(29-71).</span>
+    <span>전부원가 손익분기점에 고정제조간접을 또 넣음(36-78 ⑤).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>초변동원가 손익계산서 작성 세부, 정상원가·표준원가와 결합한 차이 조정은 넘긴다. 차이 공식 하나와 위 표.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -1547,6 +1585,7 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="pr"><td>종합원가</td><td>평균 − 선입 환산량 = 기초 × 기초 완성도 · 선입선출 단위원가 = 당기원가만 · 정상공손 = 당기 합격품 × % · 공손 단위원가 = 재료 + 가공 × 검사시점</td></tr>
       <tr data-sec="jc"><td>결합원가</td><td>분리점 판매가치 · NRV(최종가 − 추가원가) · 균등이익률 · 추가가공 = 증분수익 vs 추가원가(결합원가 무시) · 부산물 생산기준 = NRV 먼저 차감</td></tr>
       <tr data-sec="sv"><td>표준원가</td><td>AQ×AP | AQ×SP | SQ×SP · 앞 = 가격(임률), 뒤 = 능률 · 배부 = SR × SH · 조업도차이 = (기준 − SH) × 고정배부율 · 구입가격차이 = 구입량 기준</td></tr>
+      <tr data-sec="vc"><td>변동·전부</td><td>전부 이익 − 변동 이익 = 기말재고 고정비 − 기초재고 고정비 · 외부보고는 전부원가만 · 초변동 = 직접재료만 제품원가</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1567,7 +1606,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["보조부문 원가배분","#sp","29단원",5,"mid"],["활동기준원가","#abc","30단원",3,"lo"],["종합원가·공손","#pr","31단원",9,"hi"],["결합원가","#jc","32단원",7,"mid"],["표준원가·차이분석","#sv","33단원",9,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["보조부문 원가배분","#sp","29단원",5,"mid"],["활동기준원가","#abc","30단원",3,"lo"],["종합원가·공손","#pr","31단원",9,"hi"],["결합원가","#jc","32단원",7,"mid"],["표준원가·차이분석","#sv","33단원",9,"hi"],["변동·전부·초변동원가","#vc","34단원",12,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1780,6 +1819,12 @@ function svCalc(){const v=["sv1","sv2","sv3","sv4"].map(i=>{$("#"+i+"Out").textC
  const a=v[0]*v[1],b=v[0]*v[2],c=v[3]*v[2],t=x=>x===0?"0":`${Math.abs(x).toLocaleString()}(${x>0?"불리":"유리"})`;
  $("#svOut").innerHTML=`${a.toLocaleString()} | ${b.toLocaleString()} | ${c.toLocaleString()} → 가격(임률)차이 <b>${t(a-b)}</b> · 능률차이 <b>${t(b-c)}</b> · 총차이 ${t(a-c)}`}
 ["sv1","sv2","sv3","sv4"].forEach(i=>$("#"+i).addEventListener("input",svCalc));svCalc();
+
+/* 34. 변동·전부 */
+function vcCalc(){const v=["vc1","vc2","vc3","vc4","vc5"].map(i=>{$("#"+i+"Out").textContent=(+$("#"+i).value).toLocaleString();return +$("#"+i).value});
+ const b=v[0]*v[1],e=v[2]*v[3],d=e-b;
+ $("#vcOut").innerHTML=`기초재고 고정비 ${b.toLocaleString()} · 기말재고 고정비 ${e.toLocaleString()} → 전부 − 변동 = ${d.toLocaleString()} → 변동원가 영업이익 <b>${(v[4]-d).toLocaleString()}</b>`}
+["vc1","vc2","vc3","vc4","vc5"].forEach(i=>$("#"+i).addEventListener("input",vcCalc));vcCalc();
 </script>
 
 </body></html>

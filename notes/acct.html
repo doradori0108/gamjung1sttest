@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#sp">보조부문</a><a href="#abc">ABC</a><a href="#pr">종합원가</a><a href="#jc">결합원가</a><a href="#sv">표준원가</a><a href="#vc">변동·전부원가</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#ac">회계변경</a><a href="#ep">주당이익</a><a href="#cs">현금흐름표</a><a href="#ra">재무비율</a><a href="#ad">사업결합·환율</a><a href="#kf">원가흐름</a><a href="#jo">정상원가</a><a href="#sp">보조부문</a><a href="#abc">ABC</a><a href="#pr">종합원가</a><a href="#jc">결합원가</a><a href="#sv">표준원가</a><a href="#vc">변동·전부원가</a><a href="#cvp">CVP</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -1530,6 +1530,41 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 35. CVP 분석 -->
+<section id="cvp" class="sec" aria-labelledby="h-cvp">
+  <div class="shead"><h2 id="h-cvp">CVP(원가-조업도-이익) 분석</h2><span class="badge hi">비중 상 · 13문항</span><span class="lec">35단원</span></div>
+  <div class="key">원가 파트 최다 출제(매년 1~2문항). 식 하나: <b>영업이익 = 수량 × 단위당 공헌이익 − 고정비</b>. 손익분기점(이익 0), 목표이익(세전으로 환산), 안전한계, 영업레버리지도는 모두 이 식의 변형.<small>공헌이익 = 매출 − 변동비. 공헌이익률 = 공헌이익 ÷ 매출. 손익분기점(BEP) = 이익이 0이 되는 판매량.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 13문항. ① 지표 O·X(30·36회) ② 목표이익·세금(31·35회) ③ 복수제품 매출배합(28·32·34회) ④ 영업레버리지(32회) ⑤ 조건 변경 역산(29·34·37회) ⑥ 현금흐름분기점(33회)</p>
+  <div class="lab">
+    <h3>CVP 계산기 · 36회 77번 기본값</h3>
+    <div class="slider"><label for="cv1">단위당 판매가격</label><input type="range" id="cv1" min="100" max="2000" step="10" value="1200"><output id="cv1Out">1200</output></div>
+    <div class="slider"><label for="cv2">단위당 변동비</label><input type="range" id="cv2" min="0" max="1800" step="10" value="900"><output id="cv2Out">900</output></div>
+    <div class="slider"><label for="cv3">고정비</label><input type="range" id="cv3" min="0" max="500000" step="5000" value="240000"><output id="cv3Out">240000</output></div>
+    <div class="slider"><label for="cv4">판매량</label><input type="range" id="cv4" min="0" max="3000" step="10" value="1000"><output id="cv4Out">1000</output></div>
+    <div class="slider"><label for="cv5">법인세율(%)</label><input type="range" id="cv5" min="0" max="50" step="5" value="40"><output id="cv5Out">40</output></div>
+    <div class="readout" id="cvOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>지표</th><th>공식</th></tr></thead>
+    <tbody>
+      <tr><td>손익분기점</td><td>수량 = 고정비 ÷ 단위당 공헌이익 · 매출 = 고정비 ÷ 공헌이익률</td></tr>
+      <tr><td>목표이익</td><td>(고정비 + 세전 목표이익) ÷ 단위당 공헌이익, 세전 = 세후 ÷ (1 − t) (누진세면 구간별, 35-77)</td></tr>
+      <tr><td>안전한계율</td><td>(매출 − BEP 매출) ÷ 매출 = 영업이익 ÷ 공헌이익</td></tr>
+      <tr><td>영업레버리지도</td><td>공헌이익 ÷ 영업이익 = 1 ÷ 안전한계율. 이익 증가율 = DOL × 매출 증가율</td></tr>
+      <tr><td>복수 제품</td><td>매출배합 가중평균 공헌이익(수량 배합이면 단위당, 금액 배합이면 공헌이익률)</td></tr>
+      <tr><td>세후 현금흐름분기점</td><td>(공헌이익 − 고정비) × (1 − t) + 감가상각비 = 0</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>DOL을 영업이익 ÷ 공헌이익으로(30-78 · 36-77).</span>
+    <span>세후 목표이익을 세전으로 안 바꿈(31-77).</span>
+    <span>공헌이익률 단순평균(28-73).</span>
+    <span>현금흐름분기점에서 감가상각비 처리(33-75).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>불확실성하의 CVP(확률분포), 비선형 CVP, 원가구조 선택 세부는 넘긴다. 위 표 여섯 줄이면 된다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -1586,6 +1621,7 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="jc"><td>결합원가</td><td>분리점 판매가치 · NRV(최종가 − 추가원가) · 균등이익률 · 추가가공 = 증분수익 vs 추가원가(결합원가 무시) · 부산물 생산기준 = NRV 먼저 차감</td></tr>
       <tr data-sec="sv"><td>표준원가</td><td>AQ×AP | AQ×SP | SQ×SP · 앞 = 가격(임률), 뒤 = 능률 · 배부 = SR × SH · 조업도차이 = (기준 − SH) × 고정배부율 · 구입가격차이 = 구입량 기준</td></tr>
       <tr data-sec="vc"><td>변동·전부</td><td>전부 이익 − 변동 이익 = 기말재고 고정비 − 기초재고 고정비 · 외부보고는 전부원가만 · 초변동 = 직접재료만 제품원가</td></tr>
+      <tr data-sec="cvp"><td>CVP</td><td>BEP = 고정비 ÷ 단위당 공헌이익 · 목표 = (고정비 + 세후 ÷ (1 − t)) ÷ 단위 공헌이익 · DOL = 공헌이익 ÷ 영업이익 = 1 ÷ 안전한계율 · 복수제품 = 가중평균</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1606,7 +1642,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["보조부문 원가배분","#sp","29단원",5,"mid"],["활동기준원가","#abc","30단원",3,"lo"],["종합원가·공손","#pr","31단원",9,"hi"],["결합원가","#jc","32단원",7,"mid"],["표준원가·차이분석","#sv","33단원",9,"hi"],["변동·전부·초변동원가","#vc","34단원",12,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["주당이익","#ep","23단원",10,"hi"],["현금흐름표","#cs","24단원",10,"hi"],["재무비율 분석","#ra","25단원",6,"mid"],["사업결합·관계기업·환율·매각예정","#ad","26단원",16,"mid"],["원가 개념·원가흐름","#kf","27단원",10,"hi"],["개별원가·정상원가","#jo","28단원",7,"mid"],["보조부문 원가배분","#sp","29단원",5,"mid"],["활동기준원가","#abc","30단원",3,"lo"],["종합원가·공손","#pr","31단원",9,"hi"],["결합원가","#jc","32단원",7,"mid"],["표준원가·차이분석","#sv","33단원",9,"hi"],["변동·전부·초변동원가","#vc","34단원",12,"hi"],["CVP 분석","#cvp","35단원",13,"hi"],["회계변경·오류수정","#ac","22단원",2,"lo"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1825,6 +1861,13 @@ function vcCalc(){const v=["vc1","vc2","vc3","vc4","vc5"].map(i=>{$("#"+i+"Out")
  const b=v[0]*v[1],e=v[2]*v[3],d=e-b;
  $("#vcOut").innerHTML=`기초재고 고정비 ${b.toLocaleString()} · 기말재고 고정비 ${e.toLocaleString()} → 전부 − 변동 = ${d.toLocaleString()} → 변동원가 영업이익 <b>${(v[4]-d).toLocaleString()}</b>`}
 ["vc1","vc2","vc3","vc4","vc5"].forEach(i=>$("#"+i).addEventListener("input",vcCalc));vcCalc();
+
+/* 35. CVP */
+function cvCalc(){const v=["cv1","cv2","cv3","cv4","cv5"].map(i=>{$("#"+i+"Out").textContent=(+$("#"+i).value).toLocaleString();return +$("#"+i).value});
+ const u=v[0]-v[1];if(u<=0){$("#cvOut").textContent="판매가격이 변동비보다 커야 해요";return}
+ const cm=u*v[3],oi=cm-v[2],be=v[2]/u,r=x=>Math.round(x*100)/100;
+ $("#cvOut").innerHTML=`공헌이익 ${cm.toLocaleString()} · 영업이익 <b>${oi.toLocaleString()}</b>(세후 ${Math.round(oi*(1-v[4]/100)).toLocaleString()}) · 손익분기 <b>${r(be).toLocaleString()}단위</b> · 안전한계율 ${r((v[3]-be)/v[3]*100)}% · DOL ${oi>0?r(cm/oi):"-"}`}
+["cv1","cv2","cv3","cv4","cv5"].forEach(i=>$("#"+i).addEventListener("input",cvCalc));cvCalc();
 </script>
 
 </body></html>

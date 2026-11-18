@@ -66,7 +66,7 @@
   "국제수지론",
   "국제무역론"
  ],
- "dataThrough": 50,
+ "dataThrough": 52,
  "defaultLec": 20,
  "units": [
   {
@@ -258,7 +258,8 @@
    "nm": "AD-AS · 경기변동",
    "lec": 51,
    "n": 26,
-   "grp": "거시 · 국제경제학"
+   "grp": "거시 · 국제경제학",
+   "note": "adas"
   },
   {
    "u": "U23",

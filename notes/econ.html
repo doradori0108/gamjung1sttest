@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#infl">실업·필립스</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#infl">실업·필립스</a><a href="#rule">준칙·재량</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -1093,6 +1093,45 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 거시: 준칙 vs 재량 · 정책시차 · 테일러 준칙 -->
+<section id="rule" class="sec" data-lec="54" aria-labelledby="h-rule">
+  <div class="shead"><h2 id="h-rule">준칙 vs 재량 · 정책시차 · 테일러 준칙</h2><span class="badge mid">비중 중 · 11문항</span><span class="lec">54강</span></div>
+  <div class="key">결론 하나: <b>합리적 기대 아래서 재량 정책은 실업을 못 줄이고 인플레이션만 높인다</b>(시간 불일치 → 준칙이 낫다). 계산은 손실함수를 π로 미분하는 한 가지 유형.<small>준칙 = 미리 정해 약속한 규칙대로. 재량 = 그때그때 최선을 고름. 시간 불일치 = 약속해 놓고 나중에 어기고 싶어지는 문제.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 11문항. ① 손실함수 최소화 계산(29·32·35·37회) ② 정책시차 O·X(29·37회) ③ 테일러 준칙 대입(31·33·34·35회) ④ 한국은행 제도(32회)</p>
+  <div class="lab">
+    <h3>재량 vs 준칙 · u = u<sub>n</sub> − b(π − π<sup>e</sup>), L = u + (a/2)π², u<sub>n</sub> = 5 (37회 73번 기본값)</h3>
+    <div class="slider"><label for="rl1">b(필립스 기울기)</label><input type="range" id="rl1" min="0.5" max="3" step="0.5" value="2"><output id="rl1Out">2</output></div>
+    <div class="slider"><label for="rl2">a(인플레이션 싫어하는 정도)</label><input type="range" id="rl2" min="0.5" max="3" step="0.5" value="1"><output id="rl2Out">1</output></div>
+    <div class="readout" id="rlOut" aria-live="polite"></div>
+  </div>
+  <div class="steps"><b>손실함수 풀이 3단계</b>
+    <span>① 필립스곡선을 u에 대해 풀어 손실함수에 대입한다.</span>
+    <span>② π<sup>e</sup>는 상수로 두고 L을 π로 미분해 0 → 재량 π.</span>
+    <span>③ 합리적 기대면 π<sup>e</sup> = π → u = u<sub>n</sub>. 손실 = u<sub>n</sub> + 인플레이션 부분. 준칙(π = 0)이면 손실 = u<sub>n</sub>.</span>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>내부시차(결정까지)</th><th>외부시차(효과까지)</th></tr></thead>
+    <tbody>
+      <tr><td>통화정책</td><td>짧다(금통위 결정)</td><td>길다(금리 → 투자·소비 전달)</td></tr>
+      <tr><td>재정정책</td><td>길다(예산 · 국회)</td><td>짧다(직접 지출)</td></tr>
+      <tr><td>자동안정화장치</td><td colspan="2">누진세·실업급여 → 결정이 필요 없어 내부시차를 줄인다</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>테일러 준칙</h3><p>금리 = π + 중립 실질금리 + a(π − 목표) + b(산출량 갭). 인플레이션 ↑·경기 과열 → 금리 ↑. 목표치를 낮추면 금리 ↑(33-65 ②). 숫자 대입 문제는 식에 그대로 넣는다(34-75: r = 9%).</p></div>
+    <div class="mini"><h3>디스인플레이션</h3><p>긴축 → 실질이자율 ↑ → 단기 생산 ↓(경기침체). 기대가 빨리 조정될수록 빨리 장기균형으로(35-64). 루카스 비판: 정책이 바뀌면 기대·행동도 바뀐다.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>내부시차 ↔ 외부시차 정의 뒤집기(29-67 ㄱ · 37-74 ㄷ).</span>
+    <span>시간 불일치면 재량이 낫다(29-67 ㄹ). 준칙.</span>
+    <span>재량이면 실업률이 낮아진다(32-68). 합리적 기대면 u = u<sub>n</sub> 그대로.</span>
+    <span>디스인플레이션 때 실질이자율 하락(35-64 ㄴ).</span>
+    <span>물가안정목표제를 고용 목적으로(32-62 ⑤).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>바로-고든 모형의 평판·게임 확장, 통화정책 전달경로 세부(신용경로 등)는 넘긴다. 손실함수 3단계와 시차 표만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -1139,6 +1178,7 @@ a{color:var(--accent)}
       <tr data-sec="adas"><th>학파</th><td>RBC: 공급충격·가격 신축·화폐 중립·최적화 / 새케인즈: 수요충격·가격 경직(메뉴비용)·독점적 경쟁</td></tr>
       <tr data-sec="infl"><th>고용지표</th><td>실업률 = 실업자 ÷ 경활 · 고용률 = 취업자 ÷ 생산가능 · 균제 실업률 = s ÷ (s + f) · 자연실업률 = 마찰 + 구조</td></tr>
       <tr data-sec="infl"><th>필립스곡선</th><td>π − π<sup>e</sup> = −b(u − u<sub>n</sub>) · 단기 우하향, 장기 수직 · π<sup>e</sup> ↑ → 위로 · 피셔 i = r + π · 통화증가율 = π + g</td></tr>
+      <tr data-sec="rule"><th>준칙 · 재량</th><td>손실함수 π로 미분 → 재량 π · 합리적 기대면 u = u<sub>n</sub>, 재량은 인플레이션만 ↑ → 준칙 · 내부시차 통화 짧음 / 재정 김 · 테일러: π·갭 ↑ → 금리 ↑</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -1162,7 +1202,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["실업·인플레이션·필립스곡선","#infl","53강",26,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["실업·인플레이션·필립스곡선","#infl","53강",26,"hi","앱에서 표시"],["준칙·재량·테일러 준칙","#rule","54강",11,"mid","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -1419,6 +1459,12 @@ function phDraw(){const E=+$("#ph1").value,b=+$("#ph2").value,u=+$("#ph3").value
  el(p.t,"text",{x:p.X(5)+4,y:p.Y(15.2)},"장기(수직)");el(p.t,"text",{x:p.X(xa+0.15),y:p.Y(pi(xa+0.15))+24},"단기");
  $("#phOut").innerHTML=`u = ${f(u)}% → π = <b>${f(P)}%</b> · ${u<5?"자연실업률보다 낮은 실업 → π &gt; π<sup>e</sup>(고용 &gt; 완전고용)":u>5?"자연실업률보다 높은 실업 → π &lt; π<sup>e</sup>(고용 &lt; 완전고용)":"자연실업률 → π = π<sup>e</sup>"} · 실업률 1%p ↓ = 인플레이션 ${f(b)}%p ↑`}
 ["ph1","ph2","ph3"].forEach(k=>$("#"+k).addEventListener("input",phDraw));phDraw();
+
+/* 준칙 vs 재량 */
+function rlCalc(){const b=+$("#rl1").value,a=+$("#rl2").value;$("#rl1Out").textContent=b;$("#rl2Out").textContent=a;
+ const p=b/a,L=5+a/2*p*p;
+ $("#rlOut").innerHTML=`준칙(π = 0): u = 5, 손실 <b>5</b> · 재량: π = b ÷ a = <b>${f(p)}</b>, 민간이 예상해 u = 5 그대로, 손실 <b>${f(L)}</b> → 재량은 손실만 ${f(L-5)} 더 큼`}
+["rl1","rl2"].forEach(k=>$("#"+k).addEventListener("input",rlCalc));rlCalc();
 </script>
 
 </body></html>

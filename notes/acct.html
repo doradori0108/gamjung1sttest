@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#ls">리스</a><a href="#tx">법인세</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -1049,6 +1049,46 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 21. 법인세 -->
+<section id="tx" class="sec" aria-labelledby="h-tx">
+  <div class="shead"><h2 id="h-tx">법인세(이연법인세)</h2><span class="badge mid">비중 중 · 8문항</span><span class="lec">21단원</span></div>
+  <div class="key">법인세비용 = 당기법인세(과세소득 × 세율) ± 이연법인세 변동. 세율이 일정하면 지름길: <b>(세전이익 + 영구적차이) × 세율</b>.<small>일시적차이 = 회계와 세법의 시점만 다른 차이(나중에 반대로 풀림). 영구적차이 = 세법이 끝까지 인정 안 하는 차이(접대비·벌과금 한도초과).</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항 계산. ① 법인세비용(29·30·31·34·36회) ② 비용 + 이연법인세 잔액(28회, 세율 변경) ③ 유효세율(32회) ④ 미수이자 누락 오류 영향(33회)</p>
+  <div class="tw c1"><table>
+    <thead><tr><th>세무조정 항목</th><th>종류</th><th>이연</th></tr></thead>
+    <tbody>
+      <tr><td>감가상각비 한도초과 · 충당부채 · 손실충당금 한도초과</td><td>차감할 일시적차이(지금 세금 더 냄)</td><td><b>자산</b></td></tr>
+      <tr><td>정기예금 미수이자 · FVPL 평가이익(세법 불인정)</td><td>가산할 일시적차이(나중에 더 냄)</td><td><b>부채</b></td></tr>
+      <tr><td>접대비·벌과금 한도초과</td><td>영구적차이</td><td>없음</td></tr>
+      <tr><td>자기주식처분이익(자본) · 재평가잉여금(OCI)</td><td>자본 항목</td><td>세효과를 자본에서 직접 차감(34-64)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="lab">
+    <h3>법인세비용 계산기 · 31회 62번 기본값</h3>
+    <div class="slider"><label for="tq1">세전이익</label><input type="range" id="tq1" min="100000" max="1000000" step="10000" value="490000"><output id="tq1Out">490000</output></div>
+    <div class="slider"><label for="tq2">영구적차이(접대비 등)</label><input type="range" id="tq2" min="0" max="100000" step="5000" value="60000"><output id="tq2Out">60000</output></div>
+    <div class="slider"><label for="tq3">차감할 일시적차이(감가상각 한도초과)</label><input type="range" id="tq3" min="0" max="300000" step="5000" value="125000"><output id="tq3Out">125000</output></div>
+    <div class="slider"><label for="tq4">가산할 일시적차이(미수이자)</label><input type="range" id="tq4" min="0" max="150000" step="5000" value="25000"><output id="tq4Out">25000</output></div>
+    <div class="slider"><label for="tq5">미래 세율(%)</label><input type="range" id="tq5" min="10" max="30" step="1" value="20"><output id="tq5Out">20</output></div>
+    <div class="readout" id="tqOut" aria-live="polite"></div>
+  </div>
+  <p class="foot">당기 세율 20%, 설립 첫해(기초 이연법인세 0) 가정. 미래 세율을 25%로 올리면 28회 50번처럼 '풀릴 때 세율'로 이연을 잰다.</p>
+  <ol class="steps">
+    <li>과세소득 = 세전이익 + 가산조정 − 차감조정 → × 당기 세율 = 당기법인세</li>
+    <li>기말 이연법인세 = 일시적차이 × <b>풀릴 때 세율</b> → 기초와의 차이가 이연법인세 변동</li>
+    <li>법인세비용 = 당기법인세 − 이연자산 증가(+ 이연부채 증가) − 자본 항목 세효과</li>
+  </ol>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>미수이자를 이연법인세'자산'으로(31-62, 33-59). 나중에 과세 → 부채.</span>
+    <span>세율이 바뀌는데 당기 세율로 이연을 계산(28-50).</span>
+    <span>미수이자 누락 오류에 '당기법인세' 영향을 고름(33-59). 영향은 이연부채 60 · 비용 60 · 순이익 140.</span>
+    <span>자기주식처분이익 세효과를 비용에 남김(34-64).</span>
+    <span>전기 일시적차이의 소멸(20×1 미수이자가 20×2 과세)을 빠뜨림(36-66).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>지름길 공식과 위 표만. 이연법인세자산 실현가능성 판단, 결손금 이월공제, 사업결합·종속기업 투자 관련 이연법인세는 과락 회피 목표라면 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -1090,6 +1130,7 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="eb"><td>순확정급여부채</td><td>기초 + 근무원가 + 순이자 − 기여금 ± 재측정 · 재측정은 OCI · 퇴직금 지급은 영향 0</td></tr>
       <tr data-sec="sb"><td>주식기준보상</td><td>주식결제형 = 자본·부여일 FV 고정 / 현금결제형 = 부채·매 기말 FV · 비용 = 기말 + 지급 − 기초</td></tr>
       <tr data-sec="ls"><td>리스이용자</td><td>부채 = 리스료 PV · 자산 = 부채 + 이용자 개설원가 · 할인율 = 내재 → 이용자 증분차입 · 소유권 이전이면 내용연수 상각</td></tr>
+      <tr data-sec="tx"><td>법인세비용</td><td>당기법인세 ± 이연 변동 · 세율 일정이면 (세전이익 + 영구적차이) × 세율 · 미수이자 = 이연부채 · 한도초과 감가상각 = 이연자산</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1110,7 +1151,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["리스","#ls","20단원",9,"mid"],["법인세","#tx","21단원",8,"mid"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1258,6 +1299,12 @@ function lsCalc(){const p=+$("#ls1").value,n=+$("#ls2").value,b=+$("#ls3").value
  const r=.1,an=(1-Math.pow(1+r,-n))/r,pv=p*an+b*Math.pow(1+r,-n),rou=pv+c,life=b>0?4:Math.min(n,4),dep=rou/life,int=pv*r;
  $("#lsOut").innerHTML=`리스부채 ${w(Math.round(pv))} · 사용권자산 ${w(Math.round(rou))}<br>이자 ${w(Math.round(int))} + 감가상각 ${w(Math.round(dep))}(${life}년${b>0?", 소유권 이전":""}) = <b>${w(Math.round(int+dep))}</b>`}
 ["ls1","ls2","ls3","ls4"].forEach(i=>$("#"+i).addEventListener("input",lsCalc));lsCalc();
+
+/* 21. 법인세비용 */
+function tqCalc(){const b=+$("#tq1").value,p=+$("#tq2").value,d=+$("#tq3").value,a=+$("#tq4").value,r=+$("#tq5").value/100;["tq1","tq2","tq3","tq4","tq5"].forEach(i=>$("#"+i+"Out").textContent=$("#"+i).value);
+ const ti=b+p+d-a,cur=ti*.2,dta=d*r,dtl=a*r,exp=cur-dta+dtl;
+ $("#tqOut").innerHTML=`과세소득 ${w(ti)} × 20% = 당기법인세 ${w(cur)}<br>이연자산 ${w(dta)} · 이연부채 ${w(dtl)} → 법인세비용 <b>${w(Math.round(exp))}</b> · 유효세율 ${(exp/b*100).toFixed(1)}%`}
+["tq1","tq2","tq3","tq4","tq5"].forEach(i=>$("#"+i).addEventListener("input",tqCalc));tqCalc();
 </script>
 
 </body></html>

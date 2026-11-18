@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#islm">IS-LM</a><a href="#adas">AD-AS</a><a href="#infl">실업·필립스</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -1045,6 +1045,54 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 거시: 실업 · 인플레이션 · 필립스곡선 -->
+<section id="infl" class="sec" data-lec="53" aria-labelledby="h-infl">
+  <div class="shead"><h2 id="h-infl">실업 · 인플레이션 · 필립스곡선</h2><span class="badge hi">비중 상 · 26문항</span><span class="lec">53강</span></div>
+  <div class="key">세 덩어리: <b>고용지표 계산</b>(분모가 무엇인지), <b>인플레이션</b>(피셔 · 수량방정식 · 비용), <b>필립스곡선</b>(단기 우하향, 장기 수직). 매년 2~4문항, 계산이 절반.<small>경제활동인구 = 취업자 + 실업자. 구직단념자는 비경제활동인구. 필립스곡선 = 인플레이션율과 실업률의 관계.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 26문항. ① 고용지표 계산(29·30·32·33회) ② 균제상태 실업률(30·33·35·37회) ③ 필립스곡선 O·X(28·32·34·36회)와 식 해석(33·37회) ④ 피셔·수량방정식 계산(28·29·30회) ⑤ 인플레이션 비용·용어(28·32·34·36회) ⑥ 효율임금(28·31회)</p>
+  <div class="lab">
+    <h3>단기 필립스곡선 π = π<sup>e</sup> − b(u − u<sub>n</sub>), u<sub>n</sub> = 5%</h3>
+    <svg id="svgPh" viewBox="0 0 340 250" role="img" aria-label="단기 필립스곡선과 장기 필립스곡선"></svg>
+    <div class="slider"><label for="ph1">기대 인플레이션 π<sup>e</sup>(%)</label><input type="range" id="ph1" min="0" max="8" step="0.5" value="2"><output id="ph1Out">2</output></div>
+    <div class="slider"><label for="ph2">기울기 b(37-71은 2, 33-64는 0.5)</label><input type="range" id="ph2" min="0.5" max="3" step="0.5" value="2"><output id="ph2Out">2</output></div>
+    <div class="slider"><label for="ph3">실업률 u(%)</label><input type="range" id="ph3" min="2" max="9" step="0.5" value="4"><output id="ph3Out">4</output></div>
+    <div class="readout" id="phOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>지표</th><th>분자</th><th>분모</th></tr></thead>
+    <tbody>
+      <tr><td>경제활동참가율</td><td>경제활동인구</td><td>생산가능인구(15세 이상)</td></tr>
+      <tr><td>실업률</td><td>실업자</td><td><b>경제활동인구</b></td></tr>
+      <tr><td>고용률</td><td>취업자</td><td><b>생산가능인구</b></td></tr>
+      <tr><td>균제상태 실업률</td><td>실직률 s</td><td>s + 구직률 f</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>피셔 · 수량방정식</h3><p>명목이자율 = 실질이자율 + 인플레이션율. MV = PY → 통화증가율 + V증가율 = 물가상승률 + 실질성장률. 28-80: π 2% + g 2% = 통화증가율 4%. 세금은 명목이자에 매기고 물가를 뺀다(30-69).</p></div>
+    <div class="mini"><h3>인플레이션 비용</h3><p>예상된: 메뉴비용 · 구두창비용(현금 관리). 예상 못 한: 채권자 → 채무자, 고정소득자 손해, 누진세 수입 ↑. 주조차익 = 통화증가율 × 실질화폐, 인플레이션 조세 = π × 실질화폐(장기 균형에서 같음).</p></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>필립스곡선</th><th>단기</th><th>장기</th></tr></thead>
+    <tbody>
+      <tr><td>원조 필립스(1958)</td><td colspan="2">임금상승률-실업률의 우하향 '경험적' 관계(기대 개념 없음)</td></tr>
+      <tr><td>적응적 기대(프리드먼·펠프스)</td><td>우하향(AS 우상향과 거울)</td><td>자연실업률에서 수직</td></tr>
+      <tr><td>합리적 기대(새고전학파)</td><td>예상된 정책이면 수직 → 실업 증가 없이 물가 안정</td><td>수직</td></tr>
+      <tr><td>이동</td><td colspan="2">기대 인플레이션 ↑, 음의 공급충격 → 위(오른쪽)로. AS 가파를수록 필립스곡선도 가파름</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>자연실업률 = 구조적 실업'만'(28-61 ③). 마찰적 포함.</span>
+    <span>고용률 분모를 경제활동인구로(30-71 · 33-63).</span>
+    <span>AI·로봇 실업을 경기적으로(29-64 ④). 구조적.</span>
+    <span>효율임금 인하 시 유능한 노동자가 남는다(31-62 ⑤). 반대.</span>
+    <span>기대 인플레이션 ↑ → 필립스곡선 왼쪽(36-72 ⑤). 오른쪽.</span>
+    <span>π &lt; π<sup>e</sup>면 고용이 완전고용보다 높다(37-71 ④). 낮다.</span>
+    <span>디플레이션 ↔ 스태그플레이션 ↔ 디스인플레이션 혼동(34-73).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>테일러 준칙 세부, 실업 이력현상(hysteresis), 초인플레이션 사례사는 넘긴다. 고용지표 표 · 균제상태 공식 · 필립스곡선 표만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -1089,6 +1137,8 @@ a{color:var(--accent)}
       <tr data-sec="islm"><th>리카도 등가</th><td>국채 감세 → 소비 불변 · 조건: 합리적·차입제약 없음·정액세·지출 경로 불변</td></tr>
       <tr data-sec="adas"><th>AD-AS 이동</th><td>AD: 소비·투자·G·T·순수출·통화량 · AS: 기술·생산비용·기대물가(↑ → 왼쪽) · 물가 변화 = 곡선 위 이동</td></tr>
       <tr data-sec="adas"><th>학파</th><td>RBC: 공급충격·가격 신축·화폐 중립·최적화 / 새케인즈: 수요충격·가격 경직(메뉴비용)·독점적 경쟁</td></tr>
+      <tr data-sec="infl"><th>고용지표</th><td>실업률 = 실업자 ÷ 경활 · 고용률 = 취업자 ÷ 생산가능 · 균제 실업률 = s ÷ (s + f) · 자연실업률 = 마찰 + 구조</td></tr>
+      <tr data-sec="infl"><th>필립스곡선</th><td>π − π<sup>e</sup> = −b(u − u<sub>n</sub>) · 단기 우하향, 장기 수직 · π<sup>e</sup> ↑ → 위로 · 피셔 i = r + π · 통화증가율 = π + g</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -1112,7 +1162,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["IS-LM·재정·통화정책","#islm","47강",28,"hi","앱에서 표시"],["AD-AS·경기변동","#adas","51강",26,"hi","앱에서 표시"],["실업·인플레이션·필립스곡선","#infl","53강",26,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -1359,6 +1409,16 @@ function aaDraw(){const A=+$("#aa1").value,E=+$("#aa2").value;$("#aa1Out").textC
  el(p.t,"text",{x:p.X(Math.min(9.3,A-0.6)),y:p.Y(0.6)-4},"AD");el(p.t,"text",{x:p.X(9),y:p.Y(Math.min(9.6,5+E))-6},"AS");
  $("#aaOut").innerHTML=`균형 Y = <b>${f(Y)}</b>, P = <b>${f(P)}</b> · 수요 요인 +1 → Y +0.5, P +0.5(같은 방향) · 기대물가 +1 → Y −0.5, P +0.5(반대 방향)`}
 ["aa1","aa2"].forEach(k=>$("#"+k).addEventListener("input",aaDraw));aaDraw();
+
+/* 필립스곡선 */
+function phDraw(){const E=+$("#ph1").value,b=+$("#ph2").value,u=+$("#ph3").value;["ph1","ph2","ph3"].forEach(k=>$("#"+k+"Out").textContent=$("#"+k).value);
+ const p=plot($("#svgPh"),10,16,"u(%)","π(%)"),pi=x=>E-b*(x-5);
+ const xa=Math.max(0,5-(16-E)/b),xb=Math.min(10,5+E/b);
+ line(p,p.g,"d",xa,pi(xa),xb,pi(xb));line(p,p.g,"s",5,0,5,16);
+ const P=pi(u);if(P>=0&&P<=16){line(p,p.g,"guide",u,0,u,P);line(p,p.g,"guide",0,P,u,P)}
+ el(p.t,"text",{x:p.X(5)+4,y:p.Y(15.2)},"장기(수직)");el(p.t,"text",{x:p.X(xa+0.15),y:p.Y(pi(xa+0.15))+24},"단기");
+ $("#phOut").innerHTML=`u = ${f(u)}% → π = <b>${f(P)}%</b> · ${u<5?"자연실업률보다 낮은 실업 → π &gt; π<sup>e</sup>(고용 &gt; 완전고용)":u>5?"자연실업률보다 높은 실업 → π &lt; π<sup>e</sup>(고용 &lt; 완전고용)":"자연실업률 → π = π<sup>e</sup>"} · 실업률 1%p ↓ = 인플레이션 ${f(b)}%p ↑`}
+["ph1","ph2","ph3"].forEach(k=>$("#"+k).addEventListener("input",phDraw));phDraw();
 </script>
 
 </body></html>

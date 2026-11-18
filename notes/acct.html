@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#card">암기카드</a>
+  <a href="#r">회계원리</a><a href="#cf">개념체계</a><a href="#ps">재무제표 표시</a><a href="#iv">재고자산</a><a href="#p1">유형① 취득·교환</a><a href="#p2">유형② 감가상각</a><a href="#p3">유형③ 재평가·손상</a><a href="#bc">차입원가</a><a href="#ia">무형자산</a><a href="#ip">투자부동산·생물자산</a><a href="#cr">현금·수취채권</a><a href="#fa">금융자산</a><a href="#fl">금융부채(사채)</a><a href="#cb">전환사채·BW</a><a href="#pv">충당부채</a><a href="#eq">자본</a><a href="#rv">수익</a><a href="#eb">종업원급여</a><a href="#sb">주식기준보상</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 회계원리 -->
@@ -945,6 +945,70 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 18. 종업원급여 -->
+<section id="eb" class="sec" aria-labelledby="h-eb">
+  <div class="shead"><h2 id="h-eb">종업원급여(확정급여제도)</h2><span class="badge mid">비중 중 · 7문항</span><span class="lec">18단원</span></div>
+  <div class="key">확정급여 문제는 '채무'와 '사외적립자산' 두 개의 T계정을 굴리는 것. 당기손익 = 근무원가 + 순이자, 예상과 실제 차이(재측정) = 기타포괄손익.<small>확정급여채무 = 앞으로 줄 퇴직금의 현재가치. 사외적립자산 = 회사 밖 기금에 쌓아 둔 돈. 둘의 차이 = 순확정급여부채.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항 계산. ① 기말 순확정급여부채(31·37회) ② 당기손익·OCI 영향(29회 52번 · 35회 65번) ③ 채무 재측정요소(33회 69번) ④ 용어·DC vs DB O·X(33·34회)</p>
+  <div class="tw c1"><table>
+    <thead><tr><th>확정급여채무</th><th>사외적립자산</th></tr></thead>
+    <tbody>
+      <tr><td>기초<br>+ 당기근무원가(당기손익)<br>+ 이자원가 = 기초 × 할인율(당기손익)<br>− 퇴직금 지급<br>= 예상 기말 → 실제와 차이 = <b>재측정(OCI)</b></td><td>기초<br>+ 이자수익 = 기초 × <b>같은 할인율</b>(당기손익)<br>+ 기여금(회사 출연)<br>− 퇴직금 지급<br>= 예상 기말 → 실제와 차이 = <b>재측정(OCI)</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="lab">
+    <h3>순확정급여부채 한 줄 공식 · 37회 61번 기본값</h3>
+    <div class="slider"><label for="eb1">당기 근무원가</label><input type="range" id="eb1" min="40000" max="120000" step="5000" value="90000"><output id="eb1Out">90000</output></div>
+    <div class="slider"><label for="eb2">기여금 출연</label><input type="range" id="eb2" min="0" max="120000" step="5000" value="70000"><output id="eb2Out">70000</output></div>
+    <div class="slider"><label for="eb3">재측정 순손실(− 이익)</label><input type="range" id="eb3" min="-10000" max="10000" step="200" value="3200"><output id="eb3Out">3200</output></div>
+    <div class="readout" id="ebOut" aria-live="polite"></div>
+  </div>
+  <p class="foot">기초 순부채 20,000 · 할인율 10%. 퇴직금을 사외적립자산에서 주면 순부채 영향 0. 도로공사 비유: 하자보수보증금처럼 회사 밖에 예치한 돈(사외적립자산)으로 미래 의무(채무)를 대비하는 구조.</p>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>사외적립자산 이자수익에 '실제 수익률'을 쓴다. 채무와 <b>같은 할인율</b>.</span>
+    <span>재측정을 당기손익에 넣는다. OCI(재분류 안 됨).</span>
+    <span>퇴직금 지급액을 순부채에서 뺀다(31-52 · 37-61 미끼).</span>
+    <span>할인율 순서: 우량회사채 → 없으면 국공채(33-64 ⑤).</span>
+    <span>가득급여·비가득급여, DC·DB 정의를 바꿔 낸다(34-48).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>T계정 2개와 한 줄 공식만. 자산인식상한(효익 한도), 과거근무원가·정산, 기타장기종업원급여·해고급여는 과락 회피 목표라면 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<!-- 19. 주식기준보상 -->
+<section id="sb" class="sec" aria-labelledby="h-sb">
+  <div class="shead"><h2 id="h-sb">주식기준보상</h2><span class="badge mid">비중 중 · 8문항</span><span class="lec">19단원</span></div>
+  <div class="key">주식결제형(주식선택권) = 자본, 부여일 공정가치 고정. 현금결제형(주가차액보상권) = 부채, 매 기말 공정가치로 재측정. 공식은 둘 다 '인원 × 수량 × 단가 × 경과/가득기간 − 전기 누적'.<small>가득 = 근무 조건을 채워 권리가 확정되는 것. 가득 예상 인원 = 부여 인원 − 누적 실제 퇴사 − 추가 예상 퇴사.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 매년 1문항 계산. ① 당기 보상비용(29·34·37회) ② 현금결제형 비용(32·35회) ③ 행사 시 주발초·자본 증가(31·33·36회)</p>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>주식결제형</th><th>현금결제형</th></tr></thead>
+    <tbody>
+      <tr><td>계정</td><td>주식선택권(자본)</td><td>장기미지급비용(부채)</td></tr>
+      <tr><td>단가</td><td>부여일 공정가치 <b>고정</b></td><td>매 기말 공정가치</td></tr>
+      <tr><td>가득 후</td><td>추가 비용 없음</td><td>행사·소멸까지 공정가치 변동을 비용</td></tr>
+      <tr><td>행사</td><td>현금 + 주식선택권 → 자본금 + 주발초</td><td>내재가치만큼 현금 지급</td></tr>
+      <tr><td>당기 비용</td><td>누적 − 전기 누적</td><td><b>기말 부채 + 현금지급 − 기초 부채</b></td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps">
+    <li>37회 62번(유리한 조건변경): 20×1년 84명 × 10 × 100 × 1/3 = 28,000</li>
+    <li>20×2년 원래분 81명 × 10 × 100 × 2/3 − 28,000 = 26,000</li>
+    <li>증분 20을 남은 2년에 나눠: 81 × 10 × 20 × 1/2 = 8,100 → <b>34,100</b>. 불리한 변경(29회 57번)은 무시</li>
+  </ol>
+  <div class="grid2">
+    <div class="mini"><h3>행사 시 주발초</h3><p>(행사가격 + 주식선택권 장부 − 액면) × 주식 수. 31-53: (7,000 + 1,000 − 5,000) × 210 = 630,000.</p></div>
+    <div class="mini"><h3>행사 시 자본 증가</h3><p>원리상 현금(행사가격)만큼. 다만 33-63 공식 정답은 자본금 증가액(210 × 5,000)이었다 → 보기를 보고 무엇을 묻는지 확인.</p></div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>주식결제형을 매년 공정가치로 재측정(33-63 표는 미끼).</span>
+    <span>장부금액(누적)과 당기 비용을 혼동(34-44 ②).</span>
+    <span>불리한 조건변경을 반영(29-57 ①).</span>
+    <span>현금결제형 지급액을 공정가치로. 지급은 내재가치(32-64 · 35-45).</span>
+  </div>
+  <div class="drop"><b>우선순위 · 버려도 되는 주제</b><span>표와 공식만. 시장성과조건·비시장성과조건 구분, 중도청산·결제방식 선택형은 과락 회피 목표라면 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
@@ -983,6 +1047,8 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="eq"><td>우선주 배당</td><td>① 누적 연체 ② 당기 기본(각 배당률) ③ 잔여 자본금 비율(완전참가)</td></tr>
       <tr data-sec="rv"><td>수익 5단계</td><td>계·수·거·배·인 (계약 → 수행의무 → 거래가격 → 배분 → 인식)</td></tr>
       <tr data-sec="rv"><td>재매입약정</td><td>콜옵션: 재매입가 ≥ 판매가 금융약정 / 풋옵션: 유인 유의 + ≥ 판매가 금융약정, 유인 없으면 반품권</td></tr>
+      <tr data-sec="eb"><td>순확정급여부채</td><td>기초 + 근무원가 + 순이자 − 기여금 ± 재측정 · 재측정은 OCI · 퇴직금 지급은 영향 0</td></tr>
+      <tr data-sec="sb"><td>주식기준보상</td><td>주식결제형 = 자본·부여일 FV 고정 / 현금결제형 = 부채·매 기말 FV · 비용 = 기말 + 지급 − 기초</td></tr>
     </tbody>
   </table></div>
   <p class="foot">기준서 문구와 해설은 K-IFRS 기준. 재무제표 표시는 1118호(2027.1.1 시행)를 반영했으며, 2027년 4월 시험의 적용 기준은 교재·강의로 확인이 필요합니다. 강의 교재와 용어(예: '순실현가능가치' / '순실현가능액')나 풀이 순서가 다를 수 있습니다.</p>
@@ -1003,7 +1069,7 @@ const w=v=>Math.round(v).toLocaleString("ko-KR");
 /* 빈출 지도 */
 const MAP=[
  ["재고자산","#iv","4단원",31,"hi"],["수익(고객과의 계약·건설계약)","#rv","17단원",18,"hi"],["유형자산 ② 감가상각·보조금·복구","#p2","6단원",20,"hi"],["유형자산 ③ 재평가·손상","#p3","7단원",18,"hi"],
- ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
+ ["투자부동산·생물자산","#ip","10단원",17,"hi"],["금융자산","#fa","12단원",12,"hi"],["금융부채(사채)","#fl","13단원",12,"hi"],["전환사채·신주인수권부사채","#cb","14단원",10,"hi"],["충당부채·보고기간후사건","#pv","15단원",12,"hi"],["자본","#eq","16단원",10,"hi"],["종업원급여","#eb","18단원",7,"mid"],["주식기준보상","#sb","19단원",8,"mid"],["개념체계","#cf","2단원",15,"hi"],["유형자산 ① 취득·교환","#p1","5단원",11,"hi"],["무형자산","#ia","9단원",11,"hi"],
  ["재무제표 표시","#ps","3단원",9,"mid"],["현금·수취채권","#cr","11단원",8,"mid"],["차입원가","#bc","8단원",6,"mid"],["회계원리","#r","1단원",3,"lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 
@@ -1139,6 +1205,12 @@ function cnCalc(){const T=+$("#cn1").value,p1=+$("#cn2").value/100,p2=+$("#cn3")
  const C1=80,pr1=(T-C1)*p1,cum2=T<C2?(T-C2):(T-C2)*p2,pr2=cum2-pr1;
  $("#cnOut").innerHTML=`1년차 이익 (${T} − ${C1}) × ${Math.round(p1*100)}% = <b>${fmt1(pr1,1)}</b>만 원 · 2년차 누적 ${T<C2?"손실 전액 "+fmt1(T-C2,1):"("+T+" − "+C2+") × "+Math.round(p2*100)+"% = "+fmt1(cum2,1)} → 2년차 이익 <b>${fmt1(pr2,1)}</b>만 원`}
 ["cn1","cn2","cn3","cn4"].forEach(i=>$("#"+i).addEventListener("input",cnCalc));cnCalc();
+
+/* 18. 순확정급여부채 */
+function ebCalc(){const sc=+$("#eb1").value,ct=+$("#eb2").value,rm=+$("#eb3").value;["eb1","eb2","eb3"].forEach(i=>$("#"+i+"Out").textContent=$("#"+i).value);
+ const ni=20000*.1,end=20000+sc+ni-ct+rm;
+ $("#ebOut").innerHTML=`20,000 + 근무원가 ${w(sc)} + 순이자 ${w(ni)} − 기여금 ${w(ct)} ${rm>=0?"+":"−"} 재측정 ${w(Math.abs(rm))} = <b>${w(end)}</b> · 당기손익 ${w(sc+ni)} · OCI ${rm>=0?"−":"+"}${w(Math.abs(rm))}`}
+["eb1","eb2","eb3"].forEach(i=>$("#"+i).addEventListener("input",ebCalc));ebCalc();
 </script>
 
 </body></html>

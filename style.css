@@ -442,3 +442,6 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
 .news ul{margin:6px 0 0;padding-left:20px} .news li{margin:3px 0}
 .news p{margin:6px 0 0;line-height:1.55}
 .news.cur .nh b{color:var(--accent,inherit)}
+
+.dday{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.92em}
+.dday small{font-weight:400;opacity:.85}

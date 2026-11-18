@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.9";
+const APP_VER = "1.9.10";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -376,7 +376,9 @@ function chrome({ subject = "", back = null, eyebrow = "", title = "", meta = ""
   $("#timerbar").hidden = true; $("#progress").hidden = true; $("#foot").textContent = "";
   $("#seg").hidden = true; $("#notebox").hidden = true; document.body.classList.remove("noting"); $("#main").hidden = false; $("#eyebrow").hidden = false; $("#meta").hidden = false;
 }
-const dateLabel = () => { const d = new Date(day + "T00:00:00"); return `<b>${day.replace(/-/g, ".")}</b> (${"일월화수목금토"[d.getDay()]})` };
+const EXAM1 = "2027-04-04";      // 1차 시험일 가정: 2026년 제37회(4월 4일)와 같은 날짜
+function dday() { const n = Math.round((Date.parse(EXAM1) - Date.parse(day)) / 864e5); return `<span class="dday" title="2026년 1차 시험일(4월 4일)과 같은 날짜로 가정">${n > 0 ? "D-" + n + "일" : n === 0 ? "D-day" : "D+" + -n + "일"} <small>(26년도 기준)</small></span>` }
+const dateLabel = () => { const d = new Date(day + "T00:00:00"); return `<b>${day.replace(/-/g, ".")}</b> (${"일월화수목금토"[d.getDay()]}) ${dday()}` };
 function lecLabel(sub, lec) { const m = D[sub].meta; return m.stepLabel === "강" ? `${lec}강 · ${m.lectures[lec - 1] || ""}` : `${m.lectures[lec - 1] || ""}` }
 
 /* ───────── 게임 요소 (기록에서 계산만 하고 따로 저장하지 않음) ───────── */
@@ -432,8 +434,9 @@ function pathDots(sub) {
 /* ───────── 업데이트 소식 · 사용방법 ───────── */
 const LS_SEENVER = "dora-exam-seenver";
 const NEWS = [
+  ["1.9.10", "2026.11.18", ["날짜 옆에 1차 시험 D-day 표시(2026년 시험일 4월 4일 기준)", "회계 33회 63번 정답을 ④(₩1,260,000)로 바로잡음(정답표 옮겨 적기 실수)"]],
   ["1.9.9", "2026.11.18", ["홈 제목 옆에 📢 업데이트 소식 · ❓ 사용방법 버튼 추가"]],
-  ["1.9.8", "2026.11.18", ["회계 18·19단원(종업원급여 · 주식기준보상), 경제 35강(시장실패) 기출 · 문장 · 개념정리 추가", "회계 33회 63번을 공식 정답(③)으로 바로잡고 해설에 논란 표시"]],
+  ["1.9.8", "2026.11.18", ["회계 18·19단원(종업원급여 · 주식기준보상), 경제 35강(시장실패) 기출 · 문장 · 개념정리 추가", "회계 33회 63번 해설 정리"]],
   ["1.9.2~1.9.7", "2026.11.17", ["회계 12~17단원(금융자산 · 사채 · 전환사채 · 충당부채 · 자본 · 수익) 기출 · 문장 · 개념정리 추가", "경제 22~34강(비용이론 · 완전경쟁 · 독점 · 과점 · 요소시장 · 후생경제) 기출 · 문장 · 개념정리 추가"]],
   ["1.9.1", "2026.11.17", ["경제 오늘의 문제를 기출만으로(보충 문제 제외)", "문장 훈련: 문제 상황 자동 표시, 📜 원래 문제 보기, 🤔 상황이 부족해요 표시"]],
   ["1.9.0", "2026.11.17", ["개념정리도 진도까지만 보이게(안 배운 단원은 🔒)", "회계 11단원(현금 · 수취채권), 경제 21강(규모수익) 추가"]],

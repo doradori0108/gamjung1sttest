@@ -117,7 +117,7 @@ a{color:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="주제 바로가기">
-  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#card">암기카드</a>
+  <a href="#sd">수요·공급</a><a href="#el">탄력성</a><a href="#tax">조세·가격규제</a><a href="#ppf">기회비용</a><a href="#ic">무차별곡선·균형</a><a href="#sub">보조금</a><a href="#pe">가격효과</a><a href="#uf">효용함수</a><a href="#app">응용</a><a href="#eu">기대효용</a><a href="#pf">생산함수</a><a href="#cost">비용이론</a><a href="#pc">완전경쟁</a><a href="#mono">독점·가격차별</a><a href="#game">과점·게임이론</a><a href="#factor">요소시장·분배</a><a href="#welfare">일반균형·후생</a><a href="#fail">시장실패</a><a href="#gdp">국민소득</a><a href="#cons">소비·투자</a><a href="#money">승수·화폐</a><a href="#card">암기카드</a>
 </nav>
 
 <!-- 1. 수요·공급 -->
@@ -910,6 +910,58 @@ a{color:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- 거시: 승수·대부자금·화폐 -->
+<section id="money" class="sec" data-lec="44" aria-labelledby="h-money">
+  <div class="shead"><h2 id="h-money">승수 · 대부자금 · 화폐</h2><span class="badge hi">비중 상 · 28문항</span><span class="lec">44강</span></div>
+  <div class="key">거시 최다 출제 단원. 계산은 두 공식으로 끝난다: <b>지출승수</b> = 1 ÷ (1 − 한계소비성향 + 한계수입성향), <b>통화승수</b> = (현금비율 + 1) ÷ (현금비율 + 지급준비율).<small>승수 = 처음 1원 쓴 돈이 돌고 돌아 소득을 몇 원 늘리는지. 도로공사 비유: 공사비 1억이 인부 임금 → 식당 매출 → 식당 직원 소비로 이어지는 연쇄.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 10년 28문항, 매년 2~4문항. ① 정부지출·조세·균형재정승수(29·31·34·35·36·37회) ② 개방경제 승수와 경상수지(31·32·33·37회) ③ 통화승수·본원통화(30·31·34·35·37회) ④ 화폐수요·유통속도(28·30·32·36·37회) ⑤ 대부자금(32·35회)</p>
+
+  <div class="lab">
+    <h3>지출승수 계산기 · 37회 78번 기본값</h3>
+    <div class="slider"><label for="mm1">한계소비성향 c</label><input type="range" id="mm1" min="0.5" max="0.95" step="0.05" value="0.8"><output id="mm1Out">0.8</output></div>
+    <div class="slider"><label for="mm2">한계수입성향 m(처분가능소득 기준)</label><input type="range" id="mm2" min="0" max="0.4" step="0.05" value="0.1"><output id="mm2Out">0.1</output></div>
+    <div class="slider"><label for="mm3">정부지출 증가</label><input type="range" id="mm3" min="0" max="100" step="10" value="50"><output id="mm3Out">50</output></div>
+    <div class="slider"><label for="mm4">조세 증가</label><input type="range" id="mm4" min="0" max="100" step="10" value="50"><output id="mm4Out">50</output></div>
+    <div class="readout" id="mmOut" aria-live="polite"></div>
+  </div>
+  <div class="tw c1"><table>
+    <thead><tr><th>승수</th><th>폐쇄경제</th><th>개방경제(수입 = m(Y − T))</th></tr></thead>
+    <tbody>
+      <tr><td>정부지출·투자·수출</td><td>1 ÷ (1 − c)</td><td>1 ÷ (1 − c + m)</td></tr>
+      <tr><td>조세</td><td>−c ÷ (1 − c)</td><td>−(c − m) ÷ (1 − c + m)</td></tr>
+      <tr><td>균형재정(ΔG = ΔT)</td><td><b>1</b></td><td>1 (수입이 Y − T의 함수일 때, 경상수지 불변)</td></tr>
+      <tr><td>비례세 T = tY</td><td colspan="2">1 ÷ [1 − c(1 − t)] → 승수 작아짐(자동안정장치, 35-69: 5/3)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="lab">
+    <h3>통화승수 계산기 · 37회 66번 기본값</h3>
+    <div class="slider"><label for="ml1">현금/예금 비율</label><input type="range" id="ml1" min="0" max="2" step="0.1" value="0.6"><output id="ml1Out">0.6</output></div>
+    <div class="slider"><label for="ml2">지급준비율(법정 + 초과, %)</label><input type="range" id="ml2" min="5" max="100" step="5" value="20"><output id="ml2Out">20</output></div>
+    <div class="slider"><label for="ml3">본원통화 증가(조 원)</label><input type="range" id="ml3" min="1" max="10" step="1" value="3"><output id="ml3Out">3</output></div>
+    <div class="readout" id="mlOut" aria-live="polite"></div>
+  </div>
+  <div class="grid2">
+    <div class="mini"><h3>본원통화를 바꾸는 것</h3><p>공개시장 매입(↑) · 재할인 대출(↑, 재할인율 인상 ↓) · 정부의 중앙은행 차입(↑) · 외환 매입(↑). 본원통화 = 현금 + 지급준비금(시재금 포함, 34-66 ⑤).</p></div>
+    <div class="mini"><h3>승수를 바꾸는 것</h3><p>현금비율 ↑ → 승수 ↓, 지급준비율(초과 포함) ↑ → 승수 ↓. 국채 매입은 승수 불변(30-77 ㄷ). 100% 지급준비면 승수 1.</p></div>
+  </div>
+
+  <h3>화폐수요 · 유통속도</h3>
+  <p class="foot">화폐수량설 MV = PY → V = Y ÷ (M/P). 화폐수요함수가 주어지면 V를 바로 계산(28-70: M/P = Y/5i → V = 5i, 36-62: V = i/0.2 = 0.2). 화폐수요 = f(소득 +, 물가 +, 이자율 −). 케인즈 3동기: 거래적·예비적 = 소득, 투기적 = 이자율. 유동성 함정 = 이자율 탄력성 <b>무한대</b>(37-65 ①).</p>
+  <h3>대부자금시장(고전학파)</h3>
+  <p class="foot">공급 = 총저축(민간 + 정부 T − G), 수요 = 투자 I(r). 정부지출 ↑ → 정부저축 ↓ → 이자율 ↑ → 투자 ↓(구축효과, 35-67). 정부저축은 이자율과 무관(32-64 ④).</p>
+
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>개방경제 균형재정승수를 0이나 그대로 1로 외워 적용(29-68: 100, 수입 함수 형태 확인).</span>
+    <span>수출 증가분 = 경상수지 개선분으로 착각(33-66: 100 − 수입 40 = 60).</span>
+    <span>법정지급준비율만 쓰고 초과지급준비율을 빼먹음(37-66).</span>
+    <span>중앙은행이 '사면' 통화량 감소로 착각(28-66 ③, 37-67 ㄱ).</span>
+    <span>환율경로: 금리 ↑ → 통화가치 '상승' → 순수출 감소(35-66 ⑤).</span>
+  </div>
+  <div class="drop"><b>버려도 되는 주제</b><span>M1·M2·Lf 세부 구성, 화폐 기능의 역사, 보몰-토빈 재고모형 계산은 출제가 드물다. 두 승수 공식과 본원통화 표만 확실히.</span></div>
+  <p class="mine"></p>
+</section>
+
 <!-- 11. 암기카드 -->
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">시험 직전 암기카드</h2>
@@ -948,6 +1000,8 @@ a{color:var(--accent)}
       <tr data-sec="gdp"><th>항등식 · 물가</th><td>NX = (S<sub>P</sub> − I) + (T − G) · CPI 라스파이레스(수입 소비재 O) · 디플레이터 파셰(수입품 X) · PPI 수입품 O</td></tr>
       <tr data-sec="cons"><th>소비이론</th><td>케인즈 = 현재소득(APC &gt; MPC) · 항상소득 = 일시소득은 저축 · 생애주기 = 고령화 → 저축률 ↓ · 임의보행 = 예측 불가</td></tr>
       <tr data-sec="cons"><th>투자이론</th><td>자본비용 = P<sub>K</sub>(r + δ) · MPK &gt; 자본비용 → 투자 · q = 시장가치 ÷ 대체비용, q &gt; 1 → 투자</td></tr>
+      <tr data-sec="money"><th>지출승수</th><td>1/(1 − c + m) · 조세 −(c − m)/(1 − c + m) · 균형재정 1 · 비례세 1/[1 − c(1 − t)]</td></tr>
+      <tr data-sec="money"><th>통화승수</th><td>(k + 1)/(k + r), k = 현금/예금 · 국채·외환 매입 = 본원통화 ↑ · V = Y ÷ (M/P) · 유동성함정 = 탄력성 ∞</td></tr>
     </tbody>
   </table></div>
   <p class="foot">문제풀이 페이지의 '1단계 힌트'를 먼저 눌러 보고, 이 노트의 해당 그래프를 움직여 본 다음 답을 고르면 감으로 고르는 실수가 줄어듭니다.</p>
@@ -971,7 +1025,7 @@ const f=(v,d=2)=>{const r=Math.round(v*10**d)/10**d;return String(r)};
 const MAP=[
  ["탄력성","#el","6~7강",13,"hi","4/7"],["여러 가지 효용함수","#uf","13~15강",13,"hi","3/7"],["조세·보조금·가격규제","#tax","3·8강",10,"hi","5/7"],
  ["소비자이론 응용","#app","17~18강",9,"mid","아직 안 풂"],["수요·공급·시장균형","#sd","2~3강",8,"mid","4/6"],["가격효과·기펜재","#pe","12강",7,"mid","1/2"],
- ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
+ ["무차별곡선·예산선·균형","#ic","9~10강",5,"mid","2/3"],["기회비용·생산가능곡선","#ppf","1강",3,"lo","1/1"],["생산함수·규모수익","#pf","20~21강",9,"mid","앱에서 표시"],["비용이론·비용극소화","#cost","22~23강",14,"hi","앱에서 표시"],["완전경쟁시장","#pc","24~25강",14,"hi","앱에서 표시"],["독점·가격차별·독점적 경쟁","#mono","26~27강",21,"hi","앱에서 표시"],["과점·게임이론","#game","28~29강",17,"hi","앱에서 표시"],["요소시장·소득분배","#factor","30~31강",15,"hi","앱에서 표시"],["시장실패","#fail","35강",28,"hi","앱에서 표시"],["승수·대부자금·화폐","#money","44강",28,"hi","앱에서 표시"],["국민소득·물가지수","#gdp","39강",23,"hi","앱에서 표시"],["소비이론·투자이론","#cons","41강",14,"hi","앱에서 표시"],["일반균형·후생경제","#welfare","32~34강",12,"hi","앱에서 표시"],["기대효용","#eu","19강",3,"lo","앱에서 표시"],["소비자 보조금","#sub","11강",0,"lo","0/3 (보충)"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k,m])=>`<tr><td class="tn"><a href="${h}">${n}</a></td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${c*3}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">${m}</td></tr>`).join("");
 
 /* 1. 곡선 이동 */
@@ -1188,6 +1242,16 @@ function cpCalc(){const y1=+$("#cp1").value,y2=+$("#cp2").value,w0=+$("#cp3").va
  const sv=y1+w0-c1,c2=sv*(1+r)+y2,mx=y1+w0+y2/(1+r);
  $("#cpOut").innerHTML=c2<0?`현재소비가 너무 큽니다(평생 자원의 현재가치 ${f(mx)} 초과).`:`저축 ${f(sv)}${sv<0?"(차입)":""} × ${f(1+r)} + 미래소득 ${y2} → 최대 미래소비 <b>${f(c2)}</b> · 현재소비 최대치 ${f(mx)}`}
 ["cp1","cp2","cp3","cp4","cp5"].forEach(k=>$("#"+k).addEventListener("input",cpCalc));cpCalc();
+
+/* 지출승수 · 통화승수 */
+function mmCalc(){const c=+$("#mm1").value,m=+$("#mm2").value,g=+$("#mm3").value,t=+$("#mm4").value;["mm1","mm2","mm3","mm4"].forEach(k=>$("#"+k+"Out").textContent=$("#"+k).value);
+ const k=1/(1-c+m),dy=k*(g-(c-m)*t),dm=m*(dy-t);
+ $("#mmOut").innerHTML=`승수 ${f(k)} · ΔY = ${f(k)} × (${g} − ${f(c-m)} × ${t}) = <b>${f(dy)}</b> · 수입 변화 ${f(dm)} → 경상수지 ${f(-dm)}`}
+["mm1","mm2","mm3","mm4"].forEach(k=>$("#"+k).addEventListener("input",mmCalc));mmCalc();
+function mlCalc(){const k=+$("#ml1").value,r=+$("#ml2").value/100,b=+$("#ml3").value;["ml1","ml2","ml3"].forEach(i=>$("#"+i+"Out").textContent=$("#"+i).value);
+ const m=(k+1)/(k+r);
+ $("#mlOut").innerHTML=`통화승수 (${k} + 1) ÷ (${k} + ${f(r)}) = <b>${f(m)}</b> → 통화량 증가 ${f(m*b)}조 원`}
+["ml1","ml2","ml3"].forEach(i=>$("#"+i).addEventListener("input",mlCalc));mlCalc();
 </script>
 
 </body></html>

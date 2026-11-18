@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.10";
+const APP_VER = "1.9.11";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -434,8 +434,9 @@ function pathDots(sub) {
 /* ───────── 업데이트 소식 · 사용방법 ───────── */
 const LS_SEENVER = "dora-exam-seenver";
 const NEWS = [
+  ["1.9.11", "2026.11.18", ["홈 버튼을 '📢 업데이트 정보' · '❓ 사용방법' 글자와 함께 표시"]],
   ["1.9.10", "2026.11.18", ["날짜 옆에 1차 시험 D-day 표시(2026년 시험일 4월 4일 기준)", "회계 33회 63번 정답을 ④(₩1,260,000)로 바로잡음(정답표 옮겨 적기 실수)"]],
-  ["1.9.9", "2026.11.18", ["홈 제목 옆에 📢 업데이트 소식 · ❓ 사용방법 버튼 추가"]],
+  ["1.9.9", "2026.11.18", ["홈 제목 옆에 업데이트 정보 · 사용방법 버튼 추가"]],
   ["1.9.8", "2026.11.18", ["회계 18·19단원(종업원급여 · 주식기준보상), 경제 35강(시장실패) 기출 · 문장 · 개념정리 추가", "회계 33회 63번 해설 정리"]],
   ["1.9.2~1.9.7", "2026.11.17", ["회계 12~17단원(금융자산 · 사채 · 전환사채 · 충당부채 · 자본 · 수익) 기출 · 문장 · 개념정리 추가", "경제 22~34강(비용이론 · 완전경쟁 · 독점 · 과점 · 요소시장 · 후생경제) 기출 · 문장 · 개념정리 추가"]],
   ["1.9.1", "2026.11.17", ["경제 오늘의 문제를 기출만으로(보충 문제 제외)", "문장 훈련: 문제 상황 자동 표시, 📜 원래 문제 보기, 🤔 상황이 부족해요 표시"]],
@@ -461,7 +462,7 @@ function openInfo(kind) {
   const box = $("#infoSheet");
   if (kind === "news") {
     localStorage.setItem(LS_SEENVER, APP_VER);
-    box.innerHTML = `<h2 id="infoTitle">📢 업데이트 소식</h2><p class="exp">지금 버전 v${APP_VER}</p>` + NEWS.map(([v, d, items], i) => `<div class="news${i ? "" : " cur"}"><div class="nh"><b>v${v}</b><small>${d}</small></div><ul>${items.map(t => `<li>${esc2(t)}</li>`).join("")}</ul></div>`).join("");
+    box.innerHTML = `<h2 id="infoTitle">📢 업데이트 정보</h2><p class="exp">지금 버전 v${APP_VER}</p>` + NEWS.map(([v, d, items], i) => `<div class="news${i ? "" : " cur"}"><div class="nh"><b>v${v}</b><small>${d}</small></div><ul>${items.map(t => `<li>${esc2(t)}</li>`).join("")}</ul></div>`).join("");
   } else {
     box.innerHTML = `<h2 id="infoTitle">❓ 사용방법</h2>` + HELP().map(([h, t]) => `<div class="news"><div class="nh"><b>${h}</b></div><p>${esc2(t)}</p></div>`).join("");
   }
@@ -472,7 +473,7 @@ function openInfo(kind) {
 function closeInfo() { $("#info").hidden = true }
 function drawInfoBtns() {
   const nw = localStorage.getItem(LS_SEENVER) !== APP_VER;
-  $("#title").innerHTML = `오늘의 공부<span class="tbtns"><button class="iconbtn${nw ? " dot" : ""}" id="newsBtn" aria-label="업데이트 소식${nw ? " (새 소식 있음)" : ""}" title="업데이트 소식">📢</button><button class="iconbtn" id="helpBtn" aria-label="사용방법" title="사용방법">❓</button></span>`;
+  $("#title").innerHTML = `<span class="tt">오늘의 공부</span><span class="tbtns"><button class="tbtn${nw ? " dot" : ""}" id="newsBtn"${nw ? ' aria-label="업데이트 정보 (새 소식 있음)"' : ""}><span aria-hidden="true">📢</span> 업데이트 정보</button><button class="tbtn" id="helpBtn"><span aria-hidden="true">❓</span> 사용방법</button></span>`;
   $("#newsBtn").onclick = () => openInfo("news"); $("#helpBtn").onclick = () => openInfo("help");
 }
 $("#info").addEventListener("click", e => { if (e.target.id === "info") closeInfo() });

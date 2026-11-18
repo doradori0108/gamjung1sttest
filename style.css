@@ -432,9 +432,10 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
 .oopts li span{color:var(--muted)}
 
 /* 업데이트 소식 · 사용방법 (v1.9.9) */
-.tbtns{display:inline-flex;gap:6px;margin-left:10px;vertical-align:middle}
-.tbtns .iconbtn{width:32px;height:32px;font-size:15px;position:relative}
-.iconbtn.dot::after{content:"";position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--x)}
+.tbtns{display:inline-flex;flex-wrap:wrap;gap:6px;margin-left:10px;vertical-align:middle}
+.tbtn{position:relative;height:30px;padding:0 11px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn.dot::after{content:"";position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--x)}
 #infoSheet h2{margin:0;font-size:20px}
 .news{border-top:1px solid var(--rule);padding-top:10px}
 .news .nh{display:flex;align-items:baseline;gap:8px}
@@ -445,3 +446,5 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
 
 .dday{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.92em}
 .dday small{font-weight:400;opacity:.85}
+h1 .tt{white-space:nowrap}
+h1:has(.tbtns){display:flex;flex-wrap:wrap;align-items:center;gap:6px 0}

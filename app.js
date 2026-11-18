@@ -3,7 +3,7 @@
    - 기록: 이 기기(localStorage)에 바로 저장 → 설정에서 연결하면 GitHub 비공개 저장소 progress.json과 동기화
    - 문항 ID: "<과목>:<회차-번호>" (기출·보충), "<과목>:ox<번호>" (개념 O·X) */
 "use strict";
-const APP_VER = "1.9.15";
+const APP_VER = "1.9.16";
 const DAILY_N = 10;               // 오늘의 문제 수 (과목별, 기출만)
 const SEC_PER_Q = 60;             // 문제당 제한시간(초) → 10문제 = 10분
 const LS_STATE = "dora-exam-v1", LS_SYNC = "dora-exam-sync", LS_THEME = "dora-exam-theme";
@@ -434,6 +434,7 @@ function pathDots(sub) {
 /* ───────── 업데이트 소식 · 사용방법 ───────── */
 const LS_SEENVER = "dora-exam-seenver";
 const NEWS = [
+  ["1.9.16", "2026.11.18", ["전항 · 복수 정답 6문항 해설에 '⚠️ 정답 처리 사유'(문제의 어느 부분이 오류인지) 추가"]],
   ["1.9.15", "2026.11.18", ["10개년 최종정답표로 회계 · 경제 기출 전체 정답 대조 → 모두 '공식' 정답으로 표시", "전항 정답 문항 반영: 회계 31회 67번, 경제 30회 79번 · 36회 50번 · 37회 52번"]],
   ["1.9.14", "2026.11.18", ["회계 22단원(회계변경 · 오류수정) · 23단원(주당이익), 경제 44강(승수 · 대부자금 · 화폐) 기출 · 문장 · 개념정리 추가"]],
   ["1.9.13", "2026.11.18", ["회계 21단원(법인세), 경제 41강(소비 · 투자 이론) 기출 · 문장 · 개념정리 추가"]],
@@ -892,6 +893,7 @@ function answer(v, review) {
   } else if (q.t === "ex") {
     const x = D[sub].ex[q.k], ki = x.a - 1; ok = v === ki || (x.alt || []).includes(v + 1);
     html = `<p class="answer">정답 <b>${N5[ki]}</b>${x.alt ? ` <small>(${x.alt.map(n => N5[n - 1]).join("·")}도 정답 인정)</small>` : ""} · 내 답 <b>${N5[v]}</b>${x.gen ? `<span class="src">보충 문제</span>` : `<span class="src ${x.src === "공식" ? "off" : ""}">${x.src === "공식" ? "공식 정답" : "자체 풀이"}</span>`}</p>
+      ${x.why ? `<p class="why"><b>⚠️ ${(x.alt || []).length >= 4 ? "전항 정답" : "복수 정답"} 처리 사유</b>${x.why}</p>` : ""}
       ${x.box ? `<ul class="ol">${x.box.map(b => `<li><span class="k ${b.a ? "t" : "f"}">${plain(b.t)[0]}${b.a ? "O" : "X"}</span><span>${b.e}</span></li>`).join("")}</ul>` : ""}
       <ul class="ol">${x.o.map((t, i) => { const tf = markOf(x.e[i]); return `<li class="${i === ki ? "key" : ""} ${i === v && !ok ? "picked" : ""}"><span class="k ${tf}">${N5[i]}${tf === "t" ? "O" : tf === "f" ? "X" : ""}</span><span>${(() => { const ex = x.e[i] || (i === ki ? "정답" : ""), short = plain(t).length < 40; return short ? `<b>${t}</b>${ex ? " · " + ex : ""}` : ex || t })()}</span></li>` }).join("")}</ul>
       ${x.s ? `<p class="steps">${x.s}</p>` : ""}

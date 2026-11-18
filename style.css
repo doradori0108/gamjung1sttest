@@ -448,3 +448,6 @@ button.lvl{font-family:var(--f-mono);background:transparent;cursor:pointer}
 .dday small{font-weight:400;opacity:.85}
 h1 .tt{white-space:nowrap}
 h1:has(.tbtns){display:flex;flex-wrap:wrap;align-items:center;gap:6px 0}
+
+.why{margin:10px 0;padding:10px 12px;border-radius:10px;border:1px solid var(--rule);border-left:4px solid var(--x);background:var(--paper);line-height:1.6;font-size:14px}
+.why b{display:block;margin-bottom:4px}

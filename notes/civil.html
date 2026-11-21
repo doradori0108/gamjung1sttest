@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a>
+  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a><a href="#c2b">법인</a>
 </nav>
 
 <!-- C1. 민법 통칙 -->
@@ -262,6 +262,55 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- C2b. 법인 -->
+<section id="c2b" class="sec" aria-labelledby="h-c2b">
+  <div class="shead"><h2 id="h-c2b">법인 · 비법인사단</h2><span class="badge mid">비중 중 · 28문항</span><span class="lec">3단원</span></div>
+  <div class="key">법인 문제의 절반은 "숫자와 기관"(2/3 · 3/4 · 1/5 · 3주간, 필수기관 vs 임의기관), 나머지 절반은 "법인의 불법행위(제35조)"와 "비법인사단에 무엇을 유추하나"다.<small>매년 5~8번 문제에 2~3문항. 비법인사단(종중·교회·재건축조합)은 판례 위주.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 정관·총회 숫자 O·X · 대표권 제한과 등기 · 제35조 요건(대표자·직무관련성·피해자의 악의/중과실) · 비법인사단에 유추적용 안 되는 규정(제60조) · 총유물 관리·처분 · 설립등기·변경등기</p>
+  <h3>당사자 관계도 — 대표이사의 불법행위, 누가 책임지나</h3>
+  <svg viewBox="0 0 340 200" role="img" aria-label="법인, 대표자, 피해자 관계도" style="width:100%;max-width:520px">
+    <rect x="8" y="16" width="110" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="63" y="35" text-anchor="middle" font-size="12" fill="currentColor">A 법인</text><text x="63" y="51" text-anchor="middle" font-size="10" fill="var(--muted)">제35조 배상책임</text>
+    <rect x="8" y="108" width="110" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="63" y="127" text-anchor="middle" font-size="12" fill="currentColor">甲 대표자</text><text x="63" y="143" text-anchor="middle" font-size="10" fill="var(--muted)">자기 책임도 짐(연대)</text>
+    <rect x="222" y="62" width="110" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="277" y="81" text-anchor="middle" font-size="12" fill="currentColor">乙 피해자</text><text x="277" y="97" text-anchor="middle" font-size="10" fill="var(--muted)">악의·중과실이면 X</text>
+    <line x1="63" y1="60" x2="63" y2="108" stroke="var(--muted)" stroke-dasharray="4 3"/><line x1="118" y1="130" x2="222" y2="90" stroke="var(--muted)"/><line x1="118" y1="38" x2="222" y2="76" stroke="var(--muted)"/>
+    <text x="170" y="178" text-anchor="middle" font-size="10" fill="currentColor">외형상 직무행위면 사익 추구여도 직무관련성 O</text>
+    <text x="170" y="195" text-anchor="middle" font-size="10" fill="var(--muted)">대표자 = 등기 불문 사실상 대표자 포함</text>
+  </svg>
+  <div class="tw c1"><table>
+    <thead><tr><th>숫자</th><th>내용(조문)</th><th>함정</th></tr></thead>
+    <tbody>
+      <tr><td><b>2/3</b></td><td>사단법인 정관변경 = 총사원 2/3 동의 + 주무관청 허가(제42조)</td><td>법원 허가 X</td></tr>
+      <tr><td><b>3/4</b></td><td>사단법인 해산 결의(제78조)</td><td>5분의 3 X(36회 8번 ③)</td></tr>
+      <tr><td><b>1/5</b></td><td>임시총회 소집청구(제70조)</td><td>정관으로 증감 가능</td></tr>
+      <tr><td><b>3주간</b></td><td>설립허가 후 설립등기 · 청산종결 등기(제49·94조)</td><td>설립등기 = 성립요건, 그 외 등기 = 대항요건</td></tr>
+      <tr><td>과반수</td><td>이사가 여럿이면 사무집행은 이사 과반수(제58조), 대표는 각자 대표(제59조)</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>기관</h3><p>필수: 이사(사단·재단) · 사원총회(사단). 임의: 감사(대표기관 X, 등기사항 X).</p><p>이익상반 → <b>특별대리인</b>(제64조) / 이사 결원으로 손해 우려 → 임시이사(제63조). 이사와 법인 관계 = 위임 → 사임 자유(허가 X).</p></div>
+    <div class="mini"><h3>재단법인 특칙</h3><p>출연재산 귀속: 생전처분 = 법인 성립 시 · 유언 = 유언 효력 발생 시(제48조).</p><p>정관변경: 원칙 불가 · 변경방법을 정관에 정했으면 가능 · 명칭·사무소는 재산보전 위해 가능 · 기본재산 편입·처분 = 정관변경.</p></div>
+  </div>
+  <h3>비법인사단 — 법인 규정을 빌려 쓰되 "등기"만은 못 빌린다</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>법인 규정</th><th>비법인사단에 유추?</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>제35조 불법행위책임 · 제34조 권리능력 · 제62조 복임권 제한 · 제68조 총회 권한</td><td>O</td><td>대표자가 포괄 위임하면 무효(제62조)</td></tr>
+      <tr><td>제60조 대표권 제한의 등기</td><td><b>X</b>(등기할 수 없으므로)</td><td>상대방이 제한을 알았거나 과실로 몰랐으면 무효, 선의·무과실이면 유효</td></tr>
+      <tr><td>소유 형태</td><td>—</td><td><b>총유</b> · 관리·처분은 총회 결의 필요(없으면 무효) · 타인 채무 보증은 처분행위 아님</td></tr>
+      <tr><td>등기</td><td>—</td><td>부동산은 사단 명의로 등기 <b>가능</b>(부동산등기법 제26조)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>사원 지위 양도·상속은 정관으로도 허용 불가 → <b>정관으로 허용 가능</b>(28회 5번 ④, 37회 6번 ④).</span>
+    <span>대표권 제한을 정관에 적었으면 악의의 제3자에게 대항 → <b>등기해야</b> 대항(30회 7번 ㄷ). 비법인사단엔 제60조 유추 X(29회 4번).</span>
+    <span>사익을 위한 대표 행위는 직무관련성 X → <b>외형상 직무면 O</b>(29회 5번 ③). 대표자는 등기 기준 → <b>사실상 대표자도 포함</b>(31회 6번 ③). 피해자 중과실이면 책임 X(28회 6번 ③).</span>
+    <span>총회 결의로 정관을 달리 해석하면 법원도 구속 → <b>구속 X</b>(37회 6번 ⑤, 35회 7번 ②).</span>
+    <span>비법인사단은 등기능력 X → <b>O</b>(30회 8번 ⑤). 사원자격 득실은 등기사항 → <b>정관 기재사항</b>(36회 6번 ②).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>숫자표 · 제35조 관계도 · 비법인사단 표 세 개로 대부분 커버. 청산 절차 세부(채권신고 기간, 청산인 직무 순서)와 법인의 해산 사유 세부는 출제 빈도가 낮으니 기출 지문만 읽고 넘긴다. 종중 판례는 C12 총유에서 다시 나온다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
   <div class="tw"><table>
@@ -275,6 +324,9 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="c2a"><td>상대방 무기</td><td>확답촉구(법정대리인·능력자 된 본인) · 철회(선의, 계약) · 거절(불문, 단독행위) · 철회·거절은 본인에게도 O</td></tr>
       <tr data-sec="c2a"><td>후견</td><td>성년·한정 = 본인 의사 고려 · 특정 = 본인 의사에 반해 X · 피성년후견인은 동의 있어도 취소</td></tr>
       <tr data-sec="c2a"><td>실종</td><td>보통 5년 · 특별 1년 · 만료 시 사망 간주 · 취소 심판 필요 · 선의 현존이익 / 악의 이자+손해</td></tr>
+      <tr data-sec="c2b"><td>법인 숫자</td><td>정관변경 2/3+주무관청 허가 · 해산 3/4 · 임시총회 1/5 · 설립등기 3주(성립요건)</td></tr>
+      <tr data-sec="c2b"><td>제35조</td><td>대표자(사실상 포함) · 외형상 직무(사익이어도) · 피해자 악의/중과실이면 X · 대표권 없는 이사 X</td></tr>
+      <tr data-sec="c2b"><td>비법인사단</td><td>제60조만 유추 X · 총유 · 총회 결의 없는 관리·처분 무효 · 보증은 처분 X · 등기능력 O</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -283,6 +335,6 @@ svg .f-bar{fill:var(--accent)}
 <script>
 const $=s=>document.querySelector(s);
 /* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
-const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
+const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "#c2b", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 </script>

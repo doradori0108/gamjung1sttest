@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a><a href="#c2b">법인</a><a href="#c3">물건</a><a href="#c4">법률행위 일반</a><a href="#c5">의사표시</a>
+  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a><a href="#c2b">법인</a><a href="#c3">물건</a><a href="#c4">법률행위 일반</a><a href="#c5">의사표시</a><a href="#c6">대리</a>
 </nav>
 
 <!-- C1. 민법 통칙 -->
@@ -445,6 +445,58 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- C6. 대리 -->
+<section id="c6" class="sec" aria-labelledby="h-c6">
+  <div class="shead"><h2 id="h-c6">대리 (임의대리 · 복대리 · 무권대리 · 표현대리)</h2><span class="badge mid">비중 중 · 23문항</span><span class="lec">7단원</span></div>
+  <div class="key">세 사람(본인 · 대리인 · 상대방)의 삼각형. "대리권이 있나 → 없으면 본인이 추인하나 → 안 하면 상대방을 누가 지켜주나(표현대리·제135조)" 순서로 판단한다.<small>매년 12~15번 문제에 2~3문항. 무권대리 사례형과 복대리가 거의 고정.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 대리권 범위(해제권·수령권) · 복대리인의 지위 · 무권대리 사례(추인·최고·철회·제135조) · 표현대리 3유형 · 대리권 소멸 사유</p>
+  <h3>대리 삼각형</h3>
+  <svg viewBox="0 0 340 200" role="img" aria-label="본인, 대리인, 상대방 관계도" style="width:100%;max-width:520px">
+    <rect x="120" y="8" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="170" y="26" text-anchor="middle" font-size="12" fill="currentColor">甲 본인</text><text x="170" y="41" text-anchor="middle" font-size="10" fill="var(--muted)">효과가 귀속</text>
+    <rect x="8" y="132" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="58" y="150" text-anchor="middle" font-size="12" fill="currentColor">乙 대리인</text><text x="58" y="165" text-anchor="middle" font-size="10" fill="var(--muted)">행위능력 불요</text>
+    <rect x="232" y="132" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="282" y="150" text-anchor="middle" font-size="12" fill="currentColor">丙 상대방</text><text x="282" y="165" text-anchor="middle" font-size="10" fill="var(--muted)">최고·철회 가능</text>
+    <line x1="140" y1="48" x2="70" y2="132" stroke="var(--muted)"/><text x="62" y="88" font-size="10" fill="currentColor">① 수권행위(대리권)</text>
+    <line x1="108" y1="152" x2="232" y2="152" stroke="var(--muted)"/><text x="170" y="145" text-anchor="middle" font-size="10" fill="currentColor">② 현명 + 대리행위</text>
+    <line x1="200" y1="48" x2="270" y2="132" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="244" y="88" font-size="10" fill="currentColor">③ 효과 귀속</text>
+    <text x="170" y="194" text-anchor="middle" font-size="10" fill="var(--muted)">대리권 없으면 ③이 끊김 → 추인 · 표현대리 · 제135조</text>
+  </svg>
+  <div class="tw c1"><table>
+    <thead><tr><th>대리권 범위</th><th>판례 결론</th></tr></thead>
+    <tbody>
+      <tr><td>계약 체결 대리권</td><td>해제권 X · 처분권 X(31회 10번 ①)</td></tr>
+      <tr><td>매매 체결 대리권</td><td>중도금·잔금 <b>수령권 O</b> · 체결·이행 대리권엔 대금지급기일 연기권 O</td></tr>
+      <tr><td>예금계약 체결 대리권</td><td>예금 담보 대출권 X</td></tr>
+      <tr><td>범위 불분명(제118조)</td><td>보존행위(소멸시효 중단 포함) · 성질을 바꾸지 않는 이용·개량행위만</td></tr>
+      <tr><td>자기계약·쌍방대리(제124조)</td><td>원칙 금지 · 본인 허락·채무 이행은 가능 · 법무사의 등기 쌍방대리 허용</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="mini"><h3>복대리</h3><p>복대리인 = <b>본인의</b> 대리인 · 언제나 <b>임의대리인</b> · 선임해도 대리인 권한 유지 · 대리인 권한 소멸 시 함께 소멸.</p><p>복임권: 임의대리인 = 승낙·부득이한 사유(능력이 중요한 사무는 명시적 승낙) / 법정대리인 = 언제나(부득이하면 선임·감독 책임만).</p></div>
+    <div class="mini"><h3>대리권 소멸(제127조)</h3><p>본인 <b>사망</b> · 대리인 사망·성년후견 개시·파산. 본인의 성년후견·파산은 소멸 X. 임의대리는 원인관계 종료·수권행위 철회로도 소멸.</p></div>
+  </div>
+  <h3>무권대리 — 본인 · 상대방 · 무권대리인의 수단</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>누가</th><th>수단</th><th>요건 · 효과</th></tr></thead>
+    <tbody>
+      <tr><td>본인</td><td>추인(제130·133조)</td><td>상대방·무권대리인 누구에게나, 묵시적 가능 · 소급효 · 일부 추인은 상대방 동의 필요 · 무권대리인에게 하면 상대방이 알 때까지 대항 X</td></tr>
+      <tr><td>상대방</td><td>최고(제131조)</td><td>선의·악의 <b>불문</b> · 기간 내 확답 없으면 추인 <b>거절</b> 간주</td></tr>
+      <tr><td>상대방</td><td>철회(제134조)</td><td><b>선의</b>만 · 본인 추인 전까지 · 철회 후엔 추인 불가</td></tr>
+      <tr><td>무권대리인</td><td>책임(제135조)</td><td>상대방(선의·무과실) <b>선택</b>에 따라 이행 or 손해배상 · <b>무과실책임</b> · 본인이 추인하면 소멸</td></tr>
+    </tbody>
+  </table></div>
+  <div class="mini"><h3>표현대리 3유형 — 대리권은 없지만 본인이 책임</h3><p>① 대리권 수여 표시(제125조) ② 권한을 넘은 표현대리(제126조, 기본대리권 필요 · 복임권 없이 선임된 복대리인 권한도 O) ③ 대리권 소멸 후(제129조). 상대방이 정당한 이유(선의·무과실) 있어야. 표현대리가 성립해도 무권대리라 상대방은 철회 가능, 과실상계 X. (표현대리 세부는 C6 후속 기출로 보강)</p></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>대리인이 여럿이면 공동대리가 원칙 → <b>각자대리</b>(28회 12번 ⑤).</span>
+    <span>계약 체결 대리권에 해제권 포함 → <b>X</b>(29회 11번 ③, 35회 12번 ②, 37회 15번 ㄱ). 수령권은 O(35회 12번 ①).</span>
+    <span>대리권 남용 = 무권대리 → <b>유권대리</b>, 상대방이 알면 제107조 단서 유추(30회 14번 ②).</span>
+    <span>복대리인 = 대리인의 대리인·법정대리인 → <b>본인의 대리인·임의대리인</b>(35회 12번 ⑤, 28회 14번 ⑤). 선임 시 대리인 권한 소멸 → <b>유지</b>(36회 13번 ②).</span>
+    <span>추인 = 장래효 → <b>소급효</b>(28회 13번 ①). 최고 무응답 = 추인 간주 → <b>거절</b>(30회 15번 ⑤). 악의 상대방도 철회 → <b>X</b>(28회 13번 ②).</span>
+    <span>제135조 책임 = 무권대리인이 선택 → <b>상대방</b>이 선택(30회 15번 ②). 본인 성년후견 개시 = 대리권 소멸 → <b>X</b>(37회 15번 ㄴ).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>무권대리 표는 매년 나오니 필수. 현명주의·대리행위의 하자(제116조) 세부 이론은 판례 결론만. 표현대리 경합·제126조 정당한 이유 판단 기준은 기출 지문 수준으로.</span></div>
+  <p class="mine"></p>
+</section>
+
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
   <div class="tw"><table>
@@ -469,6 +521,10 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="c5"><td>4가지 효과</td><td>비진의 = 원칙 유효 · 통정허위 = 무효 · 착오 = 중요부분이면 취소(중과실 X) · 사기강박 = 취소 · 모두 선의 제3자에게 대항 X(무과실 불요)</td></tr>
       <tr data-sec="c5"><td>허위표시 제3자</td><td>O: 부동산·저당권 취득자·전득자·가장채권 양수인·압류채권자·파산관재인 / X: 계약상 지위 이전·대리인·대위 채권자</td></tr>
       <tr data-sec="c5"><td>착오 판례</td><td>상대가 알고 이용 → 중과실도 취소 · 해제 후 취소 O · 법률의 착오 적용 · 경제적 불이익 없으면 중요부분 X</td></tr>
+      <tr data-sec="c6"><td>대리권 범위</td><td>체결 대리권 = 해제 X · 수령 O · 불분명 = 보존·이용·개량 · 각자대리 원칙 · 대리인 행위능력 불요</td></tr>
+      <tr data-sec="c6"><td>복대리</td><td>본인의 대리인 · 임의대리인 · 선임해도 대리인 권한 유지 · 임의대리인 복임권 = 승낙·부득이</td></tr>
+      <tr data-sec="c6"><td>무권대리</td><td>추인 소급·묵시 O · 최고(불문) 무응답 = 거절 · 철회(선의) · 제135조 무과실·상대방 선택</td></tr>
+      <tr data-sec="c6"><td>소멸</td><td>본인 사망 · 대리인 사망·성년후견·파산 (본인 후견·파산 X)</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -477,6 +533,6 @@ svg .f-bar{fill:var(--accent)}
 <script>
 const $=s=>document.querySelector(s);
 /* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
-const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "#c2b", "3단원", 28, "mid"], ["의사표시", "#c5", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "#c4", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "#c3", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
+const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "#c2b", "3단원", 28, "mid"], ["의사표시", "#c5", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "#c6", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "#c4", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "#c3", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 </script>

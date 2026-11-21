@@ -1,0 +1,233 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>부동산학원론 개념정리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 회계학 개념정리: 경제학 요약노트와 같은 틀. 결론 → 도식 → 함정 → 기출 */
+:root{
+  --bg:#f2f4f7; --paper:#fbfcfd; --grid:#e4e9f0; --rule:#d5dce6; --ink:#1b2230; --muted:#5a6578;
+  --accent:#1f4f8a; --accent-ink:#ffffff; --demand:#1f4f8a; --supply:#b5562a; --gov:#7a5aa8;
+  --area1:rgba(31,79,138,.16); --area2:rgba(181,86,42,.18); --dwl:rgba(178,58,46,.28);
+  --hi:#b23a2e; --hi-bg:#f8e4e0; --ok:#1f7a4a; --mid:#9a6a12; --mid-bg:#f6ecd6;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}
+:root[data-theme="light"]{color-scheme:only light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+h1{font-size:28px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-size:22px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--muted);font-size:15px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--rule)}
+nav.toc a{flex:none;font-size:13.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;background:var(--paper)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{display:grid;gap:14px;scroll-margin-top:56px}
+.sec{border:1px solid var(--rule);border-radius:12px;padding:22px 20px;display:grid;gap:16px;min-width:0;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.badge{font:500 12.5px var(--f-body);padding:2px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);white-space:nowrap}
+.badge.hi{border-color:var(--hi);color:var(--hi);background:var(--hi-bg)}
+.badge.mid{border-color:var(--mid);color:var(--mid);background:var(--mid-bg)}
+.badge.lo{color:var(--muted)}
+.lec{font:500 12.5px var(--f-mono);color:var(--muted)}
+.key{background:var(--paper);border:1.5px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:16.5px;font-weight:500;line-height:1.6}
+.key small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
+.ask{font-size:14px;color:var(--muted);background:var(--paper)}
+.ask b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.c1 td:first-child{min-width:5.2em}
+.c1 table{min-width:520px}
+td.tn{min-width:9.5em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
+ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.trap b{color:var(--hi)}
+.mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
+.mine span{display:inline-block;font-family:var(--f-mono);font-size:12.5px;padding:0 7px;margin:2px 3px 2px 0;border-radius:6px;border:1px solid var(--hi);color:var(--hi)}
+.steps{margin:0;padding:10px 14px 10px 32px;border-radius:8px;background:var(--bg);font-size:14.5px;display:grid;gap:4px}
+.lab{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px;display:grid;gap:10px}
+.lab h3{font-size:15px}
+.lab .hint{font-size:13px;color:var(--muted)}
+.lab svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+svg text{fill:var(--ink);font-family:var(--f-mono);font-size:11px}
+svg .ax{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .d{stroke:var(--demand);stroke-width:2.6;fill:none}
+svg .s{stroke:var(--supply);stroke-width:2.6;fill:none}
+svg .g{stroke:var(--gov);stroke-width:2.4;fill:none}
+svg .old{stroke-dasharray:5 4;opacity:.55}
+svg .guide{stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 3;fill:none}
+svg .dot{fill:var(--ink)}
+svg .lbl{font-size:12px;font-weight:500}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls button{font:500 13.5px var(--f-body);padding:6px 11px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+.ctrls button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.ctrls button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.slider input{width:100%}
+.slider output{font-family:var(--f-mono);min-width:3.5em;text-align:right}
+.readout{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.readout b{font-family:var(--f-mono);font-weight:500}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mini{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper);display:grid;gap:6px;min-width:0}
+.mini svg{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.mini p{font-size:13.5px}
+.mini h3{font-size:14.5px}
+.foot{font-size:13px;color:var(--muted)}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle}
+a{color:var(--accent)}
+
+.drop{border-left:3px dashed var(--muted);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.drop b{color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.flow span{border:1px solid var(--rule);border-radius:8px;padding:4px 10px;background:var(--paper)}
+.flow small{color:var(--muted)}
+.flow i{font-style:normal;color:var(--muted);background:var(--paper)}
+.tree{display:grid;gap:8px}
+.tree .row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.tree .col{display:grid;gap:6px;align-content:start}
+.node{border:1px solid var(--rule);border-radius:8px;padding:8px 12px;background:var(--paper);font-size:14.5px}
+.node small{display:block;color:var(--muted);font-size:13px}
+.node.root{border:1.5px solid var(--ink);font-weight:500;text-align:center}
+.node.acc{border-color:var(--demand);color:var(--demand);font-weight:500}
+.node.acc2{border-color:var(--supply);color:var(--supply);font-weight:500}
+.je{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+.je th:nth-child(1),.je th:nth-child(2){color:var(--demand)}.je th:nth-child(3),.je th:nth-child(4){color:var(--supply)}
+.readout .je{margin:4px 0}
+svg .f-a{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-l{fill:var(--area2);stroke:var(--supply);stroke-width:1.5}
+svg .f-e{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-inv{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-loss{fill:var(--dwl)}
+svg .f-short{fill:var(--area2)}
+svg .f-bar{fill:var(--accent)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">감정평가사 1차 · 부동산학원론 · 국승옥 기본강의 · 수강한 단원까지 열림</div>
+  <h1>부동산학원론 개념정리</h1>
+  <p class="lede">제28~37회 부동산학원론 400문항을 14단원으로 나눠 정리합니다. 경제학과 겹치는 단원(수요·공급, 시장, 지대)은 경제 개념정리와 연결했고, 감정평가 단원은 2차 실무의 바탕이 됩니다. 아직 수강 전인 단원은 앱의 🗺️ 진도를 올리면 열립니다.</p>
+</header>
+
+<section id="map" class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">빈출 지도</h2>
+  <p class="ask">숫자 = 10년간(제28~37회) 출제 문항 수. <b>내 기록</b>은 앱 문제풀이 기록으로 채워집니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>단원</th><th>10년</th><th>비중</th><th>내 기록</th></tr></thead>
+    <tbody id="mapBody"></tbody>
+  </table></div>
+  <p class="foot">상 = 10년 30문항 이상(연 3문항↑), 중 = 15~29문항, 하 = 14문항 이하. 회계·경제(상 = 10문항↑)와 기준이 다른 이유: 이 과목은 단원이 넓어 10문항 기준으로는 거의 모든 단원이 상이 되기 때문. 단원 구분은 표준 기본서 순서라 강사 교재와 다를 수 있습니다.</p>
+</section>
+
+<nav class="toc" aria-label="단원 바로가기">
+  <a href="#r1">부동산학 총론</a>
+</nav>
+
+<!-- R1. 부동산학 총론 -->
+<section id="r1" class="sec" aria-labelledby="h-r1">
+  <div class="shead"><h2 id="h-r1">부동산학 총론 · 토지의 특성 · 용어</h2><span class="badge hi">비중 상 · 44문항</span><span class="lec">1단원</span></div>
+  <div class="key">토지 특성 문제는 "특성 → 그 결과(파생 현상)" 짝 맞추기다. 짝 하나만 바꿔 끼운 지문을 찾으면 된다.<small>자연적 특성 5개(부동성 · 부증성 · 영속성 · 개별성 · 인접성) + 인문적 특성 3개(용도의 다양성 · 합병·분할 가능성 · 위치의 가변성). 81~86번에 매년 4~5문항.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · ① 특성 ↔ 파생 현상 O·X / "다음 내용과 관련된 특성은?" ② 토지 용어(후보지 · 이행지 · 빈지 · 법지 · 획지 …) ③ 정착물 · 준부동산(등기 · 등록 · 명인방법) ④ 주택법·건축법상 주택 분류</p>
+  <h3>특성 → 파생 현상 짝 (이 표가 이 단원의 전부)</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>특성</th><th>뜻</th><th>파생 현상 · 감정평가 연결</th></tr></thead>
+    <tbody>
+      <tr><td><b>부동성</b></td><td>위치를 옮길 수 없음</td><td>시장 국지화 · <b>지역분석</b> · 임장활동 · 외부효과 · 지방세 근거</td></tr>
+      <tr><td><b>부증성</b></td><td>물리적 양을 늘릴 수 없음</td><td>지가 상승 · 독점 소유욕 · <b>집약적 이용</b> · 지대 발생 / 단 용도적 공급은 가능</td></tr>
+      <tr><td><b>영속성</b></td><td>소모·마멸 안 됨</td><td><b>수익방식</b>(장래편익의 현재가치) 근거 · 감가상각 배제 · 장기적 배려 · 소유와 이용 분리(임대)</td></tr>
+      <tr><td><b>개별성</b></td><td>똑같은 땅은 없음</td><td>일물일가 X · 완전 대체 X · <b>개별분석</b> · 비교 곤란 · 불완전경쟁</td></tr>
+      <tr><td><b>인접성</b></td><td>물리적으로 연결됨</td><td>외부효과 · 협동적 이용 · 구획·등록 필요</td></tr>
+      <tr><td>용도의 다양성</td><td>여러 용도로 쓸 수 있음</td><td><b>최유효이용</b> 판단근거 · 이행과 전환 가능</td></tr>
+      <tr><td>합병·분할 가능성</td><td>합치고 나눌 수 있음</td><td>용도의 다양성 지원 · 최유효이용 · 규모의 경제</td></tr>
+      <tr><td>위치의 가변성</td><td>사회·경제·행정적 위치가 변함</td><td>규제 변화 = <b>행정적</b> · 도로 개설 = 경제적 · 인구 변화 = 사회적</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">경제학 연결: 부증성 = 공급곡선이 수직(완전비탄력) → 수요가 늘면 가격만 오른다 → 경제학 지대(지대·전용수입, 경제 #factor)와 같은 그림.</p>
+  <h3>토지 용어 — 짝으로 외우기</h3>
+  <div class="tw"><table>
+    <thead><tr><th>짝</th><th>A</th><th>B</th></tr></thead>
+    <tbody>
+      <tr><td>용도 변화</td><td><b>후보지</b>: 택지·농지·임지 <b>사이</b>에서 전환 중</td><td><b>이행지</b>: 같은 용도 지역 <b>안</b> 세분 지역 간(주거→상업)</td></tr>
+      <tr><td>소유 · 실익</td><td><b>빈지</b>: 소유권 X · 이용실익 O (해변)</td><td><b>법지</b>: 소유권 O · 이용실익 X (경사면)</td></tr>
+      <tr><td>경제 · 법률 단위</td><td><b>획지</b>: 가격수준이 비슷한 일단의 토지</td><td><b>필지</b>: 하나의 지번이 붙는 등록 단위</td></tr>
+      <tr><td>건물 유무</td><td><b>나지</b>: 건물 없고 사법상 권리도 없는 토지</td><td><b>공지</b>: 건폐율 등으로 건축하며 남겨 둔 땅</td></tr>
+      <tr><td>제방</td><td><b>제외지</b>: 제방에서 하천 쪽</td><td><b>제내지</b>: 제방에서 마을 쪽</td></tr>
+      <tr><td>도시개발</td><td><b>환지</b>: 사업 후 원래 소유자에게 다시 나눠 준 땅</td><td><b>체비지</b>: 사업비 충당용으로 환지로 정하지 않은 땅</td></tr>
+      <tr><td>기타</td><td><b>포락지</b>: 지반이 절토되어 하천으로 변한 토지</td><td><b>소지</b>: 택지 등으로 조성되기 전 토지 · <b>맹지</b>: 도로 접면 없음</td></tr>
+    </tbody>
+  </table></div>
+  <h3>정착물 · 준부동산 구조도</h3>
+  <div class="tree">
+    <div class="node root">토지에 붙어 있는 것</div>
+    <div class="row2">
+      <div class="col"><div class="node acc">토지의 일부(종속 정착물)</div>
+        <div class="node">다년생 식물 · 구거(도랑) · 담장 · 돌담 · 교량<small>토지와 함께 거래</small></div></div>
+      <div class="col"><div class="node acc2">독립 정착물(별개 부동산)</div>
+        <div class="node">건물 · 등기된 입목 · 명인방법 갖춘 수목<small>농작물 = 명인방법 없어도 경작자 소유</small></div></div>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>준부동산</th><th>공시 방법</th><th>함정</th></tr></thead>
+    <tbody>
+      <tr><td>선박</td><td>등기: 20톤 이상 기선·범선, 100톤 이상 부선</td><td>"10톤 이상"은 X(29회 85번)</td></tr>
+      <tr><td>자동차 · 건설기계 · 항공기</td><td>등록(원부)</td><td>압류등록도 등록원부에</td></tr>
+      <tr><td>입목</td><td>입목등기(소유권보존등기)</td><td>토지와 분리 양도·저당 O · 토지 처분 효력 X</td></tr>
+      <tr><td>공장재단 · 광업재단</td><td>등기</td><td>소유권·저당권의 목적</td></tr>
+      <tr><td>광업권 · 어업권</td><td>등록</td><td>물권으로 보고 부동산 규정 준용</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>영속성 → 원가방식 근거 → <b>수익방식</b> 근거(30회 81번 ③).</span>
+    <span>합병·분할 가능성이 이행·전환을 가능하게 → <b>용도의 다양성</b>(31회 81번 ④).</span>
+    <span>토지거래허가구역 지정·해제 → 경제적 위치 → <b>행정적 위치</b>(36회 86번 ③).</span>
+    <span>빈지 = 소유권 인정 → <b>소유권 X</b>(31회 112번 ①). 후보지에 이행지 설명(35회 86번 ㄴ).</span>
+    <span>"토지의 이동"을 지형 변화로 → 지적공부 표시의 <b>신규·변경·말소</b>(36회 81번 ③, 관계법규 공간정보법과 같은 정의).</span>
+    <span>입목은 토지 처분 효력이 미친다 / 분리 양도 불가 → <b>둘 다 X</b>(36회 82번 ④, 30회 84번 ⑤). 농작물은 명인방법을 갖춰도 토지 일부 → <b>경작자 소유</b>(37회 82번 ③).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>특성 표와 용어 짝 표는 매년 2~3문항이 그대로 나온다 — 버리지 말 것. 한국표준산업분류(31회 114번) · 주택법상 세부 주택 정의(35회 83번)는 해마다 소재가 바뀌어 효율이 낮으니 기출 지문만 한 번 읽고 넘긴다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<section id="card" class="sec" aria-labelledby="h-card">
+  <h2 id="h-card">암기카드</h2>
+  <div class="tw"><table>
+    <thead><tr><th>외울 것</th><th>압축</th></tr></thead>
+    <tbody>
+      <tr data-sec="r1"><td>자연적 특성</td><td>부동(지역분석·국지화) · 부증(집약·지가↑) · 영속(수익방식·감가 X) · 개별(개별분석·일물일가 X) · 인접(외부효과)</td></tr>
+      <tr data-sec="r1"><td>인문적 특성</td><td>용도 다양성(최유효이용·이행·전환) · 합병분할 · 위치 가변(규제 = 행정적)</td></tr>
+      <tr data-sec="r1"><td>용어 짝</td><td>후보지(사이)/이행지(안) · 빈지(소유X 실익O)/법지(소유O 실익X) · 획지(가격)/필지(등록) · 제외지(하천 쪽)</td></tr>
+      <tr data-sec="r1"><td>준부동산</td><td>선박 20톤↑ 등기 · 자동차·항공기·건설기계 등록 · 입목 = 토지와 분리 처분 · 농작물 = 경작자 소유</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+/* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
+const MAP=[["개발 · 관리 · 마케팅", "", "10단원", 46, "hi"], ["부동산학 총론 · 토지의 특성 · 용어", "#r1", "1단원", 44, "hi"], ["부동산금융 · 증권화 · 리츠", "", "9단원", 43, "hi"], ["감정평가 3방식 계산", "", "13단원", 38, "hi"], ["중개 · 권리분석 · 경매", "", "11단원", 34, "hi"], ["감정평가 기초 · 감정평가에 관한 규칙", "", "12단원", 32, "hi"], ["부동산정책", "", "5단원", 31, "hi"], ["투자분석 · 화폐의 시간가치", "", "8단원", 31, "hi"], ["수요 · 공급 · 탄력성 · 경기변동", "", "2단원", 27, "mid"], ["부동산투자론", "", "7단원", 22, "mid"], ["부동산조세", "", "6단원", 18, "mid"], ["입지 · 도시공간구조 · 지대이론", "", "4단원", 14, "lo"], ["부동산시장 · 효율적 시장 · 여과과정", "", "3단원", 13, "lo"], ["부동산가격공시제도", "", "14단원", 7, "lo"]];
+$("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
+</script>

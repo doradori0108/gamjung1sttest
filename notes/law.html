@@ -1,0 +1,218 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>감정평가관계법규 개념정리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 회계학 개념정리: 경제학 요약노트와 같은 틀. 결론 → 도식 → 함정 → 기출 */
+:root{
+  --bg:#f2f4f7; --paper:#fbfcfd; --grid:#e4e9f0; --rule:#d5dce6; --ink:#1b2230; --muted:#5a6578;
+  --accent:#1f4f8a; --accent-ink:#ffffff; --demand:#1f4f8a; --supply:#b5562a; --gov:#7a5aa8;
+  --area1:rgba(31,79,138,.16); --area2:rgba(181,86,42,.18); --dwl:rgba(178,58,46,.28);
+  --hi:#b23a2e; --hi-bg:#f8e4e0; --ok:#1f7a4a; --mid:#9a6a12; --mid-bg:#f6ecd6;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}
+:root[data-theme="light"]{color-scheme:only light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+h1{font-size:28px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-size:22px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--muted);font-size:15px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--rule)}
+nav.toc a{flex:none;font-size:13.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;background:var(--paper)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{display:grid;gap:14px;scroll-margin-top:56px}
+.sec{border:1px solid var(--rule);border-radius:12px;padding:22px 20px;display:grid;gap:16px;min-width:0;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.badge{font:500 12.5px var(--f-body);padding:2px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);white-space:nowrap}
+.badge.hi{border-color:var(--hi);color:var(--hi);background:var(--hi-bg)}
+.badge.mid{border-color:var(--mid);color:var(--mid);background:var(--mid-bg)}
+.badge.lo{color:var(--muted)}
+.lec{font:500 12.5px var(--f-mono);color:var(--muted)}
+.key{background:var(--paper);border:1.5px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:16.5px;font-weight:500;line-height:1.6}
+.key small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
+.ask{font-size:14px;color:var(--muted);background:var(--paper)}
+.ask b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.c1 td:first-child{min-width:5.2em}
+.c1 table{min-width:520px}
+td.tn{min-width:9.5em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
+ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.trap b{color:var(--hi)}
+.mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
+.mine span{display:inline-block;font-family:var(--f-mono);font-size:12.5px;padding:0 7px;margin:2px 3px 2px 0;border-radius:6px;border:1px solid var(--hi);color:var(--hi)}
+.steps{margin:0;padding:10px 14px 10px 32px;border-radius:8px;background:var(--bg);font-size:14.5px;display:grid;gap:4px}
+.lab{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px;display:grid;gap:10px}
+.lab h3{font-size:15px}
+.lab .hint{font-size:13px;color:var(--muted)}
+.lab svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+svg text{fill:var(--ink);font-family:var(--f-mono);font-size:11px}
+svg .ax{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .d{stroke:var(--demand);stroke-width:2.6;fill:none}
+svg .s{stroke:var(--supply);stroke-width:2.6;fill:none}
+svg .g{stroke:var(--gov);stroke-width:2.4;fill:none}
+svg .old{stroke-dasharray:5 4;opacity:.55}
+svg .guide{stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 3;fill:none}
+svg .dot{fill:var(--ink)}
+svg .lbl{font-size:12px;font-weight:500}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls button{font:500 13.5px var(--f-body);padding:6px 11px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+.ctrls button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.ctrls button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.slider input{width:100%}
+.slider output{font-family:var(--f-mono);min-width:3.5em;text-align:right}
+.readout{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.readout b{font-family:var(--f-mono);font-weight:500}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mini{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper);display:grid;gap:6px;min-width:0}
+.mini svg{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.mini p{font-size:13.5px}
+.mini h3{font-size:14.5px}
+.foot{font-size:13px;color:var(--muted)}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle}
+a{color:var(--accent)}
+
+.drop{border-left:3px dashed var(--muted);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.drop b{color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.flow span{border:1px solid var(--rule);border-radius:8px;padding:4px 10px;background:var(--paper)}
+.flow small{color:var(--muted)}
+.flow i{font-style:normal;color:var(--muted);background:var(--paper)}
+.tree{display:grid;gap:8px}
+.tree .row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.tree .col{display:grid;gap:6px;align-content:start}
+.node{border:1px solid var(--rule);border-radius:8px;padding:8px 12px;background:var(--paper);font-size:14.5px}
+.node small{display:block;color:var(--muted);font-size:13px}
+.node.root{border:1.5px solid var(--ink);font-weight:500;text-align:center}
+.node.acc{border-color:var(--demand);color:var(--demand);font-weight:500}
+.node.acc2{border-color:var(--supply);color:var(--supply);font-weight:500}
+.je{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+.je th:nth-child(1),.je th:nth-child(2){color:var(--demand)}.je th:nth-child(3),.je th:nth-child(4){color:var(--supply)}
+.readout .je{margin:4px 0}
+svg .f-a{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-l{fill:var(--area2);stroke:var(--supply);stroke-width:1.5}
+svg .f-e{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-inv{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-loss{fill:var(--dwl)}
+svg .f-short{fill:var(--area2)}
+svg .f-bar{fill:var(--accent)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">감정평가사 1차 · 감정평가관계법규 · 도승하 기본강의 · 수강한 단원까지 열림</div>
+  <h1>감정평가관계법규 개념정리</h1>
+  <p class="lede">제28~37회 관계법규 400문항을 14단원으로 나눠 정리합니다. 법률별 문항 수가 매년 고정(국토계획법 13 · 감평법 3 · 공시법 3 · 국유재산 · 건축 · 공간정보 · 등기 · 정비 각 4 · 동산채권 1)이라 배점이 예측 가능한 과목입니다. 국토계획법은 실무로 아는 내용은 생략하고 <b>실무 감각과 시험 답이 달라지는 지점 · 숫자 · 기한</b> 위주로 적었습니다.</p>
+</header>
+
+<section id="map" class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">빈출 지도</h2>
+  <p class="ask">숫자 = 10년간(제28~37회) 출제 문항 수. <b>내 기록</b>은 앱 문제풀이 기록으로 채워집니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>단원</th><th>10년</th><th>비중</th><th>내 기록</th></tr></thead>
+    <tbody id="mapBody"></tbody>
+  </table></div>
+  <p class="foot">상 = 10년 30문항 이상(연 3문항↑), 중 = 15~29문항, 하 = 14문항 이하. 회계·경제(상 = 10문항↑)와 기준이 다른 이유: 이 과목은 단원이 넓어 10문항 기준으로는 거의 모든 단원이 상이 되기 때문. 단원 구분은 표준 기본서 순서라 강사 교재와 다를 수 있습니다.</p>
+</section>
+
+<nav class="toc" aria-label="단원 바로가기">
+  <a href="#l1">국토계획법 ① 계획 체계</a>
+</nav>
+
+<!-- L1. 국토계획법 계획 체계 -->
+<section id="l1" class="sec" aria-labelledby="h-l1">
+  <div class="shead"><h2 id="h-l1">국토계획법 ① 계획 체계</h2><span class="badge mid">비중 중 · 28문항</span><span class="lec">1단원</span></div>
+  <div class="key">광역도시계획 &gt; 도시·군기본계획 &gt; 도시·군관리계획. 국민을 직접 구속하는 것은 관리계획뿐이고, 효력은 지형도면을 고시한 "날부터"(다음날 X).<small>실무로 아는 입안·결정 절차보다 <b>누가 승인하나 · 몇 년마다 · 몇 분의 몇 동의</b>를 묻는다. 매년 1~3번 문제.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 계획별 수립권자·승인권자·재검토 주기 O·X, 관리계획에 해당하지 않는 것, 주민 입안 제안(대상·동의·비용), 결정권자 예외(국토부장관·해수부장관), 2024 신설 공간재구조화계획</p>
+  <h3>세 계획 비교표</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>광역도시계획</th><th>도시·군기본계획</th><th>도시·군관리계획</th></tr></thead>
+    <tbody>
+      <tr><td>성격</td><td>광역계획권 장기 발전방향</td><td>20년 종합계획 · 비구속</td><td><b>구속적</b> · 쟁송 대상</td></tr>
+      <tr><td>수립·입안</td><td>같은 도 안: 시장·군수 <b>공동</b><br>시·도에 걸침: 시·도지사 <b>공동</b><br>3년 내 승인신청 없으면: 도지사 / 장관</td><td>특별·광역·특별자치시장 · 특별자치도지사 · 시장·군수</td><td>시장·군수 등 (국가계획 관련은 장관 직접, 도지사도 가능)</td></tr>
+      <tr><td>승인·결정</td><td>시·도지사 수립 → <b>장관 승인</b><br>시장·군수 수립 → <b>도지사 승인</b></td><td>시장·군수 → <b>도지사 승인</b><br>특별·광역시장 등 → 승인 없이 확정</td><td>원칙 시·도지사 / 장관: 장관 입안 · 개발제한구역 · 국가계획 연계 시가화조정 / 해수부장관: 수산자원보호구역</td></tr>
+      <tr><td>주기</td><td>—</td><td><b>5년마다</b> 타당성 재검토</td><td><b>5년마다</b> 정비</td></tr>
+      <tr><td>주민 참여</td><td>공청회 필수</td><td>공청회 필수</td><td>주민 의견청취(조례) · 주민 입안 제안</td></tr>
+      <tr><td>충돌 시</td><td colspan="2">광역도시계획이 우선(제4조③)</td><td>광역·기본계획에 부합해야</td></tr>
+    </tbody>
+  </table></div>
+  <h3>관리계획 절차 흐름 — 효력 발생일만 기억</h3>
+  <div class="flow"><span>기초조사<small> 토지적성평가·재해취약성분석</small></span><i>→</i><span>입안<small> 주민 의견청취</small></span><i>→</i><span>협의·심의<small> 도시계획위원회</small></span><i>→</i><span>결정·고시</span><i>→</i><span><b>지형도면 고시한 날</b> = 효력 발생</span></div>
+  <p class="foot">기초조사 생략: 입안일부터 5년 이내에 토지적성평가·재해취약성분석을 한 경우 등. 주거·상업·공업지역 등에서는 토지적성평가를 하지 않을 수 있다(35회 3번 ⑤ 옳은 지문).</p>
+  <h3>주민 입안 제안 체크리스트</h3>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>대상</td><td>기반시설 설치·정비·개량 · 지구단위계획 · 산업·유통개발진흥지구 · 용도지구 일부 · 입체복합구역</td></tr>
+      <tr><td>동의</td><td>기반시설 = 대상 토지면적 <b>5분의 4</b> 이상 / 지구단위·진흥지구 등 = <b>3분의 2</b> 이상 (<b>국·공유지 제외</b>)</td></tr>
+      <tr><td>비용</td><td>제안자와 협의하여 <b>전부 또는 일부</b> 부담시킬 수 있다</td></tr>
+      <tr><td>처리</td><td>처리 결과를 제안자에게 알려야 한다(기한은 시행령: 원칙 45일, 1회 연장)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>도시·군관리계획에 해당하는 것 · 아닌 것 (36회 2번)</h3>
+  <div class="grid2">
+    <div class="mini"><h3>해당 O</h3><p>용도지역·지구 · 용도구역(개발제한 · 도시자연공원 · 시가화조정 · 수산자원보호 · 도시혁신 · 복합용도 · 입체복합) · 기반시설 · 도시개발·정비사업 · 지구단위계획 · 도시혁신계획 · 복합용도계획</p></div>
+    <div class="mini"><h3>해당 X</h3><p><b>성장관리계획</b>(별도 계획, L4) · 광역도시계획 · 도시·군기본계획 · 공간재구조화계획(별도 계획)</p></div>
+  </div>
+  <div class="mini"><h3>공간재구조화계획 (2024.8 시행, 36·37회 출제)</h3><p>도시혁신구역 · 복합용도구역(· 입체복합구역)을 지정하려고 용도지역 체계를 다시 짜는 계획. 주민 제안 동의 = 국·공유지 제외 3분의 2. 시·도지사가 결정하되 복합용도구역 입지 타당성 등은 중앙도시계획위원회 심의. 개발제한·시가화조정구역은 대상 아님(37회 2번).</p></div>
+  <div class="trap"><b>실무 감각과 시험 답이 달라지는 지점</b>
+    <span>효력 = "결정고시일" "결정이 있는 때" "다음날" → 모두 X, <b>지형도면을 고시한 날부터</b>(29회 2번 ①, 30회 1번 ①, 31회 1번 ①, 36회 3번 ④).</span>
+    <span>기본계획 재검토 3년·10년 → <b>5년</b>(29회 1번 ③, 31회 2번 ④).</span>
+    <span>기본계획이 광역계획과 다르면 기본계획 우선 → <b>광역 우선</b>(31회 6번 ②, 36회 6번 ①).</span>
+    <span>시장·군수의 광역계획 = 장관 승인 → <b>도지사 승인</b>(36회 1번 ⑤). 도지사 단독 수립 = 장관 승인 → <b>승인 불요</b>(31회 9번 ⑤).</span>
+    <span>협의 안 되면 "공동으로 조정 신청하여야" → <b>공동이나 단독으로 신청할 수 있다</b>(30회 2번 ④, 31회 9번 ③).</span>
+    <span>제안 비용 "전부 부담시킬 수 없다 / 전부 부담하여야" → <b>전부 또는 일부</b>(35회 3번 ④, 31회 6번 ⑤). 동의 면적에 국유지 포함 → <b>제외</b>(36회 4번 ②).</span>
+    <span>개발제한구역 = 시·도지사 결정 → <b>장관 결정</b>(36회 3번 ③).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>비교표의 "승인권자 · 5년 · 광역 우선 · 지형도면 고시한 날" 네 가지가 이 단원 점수의 대부분. 시범도시(29회 12번, 37회 11번)와 광역계획권 지정 세부 절차는 출제 빈도가 낮아 기출 지문만 확인. 2024년 개정(공간재구조화 · 도시혁신구역)으로 28~31회 지문 일부는 현행법과 다를 수 있으니 교재 개정판 기준으로 확인할 것.</span></div>
+  <p class="mine"></p>
+</section>
+
+<section id="card" class="sec" aria-labelledby="h-card">
+  <h2 id="h-card">암기카드</h2>
+  <div class="tw"><table>
+    <thead><tr><th>외울 것</th><th>압축</th></tr></thead>
+    <tbody>
+      <tr data-sec="l1"><td>관리계획 효력</td><td>지형도면을 고시한 날부터 (다음날 X · 결정 시 X)</td></tr>
+      <tr data-sec="l1"><td>주기</td><td>기본계획 5년 재검토 · 관리계획 5년 정비 · 광역 3년 내 승인신청 없으면 도지사/장관 수립</td></tr>
+      <tr data-sec="l1"><td>승인권자</td><td>광역: 시·도지사 수립 → 장관, 시장·군수 → 도지사 · 기본: 시장·군수 → 도지사, 특별·광역시장은 자체 확정</td></tr>
+      <tr data-sec="l1"><td>결정권자 예외</td><td>장관 = 장관 입안·개발제한·국가계획 시가화조정 · 해수부장관 = 수산자원보호구역</td></tr>
+      <tr data-sec="l1"><td>주민 제안</td><td>기반시설 4/5 · 지구단위·진흥지구 2/3 (국공유지 제외) · 비용 전부 또는 일부</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+/* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
+const MAP=[["국토계획법 ③ 용도지역 · 지구 · 구역 · 건폐율 · 용적률", "", "3단원", 41, "hi"], ["국유재산법", "", "9단원", 40, "hi"], ["건축법", "", "10단원", 40, "hi"], ["공간정보법(지적)", "", "11단원", 40, "hi"], ["부동산등기법", "", "12단원", 40, "hi"], ["도시정비법", "", "14단원", 40, "hi"], ["감정평가법", "", "7단원", 30, "hi"], ["부동산가격공시법", "", "8단원", 30, "hi"], ["국토계획법 ① 계획 체계(광역 · 기본 · 관리 · 공간재구조화)", "#l1", "1단원", 28, "mid"], ["국토계획법 ② 기반시설 · 도시·군계획시설", "", "2단원", 24, "mid"], ["국토계획법 ④ 개발행위허가 · 성장관리 · 밀도/부담구역", "", "4단원", 20, "mid"], ["국토계획법 ⑤ 지구단위계획", "", "5단원", 10, "lo"], ["동산·채권담보법", "", "13단원", 10, "lo"], ["국토계획법 ⑥ 위원회 · 보칙 · 벌칙", "", "6단원", 7, "lo"]];
+$("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
+</script>

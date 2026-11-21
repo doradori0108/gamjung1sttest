@@ -1,0 +1,230 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>민법 개념정리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 회계학 개념정리: 경제학 요약노트와 같은 틀. 결론 → 도식 → 함정 → 기출 */
+:root{
+  --bg:#f2f4f7; --paper:#fbfcfd; --grid:#e4e9f0; --rule:#d5dce6; --ink:#1b2230; --muted:#5a6578;
+  --accent:#1f4f8a; --accent-ink:#ffffff; --demand:#1f4f8a; --supply:#b5562a; --gov:#7a5aa8;
+  --area1:rgba(31,79,138,.16); --area2:rgba(181,86,42,.18); --dwl:rgba(178,58,46,.28);
+  --hi:#b23a2e; --hi-bg:#f8e4e0; --ok:#1f7a4a; --mid:#9a6a12; --mid-bg:#f6ecd6;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --paper:#19202a; --grid:#212a36; --rule:#2e3946; --ink:#e4e9f0; --muted:#97a3b5;
+  --accent:#7fb0ea; --accent-ink:#0e1520; --demand:#7fb0ea; --supply:#eb9a6e; --gov:#b79be0;
+  --area1:rgba(127,176,234,.18); --area2:rgba(235,154,110,.2); --dwl:rgba(240,138,124,.32);
+  --hi:#f08a7c; --hi-bg:#3a221e; --ok:#6fd39a; --mid:#e2b45a; --mid-bg:#3a3020; color-scheme:dark}
+:root[data-theme="light"]{color-scheme:only light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+h1{font-size:28px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-size:22px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--muted);font-size:15px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--rule)}
+nav.toc a{flex:none;font-size:13.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;background:var(--paper)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{display:grid;gap:14px;scroll-margin-top:56px}
+.sec{border:1px solid var(--rule);border-radius:12px;padding:22px 20px;display:grid;gap:16px;min-width:0;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.badge{font:500 12.5px var(--f-body);padding:2px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);white-space:nowrap}
+.badge.hi{border-color:var(--hi);color:var(--hi);background:var(--hi-bg)}
+.badge.mid{border-color:var(--mid);color:var(--mid);background:var(--mid-bg)}
+.badge.lo{color:var(--muted)}
+.lec{font:500 12.5px var(--f-mono);color:var(--muted)}
+.key{background:var(--paper);border:1.5px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:16.5px;font-weight:500;line-height:1.6}
+.key small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
+.ask{font-size:14px;color:var(--muted);background:var(--paper)}
+.ask b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.c1 td:first-child{min-width:5.2em}
+.c1 table{min-width:520px}
+td.tn{min-width:9.5em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--ok);font-weight:700} .dn{color:var(--hi);font-weight:700}
+ul.pts{margin:0;padding-left:20px;display:grid;gap:4px;background:var(--paper)}
+.trap{border-left:3px solid var(--hi);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.trap b{color:var(--hi)}
+.mine{font-size:13.5px;color:var(--muted);background:var(--paper)}
+.mine span{display:inline-block;font-family:var(--f-mono);font-size:12.5px;padding:0 7px;margin:2px 3px 2px 0;border-radius:6px;border:1px solid var(--hi);color:var(--hi)}
+.steps{margin:0;padding:10px 14px 10px 32px;border-radius:8px;background:var(--bg);font-size:14.5px;display:grid;gap:4px}
+.lab{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px;display:grid;gap:10px}
+.lab h3{font-size:15px}
+.lab .hint{font-size:13px;color:var(--muted)}
+.lab svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+svg text{fill:var(--ink);font-family:var(--f-mono);font-size:11px}
+svg .ax{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .d{stroke:var(--demand);stroke-width:2.6;fill:none}
+svg .s{stroke:var(--supply);stroke-width:2.6;fill:none}
+svg .g{stroke:var(--gov);stroke-width:2.4;fill:none}
+svg .old{stroke-dasharray:5 4;opacity:.55}
+svg .guide{stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 3;fill:none}
+svg .dot{fill:var(--ink)}
+svg .lbl{font-size:12px;font-weight:500}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls button{font:500 13.5px var(--f-body);padding:6px 11px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+.ctrls button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.ctrls button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.slider input{width:100%}
+.slider output{font-family:var(--f-mono);min-width:3.5em;text-align:right}
+.readout{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.readout b{font-family:var(--f-mono);font-weight:500}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mini{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper);display:grid;gap:6px;min-width:0}
+.mini svg{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.mini p{font-size:13.5px}
+.mini h3{font-size:14.5px}
+.foot{font-size:13px;color:var(--muted)}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle}
+a{color:var(--accent)}
+
+.drop{border-left:3px dashed var(--muted);padding:8px 12px;background:var(--paper);font-size:14.5px;display:grid;gap:4px}
+.drop b{color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.flow span{border:1px solid var(--rule);border-radius:8px;padding:4px 10px;background:var(--paper)}
+.flow small{color:var(--muted)}
+.flow i{font-style:normal;color:var(--muted);background:var(--paper)}
+.tree{display:grid;gap:8px}
+.tree .row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.tree .col{display:grid;gap:6px;align-content:start}
+.node{border:1px solid var(--rule);border-radius:8px;padding:8px 12px;background:var(--paper);font-size:14.5px}
+.node small{display:block;color:var(--muted);font-size:13px}
+.node.root{border:1.5px solid var(--ink);font-weight:500;text-align:center}
+.node.acc{border-color:var(--demand);color:var(--demand);font-weight:500}
+.node.acc2{border-color:var(--supply);color:var(--supply);font-weight:500}
+.je{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+.je th:nth-child(1),.je th:nth-child(2){color:var(--demand)}.je th:nth-child(3),.je th:nth-child(4){color:var(--supply)}
+.readout .je{margin:4px 0}
+svg .f-a{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-l{fill:var(--area2);stroke:var(--supply);stroke-width:1.5}
+svg .f-e{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-inv{fill:var(--area1);stroke:var(--demand);stroke-width:1.5}
+svg .f-loss{fill:var(--dwl)}
+svg .f-short{fill:var(--area2)}
+svg .f-bar{fill:var(--accent)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">감정평가사 1차 · 민법 · 백운정 기본강의 · 수강한 단원까지 열림</div>
+  <h1>민법 개념정리</h1>
+  <p class="lede">제28~37회 민법 400문항(총칙 약 20 · 물권 약 20문항/년)을 18단원으로 나눠 정리합니다. 단원마다 ‘결론 한 줄 → 당사자 관계도·비교표 → 자주 틀리는 지점(기출 회차) → 우선순위’ 순서이고, 조문 번호와 판례 결론을 함께 적었습니다. 아직 수강 전인 단원은 앱의 🗺️ 진도를 올리면 열립니다.</p>
+</header>
+
+<section id="map" class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">빈출 지도</h2>
+  <p class="ask">숫자 = 10년간(제28~37회) 출제 문항 수. <b>내 기록</b>은 앱 문제풀이 기록으로 채워집니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>주제</th><th>단원</th><th>10년</th><th>비중</th><th>내 기록</th></tr></thead>
+    <tbody id="mapBody"></tbody>
+  </table></div>
+  <p class="foot">상 = 10년 30문항 이상(연 3문항↑), 중 = 15~29문항, 하 = 14문항 이하. 회계·경제(상 = 10문항↑)와 기준이 다른 이유: 이 과목은 단원이 넓어 10문항 기준으로는 거의 모든 단원이 상이 되기 때문. 단원 구분은 표준 기본서 순서라 강사 교재와 다를 수 있습니다.</p>
+</section>
+
+<nav class="toc" aria-label="단원 바로가기">
+  <a href="#c1">민법 통칙</a>
+</nav>
+
+<!-- C1. 민법 통칙 -->
+<section id="c1" class="sec" aria-labelledby="h-c1">
+  <div class="shead"><h2 id="h-c1">민법 통칙 · 권리의 종류</h2><span class="badge mid">비중 중 · 19문항</span><span class="lec">1단원</span></div>
+  <div class="key">재판의 기준은 법률 → 관습법 → 조리 순. 관습법은 법률을 "보충"만 하고, 사실인 관습은 법이 아니라 계약 해석 기준이다.<small>민법 제1조(법원) · 제2조(신의성실 · 권리남용) · 제106조(사실인 관습). 매년 1번 문제가 법원(法源), 2번 문제가 신의칙인 경우가 많다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · ① 법원(관습법 vs 사실인 관습) O·X — 10년 중 9회 ② 신의칙·사정변경 판례 O·X — 거의 매년 ③ "다음 중 형성권은?" 같은 권리 분류 — 3년에 1번꼴</p>
+  <h3>재판의 기준 사다리 (제1조)</h3>
+  <div class="flow"><span>법률<small> = 헌법·조약·명령·규칙 등 성문법 전부</small></span><i>→ 규정 없으면 →</i><span>관습법<small> 법적 확신 O</small></span><i>→ 없으면 →</i><span>조리<small> 사물의 이치</small></span></div>
+  <div class="tw"><table>
+    <thead><tr><th>비교</th><th>관습법</th><th>사실인 관습</th></tr></thead>
+    <tbody>
+      <tr><td>성립</td><td>관행 + 사회의 <b>법적 확신</b></td><td>관행만 (법적 확신 X)</td></tr>
+      <tr><td>지위</td><td>법원(法源) O · 법률에 대해 <b>보충적</b></td><td>법원 X · 법률행위 <b>해석기준</b>(제106조)</td></tr>
+      <tr><td>존재 확인</td><td>법원이 <b>직권</b>으로 조사·확정</td><td>당사자가 주장·증명</td></tr>
+      <tr><td>효력 상실</td><td>적용 시점의 전체 법질서에 부합하지 않으면 효력 부정</td><td>—</td></tr>
+      <tr><td>대표 예</td><td>분묘기지권 · 관습상 법정지상권 · 명인방법</td><td>지역 거래 관행</td></tr>
+    </tbody>
+  </table></div>
+  <h3>신의칙 관계도 — "법을 어긴 사람의 무효 주장은 반칙인가?"</h3>
+  <svg viewBox="0 0 340 150" role="img" aria-label="강행규정 위반 계약의 무효 주장 관계도" style="width:100%;max-width:520px">
+    <rect x="8" y="40" width="110" height="46" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="63" y="60" text-anchor="middle" font-size="12" fill="currentColor">甲 (매도인)</text><text x="63" y="77" text-anchor="middle" font-size="10.5" fill="var(--muted)">허가 없이 계약</text>
+    <rect x="222" y="40" width="110" height="46" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="277" y="60" text-anchor="middle" font-size="12" fill="currentColor">乙 (매수인)</text><text x="277" y="77" text-anchor="middle" font-size="10.5" fill="var(--muted)">이행 청구</text>
+    <line x1="118" y1="63" x2="222" y2="63" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="170" y="56" text-anchor="middle" font-size="10.5" fill="var(--muted)">토지거래허가구역 매매</text>
+    <text x="170" y="112" text-anchor="middle" font-size="12" fill="currentColor">甲 "허가 없으니 무효다" → 신의칙 위반 X</text>
+    <text x="170" y="132" text-anchor="middle" font-size="10.5" fill="var(--muted)">막으면 강행규정을 둔 취지가 무너진다 (35회 2번 ⑤ · 36회 1번 ③)</text>
+  </svg>
+  <div class="tw"><table>
+    <thead><tr><th>신의칙 판례 결론</th><th>O / X</th></tr></thead>
+    <tbody>
+      <tr><td>신의칙 위반 여부는 당사자 주장 없어도 법원이 <b>직권</b> 판단</td><td>O</td></tr>
+      <tr><td>강행규정 위반자·무허가 계약자의 무효 주장 = 신의칙 위반</td><td>X (원칙적으로 허용)</td></tr>
+      <tr><td>사정변경으로 해제 가능 — 단 <b>계약 기초가 된 객관적</b> 사정, 주관적 사정 X</td><td>O</td></tr>
+      <tr><td>소멸시효 항변도 신의칙의 지배를 받는다</td><td>O</td></tr>
+      <tr><td>국가의 시효 주장은 원칙적으로 신의칙 위반</td><td>X (특별한 사정 있을 때만)</td></tr>
+      <tr><td>숙박업자 · 기획여행업자 · 병원(휴대품 도난)의 보호의무</td><td>O</td></tr>
+      <tr><td>과다한 변호사 보수 약정 → 적당한 범위만 청구</td><td>O</td></tr>
+      <tr><td>권리남용금지는 법인격 남용에도 적용</td><td>O</td></tr>
+    </tbody>
+  </table></div>
+  <h3>권리의 종류 — 작용에 따른 분류</h3>
+  <div class="tree">
+    <div class="node root">권리의 작용</div>
+    <div class="row2">
+      <div class="col"><div class="node acc">지배권 · 청구권</div>
+        <div class="node">지배권<small>물권 · 지식재산권 · 인격권 — 직접 지배</small></div>
+        <div class="node">청구권<small>채권 · 물권적 청구권 — 청구권 ≠ 채권</small></div></div>
+      <div class="col"><div class="node acc2">형성권 · 항변권</div>
+        <div class="node">형성권<small>취소 · 추인 · 해제 · 상계 · 지료증감청구권 · 지상물/부속물 매수청구권 · 공유물분할청구권</small></div>
+        <div class="node">항변권<small>연기적: 동시이행 · 보증인 최고·검색 / 영구적: 한정승인</small></div></div>
+    </div>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>관습법이 지금 법질서와 안 맞아도 효력 유지 → <b>효력 부정</b>(28회 1번 ①, 37회 1번 ⑤).</span>
+    <span>관습법과 제정법이 충돌하면 관습법 우선 → <b>제정법 우선</b>(35회 1번 ④). "법률은 관습법에 대해 보충적"처럼 거꾸로 쓴 지문도(37회 1번 ①).</span>
+    <span>사실인 관습은 법원이다 → <b>해석기준일 뿐</b>(37회 1번 ④).</span>
+    <span>제1조의 "법률"은 국회 제정 법률만 → <b>성문법 전부</b>(30회 1번 ①). 민사 관련 헌재 결정·대통령 긴급명령도 법원(35회 1번 ①, 37회 1번 ②).</span>
+    <span>이름이 "청구권"이면 청구권 → 지상물매수청구권·지료증감청구권은 <b>형성권</b>(37회 10번, 30회 2번 ③).</span>
+    <span>형성권은 일부 행사·조건 부가 가능 → <b>원칙적으로 불가</b>, 제척기간 적용(31회 16번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>법원 + 신의칙 두 표만 확실히 하면 매년 2문항을 가져간다. 권리 분류는 "형성권 목록" 한 줄만. 국제조약·기본권 효력 같은 헌법 쟁점은 결론("간접 적용")만 외우고 이론은 버려도 된다.</span></div>
+  <p class="mine"></p>
+</section>
+
+<section id="card" class="sec" aria-labelledby="h-card">
+  <h2 id="h-card">암기카드</h2>
+  <div class="tw"><table>
+    <thead><tr><th>외울 것</th><th>압축</th></tr></thead>
+    <tbody>
+      <tr data-sec="c1"><td>민법 제1조 순서</td><td>법률(성문법 전부) → 관습법(보충적) → 조리 · 사실인 관습 = 해석기준(제106조)</td></tr>
+      <tr data-sec="c1"><td>관습법</td><td>법적 확신 필요 · 법원이 직권 확정 · 전체 법질서에 안 맞으면 효력 부정 · 제정법과 충돌하면 제정법</td></tr>
+      <tr data-sec="c1"><td>신의칙</td><td>직권 판단 · 강행규정 위반자 무효 주장 허용 · 사정변경은 객관적 사정만 · 국가 시효 주장 원칙 허용</td></tr>
+      <tr data-sec="c1"><td>형성권</td><td>취소·추인·해제·상계 + 이름만 청구권(지료증감·지상물매수·부속물매수·공유물분할) · 조건 X · 일부 행사 X · 제척기간</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+/* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
+const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
+$("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
+</script>

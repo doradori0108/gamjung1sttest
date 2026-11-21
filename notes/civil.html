@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a><a href="#c2b">법인</a><a href="#c3">물건</a>
+  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a><a href="#c2b">법인</a><a href="#c3">물건</a><a href="#c4">법률행위 일반</a>
 </nav>
 
 <!-- C1. 민법 통칙 -->
@@ -353,6 +353,52 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- C4. 법률행위 일반 -->
+<section id="c4" class="sec" aria-labelledby="h-c4">
+  <div class="shead"><h2 id="h-c4">법률행위 일반 · 반사회 · 불공정</h2><span class="badge mid">비중 중 · 16문항</span><span class="lec">5단원</span></div>
+  <div class="key">무효 중에서도 가장 센 무효. 제103조(반사회질서)·제104조(불공정)는 <b>절대적 무효</b> — 추인 X, 선의의 제3자에게도 무효.<small>제104조는 제103조의 한 예. 매년 8~9번 문제에 1문항, 이중매매(배임 적극가담) 사례가 2~3년마다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 반사회질서인 것/아닌 것 고르기 · 불공정한 법률행위 요건·효과 O·X · 이중매매 사례(ㄱㄴㄷ) · 강행규정 위반으로 무효인 것 고르기</p>
+  <h3>이중매매 관계도 (36회 12번)</h3>
+  <svg viewBox="0 0 340 200" role="img" aria-label="이중매매 당사자 관계도" style="width:100%;max-width:520px">
+    <rect x="120" y="8" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="170" y="26" text-anchor="middle" font-size="12" fill="currentColor">甲 매도인</text><text x="170" y="41" text-anchor="middle" font-size="10" fill="var(--muted)">X토지 소유</text>
+    <rect x="8" y="92" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="58" y="110" text-anchor="middle" font-size="12" fill="currentColor">乙 제1매수인</text><text x="58" y="125" text-anchor="middle" font-size="10" fill="var(--muted)">대금 완납, 미등기</text>
+    <rect x="232" y="92" width="100" height="40" rx="8" fill="var(--paper)" stroke="var(--hi)"/><text x="282" y="110" text-anchor="middle" font-size="12" fill="currentColor">丙 제2매수인</text><text x="282" y="125" text-anchor="middle" font-size="10" fill="var(--muted)">배임 적극가담 · 등기</text>
+    <rect x="232" y="156" width="100" height="36" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="282" y="178" text-anchor="middle" font-size="11" fill="currentColor">丁 전득자(선의)</text>
+    <line x1="140" y1="48" x2="70" y2="92" stroke="var(--muted)"/><text x="88" y="66" font-size="10" fill="var(--muted)">제1계약</text>
+    <line x1="200" y1="48" x2="270" y2="92" stroke="var(--hi)" stroke-dasharray="4 3"/><text x="238" y="66" font-size="10" fill="var(--hi)">제2계약 = 절대 무효</text>
+    <line x1="282" y1="132" x2="282" y2="156" stroke="var(--muted)"/>
+    <text x="10" y="170" font-size="10" fill="currentColor">丙 등기 = 원인무효</text><text x="10" y="186" font-size="10" fill="currentColor">丁도 보호 X · 누구나 무효 주장</text>
+  </svg>
+  <p class="foot">乙은 甲을 대위하여 丙에게 말소를 청구할 수 있다(乙이 직접 丙에게 청구하는 것 X). 丙이 단순히 이중매매 사실만 알았던 경우(악의)는 유효 — "적극가담"이어야 무효.</p>
+  <h3>제103조 vs 제104조</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>반사회질서(제103조)</th><th>불공정(제104조)</th></tr></thead>
+    <tbody>
+      <tr><td>요건</td><td>내용·조건·동기(표시된 경우)가 사회질서 위반</td><td>현저한 불균형 + 피해자 궁박·경솔·무경험(<b>하나면 충분</b>) + 이용 의사</td></tr>
+      <tr><td>판단 시점</td><td colspan="2">법률행위 <b>당시</b></td></tr>
+      <tr><td>효과</td><td colspan="2">절대적 무효 · 추인 X · 법정추인 X · 선의의 제3자에게도 무효 · 이미 준 것은 불법원인급여(제746조)</td></tr>
+      <tr><td>대리</td><td>—</td><td>경솔·무경험 = <b>대리인</b> 기준 / 궁박 = <b>본인</b> 기준</td></tr>
+      <tr><td>적용 X</td><td>—</td><td><b>경매</b> · 증여 등 무상행위</td></tr>
+      <tr><td>전환</td><td>—</td><td>무효행위의 전환(제138조) <b>가능</b> — 적정 대금의 매매로</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tw"><table>
+    <thead><tr><th>반사회질서로 무효 O</th><th>무효 X(유효)</th></tr></thead>
+    <tbody>
+      <tr><td>배임 적극가담 이중매매 · 형사사건 성공보수 · 어떤 일이 있어도 이혼 안 한다는 약정 · 과도한 위약벌(초과 부분) · 부첩관계 관련 증여 · 보험금 편취 목적 보험계약 · 공무원 부정청탁 대가 · 증언 대가(통상 수준 초과)</td><td>민사사건 성공보수 · 단순 악의의 이중매매 · 양도세 회피 목적 다운계약(매매 자체는 유효) · 강제집행 면탈 목적 허위 근저당(→ 통정허위표시로 무효)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>불공정 계약이 무효여도 부제소합의는 유효 → <b>함께 무효</b>(28회 9번 ④).</span>
+    <span>경솔·무경험 = 본인 기준 → <b>대리인</b>(37회 9번 ④). 궁박은 본인.</span>
+    <span>추인·법정추인으로 유효 → <b>불가</b>(35회 9번 ④, 31회 9번 ②, 37회 9번 ⑤). 선의 제3자에게 대항 X → <b>대항 O</b>(37회 9번 ③).</span>
+    <span>무효행위 전환 불가 → <b>가능</b>(29회 8번 ⑤, 31회 9번 ①). 경매에도 적용 → <b>X</b>(37회 9번 ①).</span>
+    <span>민사사건 성공보수도 반사회 → <b>유효</b>(30회 10번 ③). 선의 전득자 丁은 보호 → <b>X</b>(36회 12번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>두 표 + 이중매매 관계도. 법률행위 해석(자연적·규범적·보충적 해석)과 법률행위의 분류(단독·계약·합동행위 등)는 기출 지문 수준에서만 보고, 이론 정리는 버려도 된다. 강행규정 중 효력규정 vs 단속규정은 "중간생략등기 금지·중개수수료 초과" 정도의 대표 예만.</span></div>
+  <p class="mine"></p>
+</section>
+
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
   <div class="tw"><table>
@@ -371,6 +417,9 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="c2b"><td>비법인사단</td><td>제60조만 유추 X · 총유 · 총회 결의 없는 관리·처분 무효 · 보증은 처분 X · 등기능력 O</td></tr>
       <tr data-sec="c3"><td>종물</td><td>주물 자체의 상용 · 독립물(부동산 O) · 같은 소유자 · 특약 배제 O · 권리·공법상 처분에도 적용</td></tr>
       <tr data-sec="c3"><td>과실</td><td>천연 = 분리 시 수취권자(특약 O) · 법정 = 일수 비율 · 입장료·임금 X</td></tr>
+      <tr data-sec="c4"><td>제103·104조 효과</td><td>절대적 무효 · 추인 X · 법정추인 X · 선의 제3자에게도 무효 · 판단 = 행위 당시</td></tr>
+      <tr data-sec="c4"><td>불공정 세부</td><td>궁박·경솔·무경험 중 하나 · 경솔·무경험 = 대리인, 궁박 = 본인 · 경매·무상행위 X · 전환 O</td></tr>
+      <tr data-sec="c4"><td>이중매매</td><td>배임 적극가담 = 무효(전득자도 보호 X) · 단순 악의 = 유효 · 형사 성공보수 무효 / 민사 유효</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -379,6 +428,6 @@ svg .f-bar{fill:var(--accent)}
 <script>
 const $=s=>document.querySelector(s);
 /* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
-const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "#c2b", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "#c3", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
+const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "#c2b", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "#c4", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "#c3", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 </script>

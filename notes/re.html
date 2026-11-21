@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#r1">부동산학 총론</a>
+  <a href="#r1">부동산학 총론</a><a href="#r2">수요</a>
 </nav>
 
 <!-- R1. 부동산학 총론 -->
@@ -211,6 +211,68 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- R2. 수요·공급 -->
+<section id="r2" class="sec" aria-labelledby="h-r2">
+  <div class="shead"><h2 id="h-r2">수요 · 공급 · 탄력성 · 경기변동</h2><span class="badge mid">비중 중 · 27문항</span><span class="lec">2단원</span></div>
+  <div class="key">경제학 미시 첫 단원과 같은 그림이다. "곡선 위 이동 vs 곡선 이동", "누가 더 많이 움직였나", "가파른 쪽이 가격을 흔든다" 세 가지면 대부분 풀린다.<small>부동산만의 추가 재료: 유효수요 · 단기 공급 비탄력 · 디파스퀠리-위튼 사분면 · 거미집 · 경기 국면별 중개활동. 함수 계산(균형·탄력성)이 매년 1문항.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 균형 변화 O·X(동시 변화 포함) · 함수로 균형가격·탄력성·초과수요 계산 · 사분면 모형 O·X(3년 연속) · 거미집 수렴/발산 판정 · 유량/저량 구분</p>
+  <h3>그림 하나로 — 수요 증가 시 공급이 가파를수록</h3>
+  <svg viewBox="0 0 340 230" role="img" aria-label="수요 증가 시 가파른 공급곡선에서 가격 상승폭이 큼" style="width:100%;max-width:460px">
+    <line x1="40" y1="200" x2="330" y2="200" stroke="var(--muted)"/><line x1="40" y1="200" x2="40" y2="12" stroke="var(--muted)"/>
+    <text x="10" y="20" font-size="11" fill="var(--muted)">가격</text><text x="300" y="218" font-size="11" fill="var(--muted)">수량</text>
+    <line x1="60" y1="40" x2="250" y2="190" stroke="var(--demand)" stroke-width="2"/><text x="236" y="182" font-size="11" fill="var(--demand)">D</text>
+    <line x1="110" y1="40" x2="300" y2="190" stroke="var(--demand)" stroke-width="2" stroke-dasharray="5 3"/><text x="286" y="182" font-size="11" fill="var(--demand)">D′</text>
+    <line x1="140" y1="195" x2="190" y2="25" stroke="var(--supply)" stroke-width="2"/><text x="192" y="24" font-size="11" fill="var(--supply)">S(비탄력)</text>
+    <circle cx="161" cy="120" r="3.5" fill="currentColor"/><circle cx="178" cy="62" r="3.5" fill="currentColor"/>
+    <text x="196" y="66" font-size="11" fill="currentColor">가격 크게 ↑ · 수량 조금 ↑</text>
+  </svg>
+  <div class="tw"><table>
+    <thead><tr><th>상황</th><th>가격</th><th>거래량</th></tr></thead>
+    <tbody>
+      <tr><td>수요 증가(인구·소득↑, 금리↓)</td><td>↑</td><td>↑</td></tr>
+      <tr><td>공급 증가(건축비·원자재↓, 기술 개발)</td><td>↓</td><td>↑</td></tr>
+      <tr><td>둘 다 증가 · 수요 증가폭이 더 큼</td><td>↑</td><td>↑</td></tr>
+      <tr><td>둘 다 증가 · 공급 증가폭이 더 큼</td><td>↓</td><td>↑</td></tr>
+      <tr><td>둘 다 감소 · 공급 감소폭이 더 큼</td><td>↑</td><td>↓</td></tr>
+      <tr><td>공급 완전탄력(수평) + 수요 증가</td><td>불변</td><td>↑</td></tr>
+      <tr><td>공급 완전비탄력(수직) + 수요 증가</td><td>↑</td><td>불변</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">요령: 같은 방향 동시 변화면 거래량은 확정, 가격은 "더 크게 움직인 쪽"이 정한다. 경제 개념정리의 수요·공급 단원과 같은 내용이다.</p>
+  <h3>계산 예시 — 임대료 규제 초과수요 (30회 108번)</h3>
+  <ol class="steps">
+    <li>수요 Q<sub>d</sub> = 100 − P/2, 공급 Q<sub>s</sub> = 20 + P/3 (단위: 천 호, 만 원)</li>
+    <li>균형: 100 − P/2 = 20 + P/3 → 80 = 5P/6 → <b>P = 96</b>, Q = 52</li>
+    <li>규제 임대료 = 96 − 36 = 60 → Q<sub>d</sub> = 70, Q<sub>s</sub> = 40</li>
+    <li>초과수요 = 70 − 40 = <b>30천 호</b> (정답 ①)</li>
+  </ol>
+  <h3>디파스퀠리-위튼 사분면 — 시계 방향으로 돈다</h3>
+  <div class="flow"><span>1사분면 공간시장<small> 재고 + 수요 → 임대료</small></span><i>→</i><span>2사분면 자산시장<small> 임대료 ÷ 자본환원율 → 가격</small></span><i>→</i><span>3사분면 개발시장<small> 가격 vs 건설비 → 신규건설량</small></span><i>→</i><span>4사분면 재고조정<small> 신규건설 = 멸실 → 장기균형 재고</small></span></div>
+  <p class="foot">내생변수 4개 = 임대료 · 자산가격 · 신규건설량 · 공간재고(신규건설비용은 외생). 건설비↓ → 신규건설↑ → 재고↑ → 임대료↓ → 가격↓(35회 85번, 37회 92번 ⑤).</p>
+  <div class="grid2">
+    <div class="mini"><h3>거미집 판정</h3><p>탄력성 기준: 수요 &gt; 공급 → 수렴 · 수요 &lt; 공급 → 발산 · 같으면 순환.</p><p>기울기 기준(절댓값): 수요 &lt; 공급 → 수렴 · 수요 &gt; 공급 → 발산. <b>기준이 반대</b>라는 점이 함정.</p></div>
+    <div class="mini"><h3>유량 vs 저량</h3><p>유량(기간): 소득 · 소비 · 투자 · 수출 · 임대료 수입 · 신규 공급량.</p><p>저량(시점): 재산 · 자산 · 부채 · 주택재고 · 인구.</p></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>경기 국면</th><th>종전 거래가</th><th>시장 주도</th></tr></thead>
+    <tbody>
+      <tr><td>상향(회복 포함)</td><td><b>하한선</b></td><td>매도자(거래를 미룸)</td></tr>
+      <tr><td>하향(후퇴 포함)</td><td><b>상한선</b></td><td>매수자</td></tr>
+      <tr><td>안정</td><td>신뢰할 수 있는 기준</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>소득 변화로 곡선 이동 = "수요량의 변화" → <b>수요의 변화</b>(28회 110번 ③).</span>
+    <span>건축비 하락 = 공급곡선 왼쪽 → <b>오른쪽</b>(28회 110번 ②).</span>
+    <span>공급 탄력성이 작으면 가격 변동폭이 작다 → <b>크다</b>(35회 102번 ⑤).</span>
+    <span>수요·공급 동시 감소, 공급이 더 많이 줄면 가격 하락 → <b>상승</b>(36회 87번 ④).</span>
+    <span>사분면: 장기균형 = 신규건설량과 "최초 재고" 일치 → <b>멸실량</b>과 일치(37회 92번 ④, 31회 93번 ④). 소득 증가 → 임대료 단기 하락 → <b>상승</b>(37회 92번 ②).</span>
+    <span>재산 = 유량 → <b>저량</b>(35회 103번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>동시 변화 표와 함수 계산(연립방정식 하나)은 매년 나오니 반드시. 탄력성 계산은 경제학에서 이미 연습한 공식 그대로. 경기변동 세부 국면(회복·후퇴의 미세 차이)은 표의 상한선/하한선만 외우고 나머지는 버려도 된다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
   <div class="tw"><table>
@@ -220,6 +282,10 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="r1"><td>인문적 특성</td><td>용도 다양성(최유효이용·이행·전환) · 합병분할 · 위치 가변(규제 = 행정적)</td></tr>
       <tr data-sec="r1"><td>용어 짝</td><td>후보지(사이)/이행지(안) · 빈지(소유X 실익O)/법지(소유O 실익X) · 획지(가격)/필지(등록) · 제외지(하천 쪽)</td></tr>
       <tr data-sec="r1"><td>준부동산</td><td>선박 20톤↑ 등기 · 자동차·항공기·건설기계 등록 · 입목 = 토지와 분리 처분 · 농작물 = 경작자 소유</td></tr>
+      <tr data-sec="r2"><td>동시 변화</td><td>같은 방향이면 거래량 확정 · 가격은 더 크게 움직인 쪽 · 가파른(비탄력) 쪽이 가격을 흔든다</td></tr>
+      <tr data-sec="r2"><td>사분면</td><td>임대료 → 가격 → 신규건설 → 재고 · 장기균형 = 신규건설 = 멸실 · 건설비↓ → 재고↑ 임대료↓ 가격↓</td></tr>
+      <tr data-sec="r2"><td>거미집</td><td>탄력성: 수요 &gt; 공급 수렴 · 기울기: |수요| &lt; |공급| 수렴 (기준 반대)</td></tr>
+      <tr data-sec="r2"><td>경기</td><td>상향 = 종전 거래가 하한선·매도자 우위 / 하향 = 상한선·매수자 우위 · 재산·재고 = 저량</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -228,6 +294,6 @@ svg .f-bar{fill:var(--accent)}
 <script>
 const $=s=>document.querySelector(s);
 /* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
-const MAP=[["개발 · 관리 · 마케팅", "", "10단원", 46, "hi"], ["부동산학 총론 · 토지의 특성 · 용어", "#r1", "1단원", 44, "hi"], ["부동산금융 · 증권화 · 리츠", "", "9단원", 43, "hi"], ["감정평가 3방식 계산", "", "13단원", 38, "hi"], ["중개 · 권리분석 · 경매", "", "11단원", 34, "hi"], ["감정평가 기초 · 감정평가에 관한 규칙", "", "12단원", 32, "hi"], ["부동산정책", "", "5단원", 31, "hi"], ["투자분석 · 화폐의 시간가치", "", "8단원", 31, "hi"], ["수요 · 공급 · 탄력성 · 경기변동", "", "2단원", 27, "mid"], ["부동산투자론", "", "7단원", 22, "mid"], ["부동산조세", "", "6단원", 18, "mid"], ["입지 · 도시공간구조 · 지대이론", "", "4단원", 14, "lo"], ["부동산시장 · 효율적 시장 · 여과과정", "", "3단원", 13, "lo"], ["부동산가격공시제도", "", "14단원", 7, "lo"]];
+const MAP=[["개발 · 관리 · 마케팅", "", "10단원", 46, "hi"], ["부동산학 총론 · 토지의 특성 · 용어", "#r1", "1단원", 44, "hi"], ["부동산금융 · 증권화 · 리츠", "", "9단원", 43, "hi"], ["감정평가 3방식 계산", "", "13단원", 38, "hi"], ["중개 · 권리분석 · 경매", "", "11단원", 34, "hi"], ["감정평가 기초 · 감정평가에 관한 규칙", "", "12단원", 32, "hi"], ["부동산정책", "", "5단원", 31, "hi"], ["투자분석 · 화폐의 시간가치", "", "8단원", 31, "hi"], ["수요 · 공급 · 탄력성 · 경기변동", "#r2", "2단원", 27, "mid"], ["부동산투자론", "", "7단원", 22, "mid"], ["부동산조세", "", "6단원", 18, "mid"], ["입지 · 도시공간구조 · 지대이론", "", "4단원", 14, "lo"], ["부동산시장 · 효율적 시장 · 여과과정", "", "3단원", 13, "lo"], ["부동산가격공시제도", "", "14단원", 7, "lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 </script>

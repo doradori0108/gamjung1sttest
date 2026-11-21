@@ -143,7 +143,7 @@ svg .f-bar{fill:var(--accent)}
 </section>
 
 <nav class="toc" aria-label="단원 바로가기">
-  <a href="#c1">민법 통칙</a>
+  <a href="#c1">민법 통칙</a><a href="#c2a">자연인</a>
 </nav>
 
 <!-- C1. 민법 통칙 -->
@@ -208,6 +208,60 @@ svg .f-bar{fill:var(--accent)}
   <p class="mine"></p>
 </section>
 
+<!-- C2a. 자연인 -->
+<section id="c2a" class="sec" aria-labelledby="h-c2a">
+  <div class="shead"><h2 id="h-c2a">자연인 · 제한능력 · 부재와 실종</h2><span class="badge mid">비중 중 · 26문항</span><span class="lec">2단원</span></div>
+  <div class="key">사람의 "능력" 세 겹: 권리능력(권리를 가질 자격) ⊃ 의사능력(판단할 정신 능력) ⊃ 행위능력(혼자 유효한 계약을 할 자격).<small>의사능력이 없으면 <b>무효</b>, 행위능력이 없으면(제한능력자) <b>취소</b>. 매년 2~4번 문제에 제한능력 1문항 + 부재·실종 1문항이 거의 고정.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · ① "미성년자가 단독으로 유효하게 할 수 없는 것은?" ② 상대방 보호(확답촉구·철회·거절·속임수) O·X ③ 부재자 재산관리인의 허가 요부 ④ 실종선고 효과·취소·청구권자 ⑤ 태아·동시사망의 "본다 / 추정한다"</p>
+  <h3>당사자 관계도 — 미성년자와 계약한 상대방의 무기 4가지</h3>
+  <svg viewBox="0 0 340 190" role="img" aria-label="제한능력자, 법정대리인, 상대방 관계도" style="width:100%;max-width:520px">
+    <rect x="8" y="20" width="104" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="60" y="39" text-anchor="middle" font-size="12" fill="currentColor">甲 미성년자</text><text x="60" y="55" text-anchor="middle" font-size="10" fill="var(--muted)">취소권 있음</text>
+    <rect x="8" y="118" width="104" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="60" y="137" text-anchor="middle" font-size="12" fill="currentColor">乙 법정대리인</text><text x="60" y="153" text-anchor="middle" font-size="10" fill="var(--muted)">취소·추인</text>
+    <rect x="228" y="68" width="104" height="44" rx="8" fill="var(--paper)" stroke="var(--rule)"/><text x="280" y="87" text-anchor="middle" font-size="12" fill="currentColor">丙 상대방</text><text x="280" y="103" text-anchor="middle" font-size="10" fill="var(--muted)">불안한 지위</text>
+    <line x1="112" y1="42" x2="228" y2="84" stroke="var(--muted)"/><line x1="112" y1="140" x2="228" y2="98" stroke="var(--muted)"/><line x1="60" y1="64" x2="60" y2="118" stroke="var(--muted)" stroke-dasharray="4 3"/>
+    <text x="228" y="40" text-anchor="middle" font-size="10" fill="currentColor">철회·거절: 甲에게도 가능</text>
+    <text x="226" y="160" text-anchor="middle" font-size="10" fill="currentColor">확답촉구: 乙에게 (甲은 능력자 된 후)</text>
+    <text x="226" y="180" text-anchor="middle" font-size="10" fill="var(--muted)">1개월 이상 기간을 정해 촉구(제15조)</text>
+  </svg>
+  <div class="tw c1"><table>
+    <thead><tr><th>상대방의 무기</th><th>누가 · 언제</th><th>대상</th><th>함정</th></tr></thead>
+    <tbody>
+      <tr><td>확답촉구(제15조)</td><td>선의·악의 불문</td><td>법정대리인 / 능력자가 된 본인</td><td>제한능력 상태 본인에게 X(28회 3번 ㄷ)</td></tr>
+      <tr><td>철회(제16조①)</td><td><b>선의</b>(제한능력자인 줄 몰랐던) 상대방만</td><td>계약</td><td>알았으면 철회 X(29회 3번 ㄷ)</td></tr>
+      <tr><td>거절(제16조②)</td><td>선의·악의 불문</td><td>단독행위</td><td>계약에 "거절" X(28회 3번 ㄹ)</td></tr>
+      <tr><td colspan="4">철회·거절은 제한능력자 본인에게도 할 수 있다(제16조③, 36회 3번 ④). 추인이 있으면 철회·거절 불가.</td></tr>
+      <tr><td>속임수(제17조)</td><td colspan="3">능력자로 믿게 함 → 취소 X(모든 제한능력자) / 법정대리인 동의가 있는 것처럼 믿게 함 → 취소 X(<b>미성년자·피한정후견인만</b>, 피성년후견인은 동의서를 위조해도 취소 가능, 29회 3번 ㄱ)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>제한능력자 4종 비교</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th></th><th>미성년자</th><th>피성년후견인</th><th>피한정후견인</th><th>피특정후견인</th></tr></thead>
+    <tbody>
+      <tr><td>요건</td><td>19세 미만</td><td>사무처리 능력 지속적 결여</td><td>사무처리 능력 부족</td><td>일시적 · 특정 사무 후원 필요</td></tr>
+      <tr><td>본인 의사</td><td>—</td><td>고려</td><td>고려</td><td><b>반하여 할 수 없음</b></td></tr>
+      <tr><td>원칙</td><td>동의 없으면 취소</td><td>동의 있어도 취소</td><td>동의 유보 범위만 취소</td><td>행위능력 제한 X</td></tr>
+      <tr><td>예외(취소 X)</td><td>권리만 얻는·의무만 면하는 행위 · 처분 허락 재산 · 허락된 영업 · 대리행위 · 17세 이상 유언</td><td>법원이 정한 범위 · 일상생활 행위</td><td>일상생활 행위</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <h3>부재 → 실종 흐름</h3>
+  <div class="flow"><span>부재<small> 돌아올 가망 X</small></span><i>→ 재산관리 →</i><span>관리인 있음<small> 처분권 위임 → 허가 X</small></span><i>/</i><span>법원 선임<small> 처분 = 허가 필요(사후 추인 방식도 O)</small></span></div>
+  <div class="flow"><span>생사불명</span><i>→</i><span>실종기간<small> 보통 5년 · 특별(전쟁·선박·항공기·위난) 1년</small></span><i>→ 청구 →</i><span>실종선고</span><i>→</i><span><b>기간 만료 시 사망 간주</b></span><i>→ 생환해도 →</i><span>취소 심판 필요<small> 선의 = 현존이익 / 악의 = 이익+이자+손해</small></span></div>
+  <div class="steps">
+    <span><b>숫자 예시(30회 6번 변형)</b> · 2015.7.1. 선박 침몰 실종 → 특별실종 1년 → 2016.7.1. 기간 만료.</span>
+    <span>2017.10.1. 실종선고 → 사망 간주 시점은 선고일이 아니라 <b>2016.7.1.</b>(만료일). 아버지가 2016.9.1.에 사망했다면 甲은 그보다 먼저 "사망"했으므로 상속인 X.</span>
+  </div>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>"본다 / 추정한다" 바꿔치기: 동시사망 = <b>추정</b>(제30조), 태아 손해배상 = <b>본다</b>(제762조), 실종선고 = <b>본다</b>, 인정사망 = 추정력(28회 2번 ①②, 30회 5번 ③⑤).</span>
+    <span>태아는 법정대리인이 수증 가능 / 일반적 보호주의 → 판례는 정지조건설이라 <b>불가</b>, 민법은 <b>개별적</b> 보호주의(28회 2번 ③, 31회 2번 ③④).</span>
+    <span>부담부 증여 · 유언(17세 미만)은 미성년자 단독 불가, 타인의 대리행위는 가능(30회 4번, 29회 2번).</span>
+    <span>본인 의사에 반해 못 하는 것은 성년후견이 아니라 <b>특정후견</b>(36회 2번 ⑤, 37회 3번 ④).</span>
+    <span>1순위 상속인이 있으면 2순위는 실종선고 청구 X(36회 5번 ②, 30회 6번 ③). 생환해도 <b>취소 심판</b> 없이는 상속 부정 X(29회 1번 ④, 30회 6번 ④).</span>
+    <span>부재자가 처분권까지 위임한 관리인 = 허가 X(31회 4번 ①, 36회 4번 ①). 법원 허가는 기왕의 처분 추인으로도 O(37회 2번 ③).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>상대방 무기 표 · 4종 비교표 · "본다/추정" 세 줄이 핵심. 후견인의 세부 권한(후견감독인·이해상반행위 절차)은 친족법 영역이라 1차에선 기출 지문만 보고 넘겨도 된다.</span></div>
+  <p class="mine"></p>
+</section>
+
 <section id="card" class="sec" aria-labelledby="h-card">
   <h2 id="h-card">암기카드</h2>
   <div class="tw"><table>
@@ -217,6 +271,10 @@ svg .f-bar{fill:var(--accent)}
       <tr data-sec="c1"><td>관습법</td><td>법적 확신 필요 · 법원이 직권 확정 · 전체 법질서에 안 맞으면 효력 부정 · 제정법과 충돌하면 제정법</td></tr>
       <tr data-sec="c1"><td>신의칙</td><td>직권 판단 · 강행규정 위반자 무효 주장 허용 · 사정변경은 객관적 사정만 · 국가 시효 주장 원칙 허용</td></tr>
       <tr data-sec="c1"><td>형성권</td><td>취소·추인·해제·상계 + 이름만 청구권(지료증감·지상물매수·부속물매수·공유물분할) · 조건 X · 일부 행사 X · 제척기간</td></tr>
+      <tr data-sec="c2a"><td>본다 / 추정</td><td>동시사망 = 추정 · 태아 손해배상·상속 = 본다 · 실종선고 = 본다(만료 시) · 인정사망 = 추정력</td></tr>
+      <tr data-sec="c2a"><td>상대방 무기</td><td>확답촉구(법정대리인·능력자 된 본인) · 철회(선의, 계약) · 거절(불문, 단독행위) · 철회·거절은 본인에게도 O</td></tr>
+      <tr data-sec="c2a"><td>후견</td><td>성년·한정 = 본인 의사 고려 · 특정 = 본인 의사에 반해 X · 피성년후견인은 동의 있어도 취소</td></tr>
+      <tr data-sec="c2a"><td>실종</td><td>보통 5년 · 특별 1년 · 만료 시 사망 간주 · 취소 심판 필요 · 선의 현존이익 / 악의 이자+손해</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -225,6 +283,6 @@ svg .f-bar{fill:var(--accent)}
 <script>
 const $=s=>document.querySelector(s);
 /* 빈출 지도: 링크가 없는 행 = 아직 개념정리 준비 중 */
-const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
+const MAP=[["소유권 · 취득시효 · 공동소유", "", "13단원", 46, "hi"], ["물권 총론 · 물권변동 · 등기", "", "11단원", 39, "hi"], ["용익물권(지상권 · 지역권 · 전세권)", "", "14단원", 37, "hi"], ["법인 · 비법인사단", "", "3단원", 28, "mid"], ["의사표시", "", "6단원", 28, "mid"], ["자연인 · 제한능력 · 부재와 실종", "#c2a", "2단원", 26, "mid"], ["대리", "", "7단원", 23, "mid"], ["기간 · 소멸시효", "", "10단원", 22, "mid"], ["점유권", "", "12단원", 21, "mid"], ["저당권", "", "17단원", 21, "mid"], ["민법 통칙 · 권리의 종류", "#c1", "1단원", 19, "mid"], ["법률행위 일반 · 반사회 · 불공정", "", "5단원", 16, "mid"], ["담보물권 총론 · 유치권", "", "15단원", 16, "mid"], ["무효와 취소", "", "8단원", 15, "mid"], ["질권", "", "16단원", 13, "lo"], ["조건과 기한", "", "9단원", 12, "lo"], ["물건 · 주물과 종물 · 과실", "", "4단원", 9, "lo"], ["특별법(가등기담보 · 집합건물 · 명의신탁)", "", "18단원", 9, "lo"]];
 $("#mapBody").innerHTML=MAP.map(([n,h,l,c,k])=>`<tr><td class="tn">${h?`<a href="${h}">${n}</a>`:n+' <small style="color:var(--muted)">(준비 중)</small>'}</td><td class="n">${l}</td><td class="n"><span class="bar" style="width:${Math.round(c*2.2)}px"></span> ${c}</td><td><span class="badge ${k}">${k==="hi"?"상":k==="mid"?"중":"하"}</span></td><td class="n">앱에서 표시</td></tr>`).join("");
 </script>

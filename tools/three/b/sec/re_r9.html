@@ -1,0 +1,56 @@
+
+<!-- R9. 투자분석 -->
+<section id="r9" class="sec" aria-labelledby="h-r9">
+  <div class="shead"><h2 id="h-r9">투자분석 (화폐의 시간가치 · 현금흐름 · NPV · IRR · 비율분석)</h2><span class="badge hi">비중 상 · 31문항</span><span class="lec">8단원</span></div>
+  <div class="key">계산이 가장 많은 단원. "6계수 짝 → 현금흐름 사다리 → 투자 판단 기준 → 비율" 네 개만 손에 익히면 계산 문제는 공식 대입이다.<small>매년 3문항. 이 단원이 2차 감정평가실무 수익환원법(DCF)의 뼈대 — 지금 익히면 2차까지 이어진다.</small></div>
+  <p class="ask"><b>시험에서 묻는 방식</b> · 6계수 용도·역수 관계 · 할인/비할인 기법 구분 · NPV·IRR·PI 판단 기준과 성질 · 현금흐름(세후현금흐름) 계산 · DCR·OER·LTV 등 비율 계산</p>
+  <h3>화폐의 시간가치 6계수 — 짝은 역수</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>상황</th><th>계수</th><th>역수 짝</th></tr></thead>
+    <tbody>
+      <tr><td>지금 1원 → n년 후</td><td>일시불의 미래가치(내가)계수 (1+r)ⁿ</td><td>일시불의 현재가치계수</td></tr>
+      <tr><td>매년 1원씩 → n년 후 총액</td><td>연금의 미래가치계수</td><td><b>감채기금계수</b>(목표액 위해 매년 적립액)</td></tr>
+      <tr><td>매년 1원씩 받을 권리의 지금 가치</td><td>연금의 현재가치계수</td><td><b>저당상수</b>(대출 원리금균등 상환액)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">이자율↑ → 미래가치계수↑ · 현재가치계수↓. 회계·경제 시간가치와 같은 계산(회계 사채 상각표의 현가계수).</p>
+  <h3>현금흐름 사다리 (31회 109번 숫자)</h3>
+  <div class="flow"><span>가능총소득 PGI<small> 2,400만</small></span><i>− 공실·대손 →</i><span>유효총소득 EGI<small> 2,160만</small></span><i>− 영업경비 →</i><span>순영업소득 NOI<small> 1,512만</small></span><i>− 부채서비스 →</i><span>세전현금흐름<small> 912만</small></span><i>− 영업소득세 →</i><span>세후현금흐름<small> <b>729.6만</b></small></span></div>
+  <p class="foot">영업경비에는 감가상각비·부채서비스·소득세가 들어가지 않는다(현금 지출 아님 / 아래 단계에서 뺌).</p>
+  <h3>투자 판단 기준</h3>
+  <div class="tw c1"><table>
+    <thead><tr><th>기법</th><th>투자 기준</th><th>성질</th></tr></thead>
+    <tbody>
+      <tr><td>NPV</td><td>&gt; <b>0</b></td><td>가치가산 O · 재투자율 = 요구수익률 · 요구수익률에 따라 달라짐</td></tr>
+      <tr><td>IRR</td><td>&gt; 요구수익률</td><td>NPV = 0인 할인율 · 복수 가능 · 가치가산 X · 재투자율 = IRR</td></tr>
+      <tr><td>PI</td><td>&gt; <b>1</b></td><td>규모 다른 배타적 투자안에서 NPV와 결론 다를 수 있음</td></tr>
+      <tr><td>회수기간</td><td>짧을수록(목표기간 이내)</td><td>단순법은 시간가치 X · 현가회수기간법은 O</td></tr>
+      <tr><td>승수법</td><td><b>작을수록</b></td><td>어림셈 · 시간가치 X</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tw c1"><table>
+    <thead><tr><th>비율</th><th>공식</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>부채감당률 DCR</td><td>NOI ÷ 부채서비스액</td><td>&gt; 1이어야 상환 가능</td></tr>
+      <tr><td>대부비율 LTV</td><td>대출액 ÷ 부동산가치</td><td>부채비율 = 부채 ÷ 지분</td></tr>
+      <tr><td>채무불이행률 DR</td><td>(영업경비 + 부채서비스) ÷ 유효총소득</td><td>높을수록 위험</td></tr>
+      <tr><td>운영경비율 OER</td><td>영업경비 ÷ 유효총소득(또는 PGI)</td><td>—</td></tr>
+      <tr><td>총부채상환비율 DTI</td><td>연간 원리금상환액 ÷ 연소득</td><td>—</td></tr>
+      <tr><td>총투자수익률 ROI · 종합환원율</td><td>NOI ÷ 총투자액</td><td>승수의 역수</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps">
+    <li><b>30회 90번</b>: NOI = 세전현금흐름 6천 + 부채서비스 4천 = 1억</li>
+    <li>EGI = 총투자 10억 ÷ EGI승수 5 = 2억 → 영업경비 = 1억</li>
+    <li>OER = 1억 ÷ 2억 = <b>0.5</b> · DCR = 1억 ÷ 4천 = <b>2.5</b> (정답 ②)</li>
+  </ol>
+  <div class="trap"><b>자주 틀리는 지점</b>
+    <span>NPV가 "1"보다 크면 투자 → NPV 기준은 <b>0</b>, 1은 PI(30회 92번 ⑤).</span>
+    <span>승수가 클수록 좋음 → <b>작을수록</b>(31회 108번 ①, 37회 104번 ④).</span>
+    <span>두 투자안 IRR은 더해진다 → <b>NPV만 가치가산</b>(35회 116번 ②).</span>
+    <span>목표액 적립 = 연금의 미래가치계수 → <b>감채기금계수</b>(31회 110번 ⑤).</span>
+    <span>회계적수익률법은 시간가치 고려 → <b>X</b>(31회 97번).</span>
+  </div>
+  <div class="drop"><b>우선순위</b><span>사다리·6계수·판단 기준표는 반드시. 계수를 이용한 긴 계산(37회 108번 연금 비교 유형)은 1차에선 시간이 많이 들면 넘기고 마지막에 푼다. IRR 복수해·재투자 가정의 이론적 배경은 결론만.</span></div>
+  <p class="mine"></p>
+</section>
